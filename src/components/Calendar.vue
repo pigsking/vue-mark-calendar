@@ -9,13 +9,19 @@
     </ul>
     <ul class="month">
       <li v-for="(item,index) in days" @click="chooseDay(item,index)" :class="{'choose-day':item.date===chooseDate,'other-month':item.day>7&&index<7||item.day<7&&index>28}">
-        <span>{{item.day}}</span>
+        <span :class="item.className">{{item.day}}</span>
       </li>
     </ul>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    markers: {
+      type: Array
+    }
+  },
+
   data() {
     return {
       week: ['日', '一', '二', '三', '四', '五', '六'],
@@ -34,7 +40,6 @@ export default {
   },
   created() {
     this.initMonth(this.currentYear, this.currentMonth)
-    this.initChooseDay()
   },
   methods: {
     isLeapYear(year) {
@@ -43,12 +48,12 @@ export default {
     },
 
     initMonth(year, month) {
-      const currentMonthDays = this.getMonthDays(year, month)
-      const prevMonthDays = this.getMonthDays(
+      const currentMonthDays = this.getDaysOfMonth(year, month)
+      const prevMonthDays = this.getDaysOfMonth(
         year,
         month === 1 ? (month = 12) : month - 1
       )
-      const nextMonthDays = this.getMonthDays(
+      const nextMonthDays = this.getDaysOfMonth(
         year,
         month === 12 ? (month = 1) : month + 1
       )
@@ -72,31 +77,31 @@ export default {
         ...nextMonthSpliceDays
       ]
     },
-    getMonthDays(year, month) {
-      let maxDay
+    getDaysOfMonth(year, month) {
+      let totalDay
       let days = []
       if (month === 2) {
-        maxDay = this.isLeapYear(year) ? 29 : 28
+        totalDay = this.isLeapYear(year) ? 29 : 28
       } else {
-        maxDay = this.minMonths.includes(month) ? 30 : 31
+        totalDay = this.minMonths.includes(month) ? 30 : 31
       }
-      for (let i = 0; i < maxDay; i++) {
+      for (let i = 0; i < totalDay; i++) {
         let day = {
           day: i + 1,
+          className: '',
           date: `${year}/${month}/${i + 1}`
         }
+        // add marker
+        this.markers.map(item => {
+          if (day.date === item.date) {
+            day.className = item.className
+          }
+        })
         days.push(day)
       }
       return days
     },
-    /**
-     * @description init choose one day
-     */
-    initChooseDay() {
-      const date = new Date()
-      const today = (this.today = date.getDate())
-      this.chooseDay(today)
-    },
+
     /**
      * @description switch month
      * @param {String} type prev or next
@@ -140,7 +145,6 @@ export default {
       if (item.day < 7 && index > 28) {
         this.switchMonth('next')
       }
-      console.log(item.date)
       this.chooseDate = item.date
     }
   }
@@ -171,6 +175,7 @@ header {
 .week li {
   flex: 1;
   text-align: center;
+  cursor: pointer;
 }
 .month {
   display: flex;
@@ -186,14 +191,15 @@ header {
   width: 40px;
   height: 40px;
   line-height: 40px;
-  text-align: center;
-}
-.choose-day span{
   border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+.choose-day span {
   color: #232323;
   background-color: #fff;
 }
-.other-month span{
+.other-month span {
   color: #333;
 }
 </style>
