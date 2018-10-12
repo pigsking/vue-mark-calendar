@@ -1,15 +1,15 @@
 <template>
   <div id="calendar">
-    <header>
+    <div class="month-switch">
       <span @click="switchMonth('prev')">Prev</span>
-      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span @click="switchMonth('next')">Next</span>
-    </header>
+      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span :class="{'disabled-switch':disabledFuture}" @click="switchMonth('next')">Next</span>
+    </div>
     <ul class="week">
       <li v-for="(day,index) in week" :key="index">{{day}}</li>
     </ul>
     <ul class="month">
-      <li v-for="(item,index) in days" @click="chooseDay(item,index)" :class="{'choose-day':item.date===chooseDate,'other-month':item.day>7&&index<7||item.day<7&&index>28}">
-        <span :class="item.className">{{item.day}}</span>
+      <li v-for="(item,index) in days" @click="chooseDay(item,index)" :class="[item.className,{'choose-day':item.date===chooseDate,'disabled-day':disabledFuture&&item.isFutureDay,'other-month':item.day>7&&index<7||item.day<7&&index>28}]">
+        <span>{{item.day}}</span>
       </li>
     </ul>
   </div>
@@ -19,29 +19,35 @@ export default {
   props: {
     markers: {
       type: Array
+    },
+    disabledFuture: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
+      minMonths: [4, 6, 9, 11],
+      currentYear: new Date().getFullYear(),
+      currentMonth: new Date().getMonth() + 1,
       week: ['日', '一', '二', '三', '四', '五', '六'],
       days: null,
       chooseDate: null,
-      minMonths: [4, 6, 9, 11],
-      // current: {
-      //   year: new Date().getFullYear(),
-      //   month: new Date().getMonth() + 1,
-      //   day: null,
-      //   date: null
-      // },
-      currentYear: new Date().getFullYear(),
-      currentMonth: new Date().getMonth() + 1
+      todayDate: null
     }
   },
   created() {
+    this.getTodayDate()
     this.initMonth(this.currentYear, this.currentMonth)
   },
   methods: {
+    getTodayDate() {
+      const date = new Date()
+      this.todayDate = `${this.currentYear}/${
+        this.currentMonth
+      }/${date.getDate()}`
+    },
     isLeapYear(year) {
       if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) return true
       else return false
@@ -88,8 +94,12 @@ export default {
       for (let i = 0; i < totalDay; i++) {
         let day = {
           day: i + 1,
-          className: '',
+          // className: '',
+          isFutureDay: false,
           date: `${year}/${month}/${i + 1}`
+        }
+        if (new Date(this.todayDate).getTime() < new Date(day.date).getTime()) {
+          day.isFutureDay = true
         }
         // add marker
         this.markers.map(item => {
@@ -117,7 +127,7 @@ export default {
         }
       }
       // next month
-      if (type === 'next') {
+      if (type === 'next' && !this.disabledFuture) {
         if (this.currentMonth < 12) {
           this.currentMonth++
         } else {
@@ -145,13 +155,24 @@ export default {
       if (item.day < 7 && index > 28) {
         this.switchMonth('next')
       }
-      this.chooseDate = item.date
+
+      if (!this.disabledFuture) {
+        this.chooseDate = item.date
+      } else {
+        // handle disabled
+        if (!item.isFutureDay) {
+          this.chooseDate = item.date
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 ul {
   padding-left: 0;
 }
@@ -160,14 +181,18 @@ li {
 }
 
 #calendar {
-  padding: 20px 30px;
+  min-width: 320px;
+  padding: 10px;
   color: #fff;
   background-color: #232323;
 }
-header {
+.month-switch {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+}
+.month-switch .disabled-switch {
+  color: #333;
 }
 .week {
   display: flex;
@@ -195,12 +220,16 @@ header {
   text-align: center;
   cursor: pointer;
 }
-.choose-day span {
+#calendar .choose-day span {
   color: #232323;
   background-color: #fff;
 }
-.other-month span {
+#calendar .other-month span {
   color: #333;
+}
+#calendar .disabled-day span {
+  color: #333;
+  background-color: transparent;
 }
 </style>
 

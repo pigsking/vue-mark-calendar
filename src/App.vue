@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <Calendar :markers="markers" />
+    <div id="calendar">
+      <Calendar :markers="markers" :disabledFuture="disabledFuture" />
+    </div>
+    <ul class="options">
+      <li>
+        <label for="disabledFuture">Disabled Future</label>
+        <input type="checkbox" id="disabledFuture" v-model="disabledFuture">
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -23,35 +31,48 @@ export default {
           date: '2018/10/30',
           className: 'miss'
         },
-       
+
         {
           date: '2018/10/1',
           className: 'dream'
         }
-      ]
+      ],
+      disabledFuture: false
     }
   }
 }
 </script>
 
 <style>
-#app {
-  width: 380px;
-  margin: auto;
+* {
+  box-sizing: border-box;
+}
+ul {
+  padding-left: 0;
+}
+li {
+  list-style: none;
+}
+
+#calendar {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-#app /deep/ .love {
+#calendar /deep/ .love span {
   background-color: #d32f2f;
 }
-#app /deep/ .miss {
+#calendar /deep/ .miss span {
   background-color: #ff4081;
 }
 
-#app /deep/ .dream {
+#calendar /deep/ .dream span {
   background-color: #448aff;
+}
+
+.options {
+  padding: 10px;
 }
 </style>
