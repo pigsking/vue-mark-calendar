@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar :markers="markers" :disabledFuture="disabledFuture" />
+      <Calendar :markers="markers" :disabledFuture="disabledFuture" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
     </div>
+    <p class="current-date">{{currentDate}}</p>
     <ul class="options">
       <li>
         <label for="disabledFuture">Disabled Future</label>
@@ -31,13 +32,21 @@ export default {
           date: '2018/10/30',
           className: 'miss'
         },
-
         {
           date: '2018/10/1',
           className: 'dream'
         }
       ],
-      disabledFuture: false
+      disabledFuture: false,
+      currentDate: ''
+    }
+  },
+  methods: {
+    handleDayChange(date) {
+      this.currentDate = date
+    },
+    handleMonthChange(date) {
+      this.currentDate = date
     }
   }
 }
@@ -74,5 +83,9 @@ li {
 
 .options {
   padding: 10px;
+}
+.current-date {
+  text-align: center;
+  color: #232323;
 }
 </style>

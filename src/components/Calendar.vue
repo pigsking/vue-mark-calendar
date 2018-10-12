@@ -1,14 +1,14 @@
 <template>
   <div id="calendar">
     <div class="month-switch">
-      <span @click="switchMonth('prev')">Prev</span>
-      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span :class="{'disabled-switch':disabledFuture}" @click="switchMonth('next')">Next</span>
+      <span @click="handleMonthSwitch('prev')">Prev</span>
+      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span :class="{'disabled-switch':disabledFuture}" @click="handleMonthSwitch('next')">Next</span>
     </div>
     <ul class="week">
       <li v-for="(day,index) in week" :key="index">{{day}}</li>
     </ul>
     <ul class="month">
-      <li v-for="(item,index) in days" @click="chooseDay(item,index)" :class="[item.className,{'choose-day':item.date===chooseDate,'disabled-day':disabledFuture&&item.isFutureDay,'other-month':item.day>7&&index<7||item.day<7&&index>28}]">
+      <li v-for="(item,index) in days" @click="handleDayChoose(item,index)" :class="[item.className,{'choose-day':item.date===chooseDate,'disabled-day':disabledFuture&&item.isFutureDay,'other-month':item.day>7&&index<7||item.day<7&&index>28}]">
         <span>{{item.day}}</span>
       </li>
     </ul>
@@ -34,6 +34,7 @@ export default {
       week: ['日', '一', '二', '三', '四', '五', '六'],
       days: null,
       chooseDate: null,
+      chooseDay: null,
       todayDate: null
     }
   },
@@ -47,6 +48,11 @@ export default {
       this.todayDate = `${this.currentYear}/${
         this.currentMonth
       }/${date.getDate()}`
+
+      // init choose tody
+      this.chooseDay = date.getDate()
+      this.chooseDate = this.todayDate
+      this.$emit('day', this.chooseDate)
     },
     isLeapYear(year) {
       if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) return true
@@ -116,7 +122,7 @@ export default {
      * @description switch month
      * @param {String} type prev or next
      */
-    switchMonth(type) {
+    handleMonthSwitch(type) {
       // prev month
       if (type === 'prev') {
         if (this.currentMonth > 1) {
@@ -135,7 +141,7 @@ export default {
           this.currentMonth = 1
         }
       }
-      const date = `${this.currentYear}/${this.currentMonth}/${this.today}`
+      const date = `${this.currentYear}/${this.currentMonth}/${this.chooseDay}`
       this.$emit('month', date)
       this.initMonth(this.currentYear, this.currentMonth)
     },
@@ -143,17 +149,18 @@ export default {
      * @description choose one day
      * @param {Number} day one day
      */
-    chooseDay(item, index) {
+    handleDayChoose(item, index) {
+      this.chooseDay = item.day
       const date = `${this.currentYear}/${this.currentMonth}/${item.day}`
       this.$emit('day', date)
 
       // switch to prev month
       if (item.day > 7 && index < 7) {
-        this.switchMonth('prev')
+        this.handleMonthSwitch('prev')
       }
       // switch to next month
       if (item.day < 7 && index > 28) {
-        this.switchMonth('next')
+        this.handleMonthSwitch('next')
       }
 
       if (!this.disabledFuture) {
