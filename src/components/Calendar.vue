@@ -2,7 +2,7 @@
   <div id="calendar">
     <div class="month-switch">
       <span @click="handleMonthSwitch('prev')">Prev</span>
-      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span :class="{'disabled-switch':disabledFuture}" @click="handleMonthSwitch('next')">Next</span>
+      {{currentYear}} / {{currentMonth<10?'0'+currentMonth:currentMonth}} <span @click="handleMonthSwitch('next')">Next</span>
     </div>
     <ul class="week">
       <li v-for="(day,index) in week" :key="index">{{day}}</li>
@@ -133,7 +133,7 @@ export default {
         }
       }
       // next month
-      if (type === 'next' && !this.disabledFuture) {
+      if (type === 'next') {
         if (this.currentMonth < 12) {
           this.currentMonth++
         } else {
