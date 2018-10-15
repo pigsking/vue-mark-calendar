@@ -1,14 +1,10 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar :english="english" :markers="markers" :disabledFuture="disabledFuture" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
+      <Calendar ref="calendar" :markers="markers" :disabledFuture="disabledFuture" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
     </div>
-    <p class="current-date">{{currentDate}}</p>
+    <input type="date" v-model="currentDate" @change="handleDateChange">
     <ul class="options">
-      <li>
-        <label for="english">English</label>
-        <input type="checkbox" id="english" v-model="english">
-      </li>
       <li>
         <label for="disabledFuture">Disabled Future</label>
         <input type="checkbox" id="disabledFuture" v-model="disabledFuture">
@@ -29,15 +25,15 @@ export default {
     return {
       markers: [
         {
-          date: '2018/10/20',
+          date: '2018-10-20',
           className: 'love'
         },
         {
-          date: '2018/10/30',
+          date: '2018-10-30',
           className: 'miss'
         },
         {
-          date: '2018/10/1',
+          date: '2018-10-1',
           className: 'dream'
         }
       ],
@@ -52,6 +48,9 @@ export default {
     },
     handleMonthChange(date) {
       this.currentDate = date
+    },
+    handleDateChange() {
+      this.$refs.calendar.chooseSpecifiedDate(this.currentDate)
     }
   }
 }
