@@ -17,10 +17,12 @@
 <script>
 export default {
   props: {
-    markers: {
-      type: Array
-    },
+    markers: Array,
     disabledFuture: {
+      type: Boolean,
+      default: false
+    },
+    english: {
       type: Boolean,
       default: false
     }
@@ -29,13 +31,20 @@ export default {
   data() {
     return {
       minMonths: [4, 6, 9, 11],
+
       currentYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth() + 1,
-      week: ['日', '一', '二', '三', '四', '五', '六'],
-      days: null,
+      days: null, // the total days in the month
       chooseDate: null,
       chooseDay: null,
       todayDate: null
+    }
+  },
+  computed: {
+    week() {
+      return this.english
+        ? ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+        : ['日', '一', '二', '三', '四', '五', '六']
     }
   },
   created() {
@@ -43,29 +52,41 @@ export default {
     this.initMonth(this.currentYear, this.currentMonth)
   },
   methods: {
+    /**
+     * @description check the leap year
+     * @param {Number} year
+     * @return {Boolean}
+     */
+    isLeapYear(year) {
+      return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
+    },
+    /**
+     * @description get today's date
+     */
     getTodayDate() {
       const date = new Date()
       this.todayDate = `${this.currentYear}/${
         this.currentMonth
       }/${date.getDate()}`
+      // this.todayDay = date.getDate()
 
       // init choose tody
       this.chooseDay = date.getDate()
       this.chooseDate = this.todayDate
       this.$emit('day', this.chooseDate)
     },
-    isLeapYear(year) {
-      if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) return true
-      else return false
-    },
-
+    /**
+     * @description init month
+     * @param {Number} year
+     * @param {Number} month
+     */
     initMonth(year, month) {
-      const currentMonthDays = this.getDaysOfMonth(year, month)
-      const prevMonthDays = this.getDaysOfMonth(
+      const currentMonthDays = this.getTotalDays(year, month)
+      const prevMonthDays = this.getTotalDays(
         year,
         month === 1 ? (month = 12) : month - 1
       )
-      const nextMonthDays = this.getDaysOfMonth(
+      const nextMonthDays = this.getTotalDays(
         year,
         month === 12 ? (month = 1) : month + 1
       )
@@ -89,31 +110,42 @@ export default {
         ...nextMonthSpliceDays
       ]
     },
-    getDaysOfMonth(year, month) {
-      let totalDay
+    /**
+     * @description get the total days in the month
+     * @param {Number} year
+     * @param {Number} month
+     * @return {Array} days
+     */
+    getTotalDays(year, month) {
+      let totalDays
       let days = []
+
       if (month === 2) {
-        totalDay = this.isLeapYear(year) ? 29 : 28
+        totalDays = this.isLeapYear(year) ? 29 : 28
       } else {
-        totalDay = this.minMonths.includes(month) ? 30 : 31
+        totalDays = this.minMonths.includes(month) ? 30 : 31
       }
-      for (let i = 0; i < totalDay; i++) {
-        let day = {
-          day: i + 1,
-          // className: '',
-          isFutureDay: false,
-          date: `${year}/${month}/${i + 1}`
+
+      for (let i = 0; i < totalDays; i++) {
+        let day = i + 1
+        let date = `${year}/${month}/${day}`
+
+        let dayObj = {
+          day: day,
+          date: date,
+          timeStamp: new Date(date).getTime()
         }
-        if (new Date(this.todayDate).getTime() < new Date(day.date).getTime()) {
-          day.isFutureDay = true
-        }
+
+        dayObj.isFutureDay =
+          new Date(this.todayDate).getTime() < dayObj.timeStamp ? true : false
+
         // add marker
         this.markers.map(item => {
-          if (day.date === item.date) {
-            day.className = item.className
+          if (dayObj.date === item.date) {
+            dayObj.className = item.className
           }
         })
-        days.push(day)
+        days.push(dayObj)
       }
       return days
     },
@@ -179,6 +211,7 @@ export default {
 <style scoped>
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 ul {
   padding-left: 0;

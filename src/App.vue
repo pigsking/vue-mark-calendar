@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar :markers="markers" :disabledFuture="disabledFuture" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
+      <Calendar :english="english" :markers="markers" :disabledFuture="disabledFuture" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
     </div>
     <p class="current-date">{{currentDate}}</p>
     <ul class="options">
+      <li>
+        <label for="english">English</label>
+        <input type="checkbox" id="english" v-model="english">
+      </li>
       <li>
         <label for="disabledFuture">Disabled Future</label>
         <input type="checkbox" id="disabledFuture" v-model="disabledFuture">
@@ -38,6 +42,7 @@ export default {
         }
       ],
       disabledFuture: false,
+      english: false,
       currentDate: ''
     }
   },
