@@ -79,16 +79,16 @@ li {
   color: #2c3e50;
 }
 #calendar /deep/ .love span {
-  color: #fff;
+  color: #fff!important;
   background-color: #7b1fa2;
 }
 #calendar /deep/ .miss span {
-  color: #fff;
+  color: #fff!important;
   background-color: #ff4081;
 }
 
 #calendar /deep/ .dream span {
-  color: #fff;
+  color: #fff!important;
   background-color: #448aff;
 }
 
