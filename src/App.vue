@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar ref="calendar" :markers="markers" :disabledFuture="disabledFuture" :hideOtherMonthDays="hideOtherMonthDays" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
+      <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" :hideOtherMonthDay="hideOtherMonthDay" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
     </div>
     <ul class="options">
       <li>
-        <label for="disabledFuture">Disabled Future</label>
-        <input type="checkbox" id="disabledFuture" v-model="disabledFuture">
+        <label for="disabledFutureDay">Disabled Future</label>
+        <input type="checkbox" id="disabledFutureDay" v-model="disabledFutureDay">
       </li>
       <li>
-        <label for="hideOtherMonthDays">Hie other month days</label>
-        <input type="checkbox" id="hideOtherMonthDays" v-model="hideOtherMonthDays">
+        <label for="hideOtherMonthDay">Hie other month days</label>
+        <input type="checkbox" id="hideOtherMonthDay" v-model="hideOtherMonthDay">
       </li>
     </ul>
     <input type="date" v-model="currentDate" @change="handleDateChange">
@@ -41,8 +41,8 @@ export default {
           className: "dream"
         }
       ],
-      disabledFuture: false,
-      hideOtherMonthDays: false,
+      disabledFutureDay: false,
+      hideOtherMonthDay: false,
       currentDate: ""
     };
   },
@@ -79,16 +79,16 @@ li {
   color: #2c3e50;
 }
 #calendar /deep/ .love span {
-  color: #fff!important;
+  color: #fff;
   background-color: #7b1fa2;
 }
 #calendar /deep/ .miss span {
-  color: #fff!important;
+  color: #fff;
   background-color: #ff4081;
 }
 
 #calendar /deep/ .dream span {
-  color: #fff!important;
+  color: #fff;
   background-color: #448aff;
 }
 
