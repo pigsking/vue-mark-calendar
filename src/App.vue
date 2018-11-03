@@ -1,8 +1,12 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" :hideOtherMonthDay="hideOtherMonthDay" @month="handleMonthChange($event)" @day="handleDayChange($event)" />
+      <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" 
+      :hideOtherMonthDay="hideOtherMonthDay" @month="handleMonthChange($event)" @day="handleDayChange($event)" 
+      />
     </div>
+    <div class="control">
+      <input type="date" v-model="currentDate" @change="handleDateChange">
     <ul class="options">
       <li>
         <label for="disabledFutureDay">Disabled Future</label>
@@ -13,7 +17,7 @@
         <input type="checkbox" id="hideOtherMonthDay" v-model="hideOtherMonthDay">
       </li>
     </ul>
-    <input type="date" v-model="currentDate" @change="handleDateChange">
+    </div>
   </div>
 </template>
 

@@ -2,9 +2,9 @@
   <div id="calendar">
     <div class="calendar-header">
       <div class="month-switch">
-        <span @click="handleMonthSwitch('prev')">Prev</span>
-        <span @click="state.showYears=true"> {{current.year}} - {{current.month}}</span>
-        <span @click="handleMonthSwitch('next')">Next</span>
+        <span class="prev" @click="handleMonthSwitch('prev')">Prev</span>
+        <span> {{current.year}} - {{current.month}}</span>
+        <span class="next" @click="handleMonthSwitch('next')">Next</span>
       </div>
     </div>
     <div class="calendar-content">
@@ -26,7 +26,7 @@ export default {
     markers: Array,
     weekText: {
       type: Array,
-      default: () => ["日", "一", "二", "三", "四", "五", "六"]
+      default: () => ["S", "M", "T", "W", "T", "F", "S"]
     },
     disabledFutureDay: {
       type: Boolean,
@@ -58,16 +58,16 @@ export default {
   },
   mounted() {
     this.initCalendar();
+    this.current.date = util.splicingDate(this.current);
     this.$emit("day", util.splicingDate(this.current));
   },
   methods: {
     initCalendar() {
       this.days = util.initCalendar(this.current, this.markers);
     },
-    dayClasses(item, index) {
-      const { date } = this.current;
+    dayClasses(item) {
       return {
-        "choose-day": item.date === date,
+        "choose-day": item.date === this.current.date,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
         "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay
@@ -133,13 +133,12 @@ export default {
       }
     },
     chooseSpecifiedDate(date) {
-      const dateArr = date.split("-");
-      this.current.year = dateArr[0];
-      this.current.month = dateArr[1];
-      this.current.day = dateArr[2];
-
+      const [yaer, month, day] = date.split("-");
+      this.current.year = yaer;
+      this.current.month = month;
+      this.current.day = day;
       this.current.date = date;
-      this.initMonth();
+      this.initCalendar();
     }
   }
 };
@@ -164,26 +163,6 @@ li {
 .calendar-header {
   position: relative;
 }
-.calendar-header .years,
-.calendar-header .months {
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-wrap: wrap;
-  max-height: 300px;
-  margin-top: 0;
-  border-top: 1px solid #fff;
-  background-color: #232323;
-}
-.calendar-header .years li,
-.calendar-header .months li {
-  width: 25%;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-}
 
 .month-switch {
   display: flex;
@@ -193,9 +172,11 @@ li {
   padding: 0 10px;
   background-color: #232323;
 }
-.month-switch .disabled-switch {
-  color: #333;
+.month-switch .prev,
+.month-switch .next {
+  cursor: pointer;
 }
+
 .calendar-content {
   color: #232323;
   background-color: #fff;
@@ -226,10 +207,7 @@ li {
   text-align: center;
   cursor: pointer;
 }
-/* #calendar .month span:hover {
-  color: #999;
-  background-color: #ccc;
-} */
+
 #calendar .choose-day span {
   color: #fff;
   background-color: #232323;
