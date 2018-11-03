@@ -1,21 +1,8 @@
 # calendar
+When I wrote this, only God and I understood what I was doing.
+Now, only God knows.
 
-## Project setup
-```
-npm install
-```
+![Good luck GIF](./good-luck.gif)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+### License
+This project is licensed under [GLWTPL](./LICENSE)
