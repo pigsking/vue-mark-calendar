@@ -2,14 +2,19 @@
   <div id="app">
     <div id="calendar">
       <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" 
-      :hideOtherMonthDay="hideOtherMonthDay" @month="handleMonthChange($event)" @day="handleDayChange($event)" 
+      :hideOtherMonthDay="hideOtherMonthDay"  @month="handleMonthChange($event)" @day="handleDayChange($event)" 
       />
     </div>
     <div class="control">
+      <section>
+          <h3>Change date</h3>
       <input type="date" v-model="currentDate" @change="handleDateChange">
-    <ul class="options">
+      </section>
+    <section>
+      <h3>Change props</h3>
+<ul class="options">
       <li>
-        <label for="disabledFutureDay">Disabled Future</label>
+        <label for="disabledFutureDay">Disabled future days</label>
         <input type="checkbox" id="disabledFutureDay" v-model="disabledFutureDay">
       </li>
       <li>
@@ -17,6 +22,8 @@
         <input type="checkbox" id="hideOtherMonthDay" v-model="hideOtherMonthDay">
       </li>
     </ul>
+    </section>
+    
     </div>
   </div>
 </template>
@@ -50,6 +57,11 @@ export default {
       currentDate: ""
     };
   },
+  watch: {
+    currentDate(val) {
+      console.log(val);
+    }
+  },
   methods: {
     handleDayChange(date) {
       this.currentDate = date;
@@ -58,7 +70,7 @@ export default {
       this.currentDate = date;
     },
     handleDateChange() {
-      this.$refs.calendar.chooseSpecifiedDate(this.currentDate);
+        this.$refs.calendar.chooseSpecifiedDate(this.currentDate);
     }
   }
 };
@@ -74,7 +86,13 @@ ul {
 li {
   list-style: none;
 }
-
+body {
+  background-color: #efefef;
+}
+#app {
+  max-width: 414px;
+  margin: auto;
+}
 #calendar {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -95,9 +113,15 @@ li {
   color: #fff;
   background-color: #448aff;
 }
+.control-header {
+  text-align: center;
+}
 
 .options {
   padding: 10px;
+}
+.options li {
+  margin-bottom: 10px;
 }
 .current-date {
   text-align: center;

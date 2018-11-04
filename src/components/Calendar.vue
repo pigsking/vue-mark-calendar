@@ -2,9 +2,9 @@
   <div id="calendar">
     <div class="calendar-header">
       <div class="month-switch">
-        <span class="prev" @click="handleMonthSwitch('prev')">Prev</span>
-        <span> {{current.year}} - {{current.month}}</span>
-        <span class="next" @click="handleMonthSwitch('next')">Next</span>
+        <span class="prev" @click="handleMonthSwitch('prev')"></span>
+        <span> {{current.year}}-{{current.month}} </span>
+        <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
     </div>
     <div class="calendar-content">
@@ -56,7 +56,7 @@ export default {
       this.initCalendar();
     }
   },
-  mounted() {
+  created() {
     this.initCalendar();
     this.current.date = util.splicingDate(this.current);
     this.$emit("day", util.splicingDate(this.current));
@@ -98,18 +98,22 @@ export default {
           month = 1;
         }
       }
+      const day = new Date().getDate();
+      const switchAfterMonthTotalDays = util.getTotalDays(year, month);
       this.current.year = year;
-      this.current.month = month > 9 ? month : "0" + month;
+      this.current.month = month;
+      // avoid cross-border
+      this.current.day =
+        day > switchAfterMonthTotalDays ? switchAfterMonthTotalDays : day;
 
-      const date = util.splicingDate(this.current);
-      this.$emit("month", date);
-      // this.initMonth()
+      this.current.date = util.splicingDate(this.current);
+      this.$emit("month", util.splicingDate(this.current));
     },
     /**
      * @description choose one day
-     * @param {Number} day one day
+     * @param {Object} item
      */
-    handleDayChoose(item, index) {
+    handleDayChoose(item) {
       if (
         (this.disabledFutureDay && item.isFutureDay) ||
         (this.hideOtherMonthDay && item.isOtherMonthDay)
@@ -119,26 +123,27 @@ export default {
 
       this.current.day = item.day;
       this.current.date = item.date;
-      const date = util.splicingDate(this.current);
+      this.$emit("day", util.splicingDate(this.current));
 
-      this.$emit("day", date);
-
-      // switch to prev month
-      if (item.day > 7 && index < 7) {
-        this.handleMonthSwitch("prev");
-      }
-      // switch to next month
-      if (item.day < 7 && index > 28) {
-        this.handleMonthSwitch("next");
-      }
+      item.isOtherMonthDay &&
+        (item.day > 7
+          ? this.handleMonthSwitch("prev")
+          : this.handleMonthSwitch("next"));
     },
     chooseSpecifiedDate(date) {
-      const [yaer, month, day] = date.split("-");
-      this.current.year = yaer;
-      this.current.month = month;
+      if (!date) throw "Missing required parameters";
+
+      const [year, month, day] = date.split("-") || date.split("/");
+      const { year: currentYear, month: currentMonth } = this.current;
+
       this.current.day = day;
       this.current.date = date;
-      this.initCalendar();
+      // not init this month
+      if (year != currentYear && month != currentMonth) {
+        this.current.year = year;
+        this.current.month = month;
+        this.initCalendar();
+      }
     }
   }
 };
@@ -150,6 +155,7 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 ul {
+  margin: 0;
   padding-left: 0;
 }
 li {
@@ -169,20 +175,32 @@ li {
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  padding: 0 10px;
+  padding: 0 20px;
   background-color: #232323;
 }
 .month-switch .prev,
 .month-switch .next {
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #fff;
   cursor: pointer;
 }
 
+.month-switch .prev {
+  transform: rotate(-135deg);
+}
+
+.month-switch .next {
+  transform: rotate(45deg);
+}
 .calendar-content {
   color: #232323;
   background-color: #fff;
 }
 .week {
   display: flex;
+  padding: 10px 0;
 }
 .week li {
   flex: 1;
@@ -216,7 +234,7 @@ li {
 #calendar .other-month-day span {
   color: #ccc;
 }
-#calendar .other-month-day--hide span {
+#calendar .other-month-day.other-month-day--hide span {
   color: transparent;
   background-color: transparent;
 }

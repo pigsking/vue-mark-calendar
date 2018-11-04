@@ -25,6 +25,7 @@ export default {
     */
     splicingDate({ year, month, day } = {}) {
         day = day > 9 ? day : "0" + day;
+        month = month > 9 ? month : "0" + month;
         return `${year}-${month}-${day}`;
     },
     /**
@@ -76,8 +77,8 @@ export default {
    * @description init month
    */
     initCalendar({ year, month } = {}, markers) {
-        const prevMonth = month === 1 ? (month = 12) : month - 1;
-        const nextMonth = month === 12 ? (month = 1) : month + 1;
+        const prevMonth = month === 1 ? 12 : month - 1;
+        const nextMonth = month === 12 ? 1 : month + 1;
 
         const currentMonthAllDays = this.handleDays(year, month, markers);
         let prevMonthDays = this.handleDays(year, prevMonth, markers);
@@ -95,13 +96,9 @@ export default {
             prevMonthDays.length - 1
         );
         const nextMonthFewDays = nextMonthDays.splice(0, 7 - (lastDay + 1));
-        
-        prevMonthFewDays.map(item => {
-            item['isOtherMonthDay'] = true
-        })
-        nextMonthFewDays.map(item => {
-            item['isOtherMonthDay'] = true
-        })
+
+        prevMonthFewDays.map(item => item['isOtherMonthDay'] = true)
+        nextMonthFewDays.map(item => item['isOtherMonthDay'] = true)
         return [
             ...prevMonthFewDays,
             ...currentMonthAllDays,
