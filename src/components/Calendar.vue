@@ -1,11 +1,13 @@
 <template>
   <div id="calendar">
     <div class="calendar-header">
-      <div class="month-switch">
+        <slot name="month-switch" v-if="$slots['month-switch']"></slot>
+        <div class="month-switch" v-else>
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
         <span> {{current.year}}-{{current.month}} </span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
+    
     </div>
     <div class="calendar-content">
       <ul class="week">
@@ -50,9 +52,6 @@ export default {
   },
   watch: {
     "current.month"() {
-      this.initCalendar();
-    },
-    hideOtherMonthDay() {
       this.initCalendar();
     }
   },
@@ -103,8 +102,9 @@ export default {
       this.current.year = year;
       this.current.month = month;
       // avoid cross-border
-      this.current.day =
-        day > switchAfterMonthTotalDays ? switchAfterMonthTotalDays : day;
+      if (day > switchAfterMonthTotalDays) {
+        this.current.day = switchAfterMonthTotalDays;
+      }
 
       this.current.date = util.splicingDate(this.current);
       this.$emit("month", util.splicingDate(this.current));
@@ -129,6 +129,13 @@ export default {
         (item.day > 7
           ? this.handleMonthSwitch("prev")
           : this.handleMonthSwitch("next"));
+    },
+    // External method
+    switchToPrevMonth() {
+      this.handleMonthSwitch("prev");
+    },
+    switchToNextMonth() {
+      this.handleMonthSwitch("next");
     },
     chooseSpecifiedDate(date) {
       if (!date) throw "Missing required parameters";

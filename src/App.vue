@@ -2,8 +2,8 @@
   <div id="app">
     <div id="calendar">
       <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" 
-      :hideOtherMonthDay="hideOtherMonthDay"  @month="handleMonthChange($event)" @day="handleDayChange($event)" 
-      />
+      :hideOtherMonthDay="hideOtherMonthDay"  @month="handleMonthChange($event)" @day="handleDayChange($event)" >
+      </Calendar>
     </div>
     <div class="control">
       <section>
@@ -12,7 +12,7 @@
       </section>
     <section>
       <h3>Change props</h3>
-<ul class="options">
+   <ul class="options">
       <li>
         <label for="disabledFutureDay">Disabled future days</label>
         <input type="checkbox" id="disabledFutureDay" v-model="disabledFutureDay">
@@ -23,7 +23,6 @@
       </li>
     </ul>
     </section>
-    
     </div>
   </div>
 </template>
@@ -48,7 +47,7 @@ export default {
           className: "miss"
         },
         {
-          date: "2018-10-1",
+          date: "2018-10-01",
           className: "dream"
         }
       ],
@@ -56,11 +55,6 @@ export default {
       hideOtherMonthDay: false,
       currentDate: ""
     };
-  },
-  watch: {
-    currentDate(val) {
-      console.log(val);
-    }
   },
   methods: {
     handleDayChange(date) {
@@ -70,7 +64,13 @@ export default {
       this.currentDate = date;
     },
     handleDateChange() {
-        this.$refs.calendar.chooseSpecifiedDate(this.currentDate);
+      this.$refs.calendar.chooseSpecifiedDate(this.currentDate);
+    },
+    switchToPrevMonth() {
+      this.$refs.calendar.switchToPrevMonth();
+    },
+    switchToNextMonth() {
+      this.$refs.calendar.switchToNextMonth();
     }
   }
 };
