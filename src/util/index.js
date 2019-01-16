@@ -58,8 +58,7 @@ export default {
             const dayObj = {
                 day: day,
                 date: date,
-                isFutureDay:
-                    this.getTimestamp() < this.getTimestamp(date) ? true : false,
+                isFutureDay: this.getTimestamp() < this.getTimestamp(date)
             };
 
             // add marker
@@ -81,8 +80,8 @@ export default {
         const nextMonth = month === 12 ? 1 : month + 1;
 
         const currentMonthAllDays = this.handleDays(year, month, markers);
-        let prevMonthDays = this.handleDays(year, prevMonth, markers);
-        let nextMonthDays = this.handleDays(year, nextMonth, markers);
+        let prevMonthAllDays = this.handleDays(year, prevMonth, markers);
+        let nextMonthAllDays = this.handleDays(year, nextMonth, markers);
 
         // get the first day and the last day of the month is the day of the week
         const firstDay = new Date(currentMonthAllDays[0].date).getDay();
@@ -91,14 +90,15 @@ export default {
         ).getDay();
 
         // concat prev month and next month
-        const prevMonthFewDays = prevMonthDays.splice(
-            prevMonthDays.length - firstDay,
-            prevMonthDays.length - 1
+        const prevMonthFewDays = prevMonthAllDays.splice(
+            prevMonthAllDays.length - firstDay,
+            prevMonthAllDays.length - 1
         );
-        const nextMonthFewDays = nextMonthDays.splice(0, 7 - (lastDay + 1));
+        const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - (lastDay + 1));
 
-        prevMonthFewDays.map(item => item['isOtherMonthDay'] = true)
-        nextMonthFewDays.map(item => item['isOtherMonthDay'] = true)
+        // concat prev last few days and next month first few days
+        prevMonthFewDays.concat(nextMonthFewDays).map(item => item['isOtherMonthDay'] = true)
+
         return [
             ...prevMonthFewDays,
             ...currentMonthAllDays,

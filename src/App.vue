@@ -1,28 +1,29 @@
 <template>
   <div id="app">
     <div id="calendar">
-      <Calendar ref="calendar" :markers="markers" :disabledFutureDay="disabledFutureDay" 
-      :hideOtherMonthDay="hideOtherMonthDay"  @month="handleMonthChange($event)" @day="handleDayChange($event)" >
-      </Calendar>
+      <Calendar
+        ref="calendar"
+        :markers="markers"
+        :disabledFutureDay="disabledFutureDay"
+        :hideOtherMonthDay="hideOtherMonthDay"
+        @month="handleMonthChange($event)"
+        @day="handleDayChange($event)"
+      ></Calendar>
     </div>
     <div class="control">
       <section>
-          <h3>Change date</h3>
-      <input type="date" v-model="currentDate" @change="handleDateChange">
+        <h3>Change props</h3>
+        <ul class="options">
+          <li>
+            <label for="disabledFutureDay">Disabled future days</label>
+            <input type="checkbox" id="disabledFutureDay" v-model="disabledFutureDay">
+          </li>
+          <li>
+            <label for="hideOtherMonthDay">Hie other month days</label>
+            <input type="checkbox" id="hideOtherMonthDay" v-model="hideOtherMonthDay">
+          </li>
+        </ul>
       </section>
-    <section>
-      <h3>Change props</h3>
-   <ul class="options">
-      <li>
-        <label for="disabledFutureDay">Disabled future days</label>
-        <input type="checkbox" id="disabledFutureDay" v-model="disabledFutureDay">
-      </li>
-      <li>
-        <label for="hideOtherMonthDay">Hie other month days</label>
-        <input type="checkbox" id="hideOtherMonthDay" v-model="hideOtherMonthDay">
-      </li>
-    </ul>
-    </section>
     </div>
   </div>
 </template>
@@ -56,15 +57,15 @@ export default {
       currentDate: ""
     };
   },
+  mounted() {
+    this.$refs.calendar.chooseTargetDate("2018-10-09");
+  },
   methods: {
     handleDayChange(date) {
       this.currentDate = date;
     },
     handleMonthChange(date) {
       this.currentDate = date;
-    },
-    handleDateChange() {
-      this.$refs.calendar.chooseSpecifiedDate(this.currentDate);
     },
     switchToPrevMonth() {
       this.$refs.calendar.switchToPrevMonth();

@@ -13,7 +13,7 @@
 ### Slots
  name   | description|
 | ------ | ------ |
-| month switch | custom month switch theme | 
+| month-switch | custom month switch theme | 
 
 ### Events
 Receive :
@@ -24,14 +24,14 @@ Initiate :
 ```javascript
    <Calendar ref="calendar" />
 
-   // switch to prev month 
+   // switch to the prev month 
    this.$refs.calendar.switchToPrevMonth()
 
-   // switch to next month 
+   // switch to the next month 
    this.$refs.calendar.switchToNextMonth()
 
-   // go to target date
-   this.$refs.calendar.chooseSpecifiedDate('2018-11-09')
+   // go to the target date
+   this.$refs.calendar.chooseTargetDate('2018-11-09')
 
 ```
 ## Theme

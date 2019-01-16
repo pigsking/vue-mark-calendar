@@ -1,20 +1,24 @@
 <template>
   <div id="calendar">
     <div class="calendar-header">
-        <slot name="month-switch" v-if="$slots['month-switch']"></slot>
-        <div class="month-switch" v-else>
+      <slot name="month-switch" v-if="$slots['month-switch']"></slot>
+      <div class="month-switch" v-else>
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span> {{current.year}}-{{current.month}} </span>
+        <span>{{currentDateObj.year}}-{{currentDateObj.month> 9 ? currentDateObj.month : "0" + currentDateObj.month}}</span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
-    
     </div>
     <div class="calendar-content">
       <ul class="week">
         <li v-for="(day,index) in weekText" :key="index">{{day}}</li>
       </ul>
       <ul class="month">
-        <li v-for="(item,index) in days" :key="index" @click="handleDayChoose(item,index)" :class="[dayClasses(item,index),item.className]">
+        <li
+          v-for="(item,index) in days"
+          :key="index"
+          @click="handleDayChoose(item,index)"
+          :class="[dayClasses(item),item.className]"
+        >
           <span>{{item.day}}</span>
         </li>
       </ul>
@@ -42,7 +46,7 @@ export default {
   data() {
     return {
       days: [],
-      current: {
+      currentDateObj: {
         date: null,
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
@@ -50,36 +54,36 @@ export default {
       }
     };
   },
+
   watch: {
-    "current.month"() {
+    "currentDateObj.month"() {
       this.initCalendar();
     }
   },
   created() {
     this.initCalendar();
-    this.current.date = util.splicingDate(this.current);
-    this.$emit("day", util.splicingDate(this.current));
+    this.currentDateObj.date = util.splicingDate(this.currentDateObj);
+    this.$emit("day", this.currentDateObj.date);
   },
   methods: {
     initCalendar() {
-      this.days = util.initCalendar(this.current, this.markers);
+      this.days = util.initCalendar(this.currentDateObj, this.markers);
     },
     dayClasses(item) {
       return {
-        "choose-day": item.date === this.current.date,
+        "choose-day": item.date === this.currentDateObj.date,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
         "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay
       };
     },
-
     /**
      * @description switch month
      * @param {String} type prev or next
      */
     handleMonthSwitch(type) {
       // prev month
-      let { year, month } = this.current;
+      let { year, month } = this.currentDateObj;
       if (type === "prev") {
         if (month > 1) {
           month--;
@@ -97,17 +101,20 @@ export default {
           month = 1;
         }
       }
-      const day = new Date().getDate();
+
       const switchAfterMonthTotalDays = util.getTotalDays(year, month);
-      this.current.year = year;
-      this.current.month = month;
       // avoid cross-border
-      if (day > switchAfterMonthTotalDays) {
-        this.current.day = switchAfterMonthTotalDays;
+      if (
+        new Date().getDate() > switchAfterMonthTotalDays ||
+        this.currentDateObj.day > switchAfterMonthTotalDays
+      ) {
+        this.currentDateObj.day = switchAfterMonthTotalDays;
       }
 
-      this.current.date = util.splicingDate(this.current);
-      this.$emit("month", util.splicingDate(this.current));
+      this.currentDateObj.year = year;
+      this.currentDateObj.month = month;
+      this.currentDateObj.date = util.splicingDate(this.currentDateObj);
+      this.$emit("month", this.currentDateObj.date);
     },
     /**
      * @description choose one day
@@ -121,9 +128,9 @@ export default {
         return;
       }
 
-      this.current.day = item.day;
-      this.current.date = item.date;
-      this.$emit("day", util.splicingDate(this.current));
+      this.currentDateObj.day = item.day;
+      this.currentDateObj.date = item.date;
+      this.$emit("day", util.splicingDate(this.currentDateObj));
 
       item.isOtherMonthDay &&
         (item.day > 7
@@ -137,18 +144,23 @@ export default {
     switchToNextMonth() {
       this.handleMonthSwitch("next");
     },
-    chooseSpecifiedDate(date) {
+    /**
+     * @description choose target date
+     * @param {String} date
+     */
+    chooseTargetDate(date) {
       if (!date) throw "Missing required parameters";
 
-      const [year, month, day] = date.split("-") || date.split("/");
-      const { year: currentYear, month: currentMonth } = this.current;
+      const [y, m, day] = date.split("-");
+      const { year, month } = this.currentDateObj;
 
-      this.current.day = day;
-      this.current.date = date;
+      this.currentDateObj.day = day;
+      this.currentDateObj.date = date;
+
       // not init this month
-      if (year != currentYear && month != currentMonth) {
-        this.current.year = year;
-        this.current.month = month;
+      if (y != year && m != month) {
+        this.currentDateObj.year = y;
+        this.currentDateObj.month = m;
         this.initCalendar();
       }
     }
