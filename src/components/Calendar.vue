@@ -41,8 +41,17 @@ export default {
     hideOtherMonthDay: {
       type: Boolean,
       default: false
+    },
+    hideOtherMonthMarker: {
+      type: Boolean,
+      default: true
+    },
+    format: {
+      type: String,
+      default: "YYYY-MM-DD"
     }
   },
+
   data() {
     return {
       days: [],
@@ -54,7 +63,6 @@ export default {
       }
     };
   },
-
   watch: {
     "currentDateObj.month"() {
       this.initCalendar();
@@ -62,20 +70,58 @@ export default {
   },
   created() {
     this.initCalendar();
-    this.currentDateObj.date = util.splicingDate(this.currentDateObj);
+    this.currentDateObj.date = util.splicingDate(
+      this.currentDateObj,
+      this.format
+    );
     this.$emit("day", this.currentDateObj.date);
   },
   methods: {
-    initCalendar() {
-      this.days = util.initCalendar(this.currentDateObj, this.markers);
-    },
     dayClasses(item) {
       return {
-        "choose-day": item.date === this.currentDateObj.date,
+        "choose-day": this.currentDateObj.day === item.day,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
-        "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay
+        "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay,
+        "other-month-marker--hide":
+          this.hideOtherMonthMarker && item.isOtherMonthDay
       };
+    },
+    /**
+     * @description init month
+     */
+    initCalendar() {
+      const { year, month } = this.currentDateObj;
+      const prevMonth = month === 1 ? 12 : month - 1;
+      const nextMonth = month === 12 ? 1 : month + 1;
+
+      const currentMonthAllDays = this.handleDays(year, month);
+      let prevMonthAllDays = this.handleDays(year, prevMonth, true);
+      let nextMonthAllDays = this.handleDays(year, nextMonth, true);
+
+      // get the first day and the last day of the month is the day of the week
+      const firstDay = new Date(currentMonthAllDays[0].date).getDay();
+      const lastDay = new Date(
+        currentMonthAllDays[currentMonthAllDays.length - 1].date
+      ).getDay();
+
+      // concat prev month and next month
+      const prevMonthFewDays = prevMonthAllDays.splice(
+        prevMonthAllDays.length - firstDay,
+        prevMonthAllDays.length - 1
+      );
+      const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - (lastDay + 1));
+
+      // concat prev last few days and next month first few days
+      prevMonthFewDays
+        .concat(nextMonthFewDays)
+        .map(item => (item["isOtherMonthDay"] = true));
+
+      this.days = [
+        ...prevMonthFewDays,
+        ...currentMonthAllDays,
+        ...nextMonthFewDays
+      ];
     },
     /**
      * @description switch month
@@ -113,7 +159,10 @@ export default {
 
       this.currentDateObj.year = year;
       this.currentDateObj.month = month;
-      this.currentDateObj.date = util.splicingDate(this.currentDateObj);
+      this.currentDateObj.date = util.splicingDate(
+        this.currentDateObj,
+        this.format
+      );
       this.$emit("month", this.currentDateObj.date);
     },
     /**
@@ -130,20 +179,51 @@ export default {
 
       this.currentDateObj.day = item.day;
       this.currentDateObj.date = item.date;
-      this.$emit("day", util.splicingDate(this.currentDateObj));
+
+      this.$emit("day", util.splicingDate(this.currentDateObj, this.format));
 
       item.isOtherMonthDay &&
         (item.day > 7
           ? this.handleMonthSwitch("prev")
           : this.handleMonthSwitch("next"));
     },
-    // External method
-    switchToPrevMonth() {
-      this.handleMonthSwitch("prev");
+
+    /**
+     * @description get the total days in the month
+     * @param {Number} year
+     * @param {Number} month
+     * @return {Array} days
+     */
+    handleDays(year, month, isOtherMonths = false) {
+      let days = [];
+      const totalDays = util.getTotalDays(year, month);
+      for (let i = 0; i < totalDays; i++) {
+        const day = i + 1;
+        const date = util.splicingDate({ year, month, day });
+        const dayObj = {
+          day: day,
+          date: date,
+          isFutureDay: util.getTimestamp() < util.getTimestamp(date)
+        };
+
+        // add marker
+        const markers = this.markers;
+
+        if (markers && (!isOtherMonths || !this.hideOtherMonthMarker)) {
+          markers.map(item => {
+            if (
+              util.getTimestamp(dayObj.date) === util.getTimestamp(item.date)
+            ) {
+              dayObj["className"] = item.className;
+            }
+          });
+        }
+
+        days.push(dayObj);
+      }
+      return days;
     },
-    switchToNextMonth() {
-      this.handleMonthSwitch("next");
-    },
+
     /**
      * @description choose target date
      * @param {String} date
@@ -154,15 +234,22 @@ export default {
       const [y, m, day] = date.split("-");
       const { year, month } = this.currentDateObj;
 
-      this.currentDateObj.day = day;
+      this.currentDateObj.day = +day;
       this.currentDateObj.date = date;
 
       // not init this month
       if (y != year && m != month) {
-        this.currentDateObj.year = y;
-        this.currentDateObj.month = m;
+        this.currentDateObj.year = +y;
+        this.currentDateObj.month = +m;
         this.initCalendar();
       }
+    },
+    // External method
+    switchToPrevMonth() {
+      this.handleMonthSwitch("prev");
+    },
+    switchToNextMonth() {
+      this.handleMonthSwitch("next");
     }
   }
 };
@@ -260,6 +347,10 @@ li {
 #calendar .disabled-day span {
   color: #ccc;
   background-color: transparent;
+}
+
+#calendar .other-month-day.other-month-marker--hide span {
+  background-color: transparent !important;
 }
 </style>
 

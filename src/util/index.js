@@ -1,4 +1,3 @@
-const minMonths = [4, 6, 9, 11]
 export default {
     /**
   * @description check the leap year
@@ -14,19 +13,25 @@ export default {
      * @return {Number} 
      */
     getTimestamp(date) {
-        return date ? new Date(date).getTime() : new Date().getTime()
+        return date ? +new Date(date) : +new Date()
     },
     /**
     * @description conver date by lang
-    * @param {String} year
-    * @param {String} month
-    * @param {String} day
-    * @return {String}
+    * @param {Object} year|month|day
+    * @return {String} format
     */
-    splicingDate({ year, month, day } = {}) {
-        day = day > 9 ? day : "0" + day;
-        month = month > 9 ? month : "0" + month;
-        return `${year}-${month}-${day}`;
+    splicingDate({ year, month, day } = {}, format) {
+        return !format ? `${year}-${month}-${day}` :
+            format.replace(/\[.*?\]|Y{2,4}|M{1,2}|D{1,2}|SSS/g, (match) => {
+                return {
+                    YY: String(year).slice(-2),
+                    YYYY: year,
+                    M: month,
+                    MM: month > 9 ? month : `0${month}`,
+                    D: day,
+                    DD: day > 9 ? day : `0${day}`
+                }[match]
+            })
     },
     /**
    * @description get the total days in the month
@@ -35,74 +40,7 @@ export default {
    * @return {Number} totalDays
    */
     getTotalDays(year, month) {
-        let totalDays
-        if (month == 2) {
-            totalDays = this.isLeapYear(year) ? 29 : 28
-        } else {
-            totalDays = minMonths.includes(month) ? 30 : 31
-        }
-        return totalDays
-    },
-    /**
-     * @description get the total days in the month
-     * @param {Number} year
-     * @param {Number} month
-     * @return {Array} days
-     */
-    handleDays(year, month, markers) {
-        let days = [];
-        const totalDays = this.getTotalDays(year, month);
-        for (let i = 0; i < totalDays; i++) {
-            const day = i + 1;
-            const date = this.splicingDate({ year, month, day });
-            const dayObj = {
-                day: day,
-                date: date,
-                isFutureDay: this.getTimestamp() < this.getTimestamp(date)
-            };
-
-            // add marker
-            markers && markers.map(item => {
-
-                if (dayObj.date === item.date) {
-                    dayObj['className'] = item.className;
-                }
-            });
-            days.push(dayObj);
-        }
-        return days;
-    },
-    /**
-   * @description init month
-   */
-    initCalendar({ year, month } = {}, markers) {
-        const prevMonth = month === 1 ? 12 : month - 1;
-        const nextMonth = month === 12 ? 1 : month + 1;
-
-        const currentMonthAllDays = this.handleDays(year, month, markers);
-        let prevMonthAllDays = this.handleDays(year, prevMonth, markers);
-        let nextMonthAllDays = this.handleDays(year, nextMonth, markers);
-
-        // get the first day and the last day of the month is the day of the week
-        const firstDay = new Date(currentMonthAllDays[0].date).getDay();
-        const lastDay = new Date(
-            currentMonthAllDays[currentMonthAllDays.length - 1].date
-        ).getDay();
-
-        // concat prev month and next month
-        const prevMonthFewDays = prevMonthAllDays.splice(
-            prevMonthAllDays.length - firstDay,
-            prevMonthAllDays.length - 1
-        );
-        const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - (lastDay + 1));
-
-        // concat prev last few days and next month first few days
-        prevMonthFewDays.concat(nextMonthFewDays).map(item => item['isOtherMonthDay'] = true)
-
-        return [
-            ...prevMonthFewDays,
-            ...currentMonthAllDays,
-            ...nextMonthFewDays
-        ];
-    },
+        return month == 2 ? (this.isLeapYear(year) ? 29 : 28) :
+            String(month).match(/\[.*?\]|4|6|9|11|SSS/g) ? 30 : 31
+    }
 }

@@ -1,14 +1,15 @@
 # calendar
 
-
-## API
 ### Props
+
  name | type | default | description|
 | ------ | ------ | ------ |------ |
+| markers | Array | - | day markes |
+| format | String | "YYYY-MM-DD" | format date |
 | weekText | String | ["S", "M", "T", "W", "T", "F", "S"] | week text
 | disabledFutureDay | Boolean | false | if true, future days status is disabled |
 | hideOtherMonthDay | Boolean | false | if true, other month days status is hide and disabled |
-| markers | Array | - | day markes |
+| hideOtherMonthMarker | Boolean | true | if true, other month days status is hide |
 
 ### Slots
  name   | description|
