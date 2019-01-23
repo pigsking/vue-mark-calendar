@@ -197,13 +197,19 @@ export default {
     handleDays(year, month, isOtherMonths = false) {
       let days = [];
       const totalDays = util.getTotalDays(year, month);
+      if (isOtherMonths) {
+        if (month === 1) year += 1;
+        if (month === 12) year -= 1;
+      }
+
       for (let i = 0; i < totalDays; i++) {
         const day = i + 1;
         const date = util.splicingDate({ year, month, day });
         const dayObj = {
           day: day,
           date: date,
-          isFutureDay: util.getTimestamp() < util.getTimestamp(date)
+          isFutureDay: util.getTimestamp() < util.getTimestamp(date),
+          isWeekend: util.isWeekend(date)
         };
 
         // add marker

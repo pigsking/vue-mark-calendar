@@ -1,11 +1,19 @@
 export default {
     /**
-  * @description check the leap year
-  * @param {Number} year
-  * @return {Boolean}
-  */
+     * @description check the leap year
+     * @param {Number} year
+     * @return {Boolean}
+     */
     isLeapYear(year) {
         return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
+    },
+    /**
+    * @description check the leap year
+    * @param {Number} year
+    * @return {Boolean}
+    */
+    isWeekend(date) {
+        return [0, 6].includes(new Date(date).getDay())
     },
     /**
      * @description get target date  or today timestamp
