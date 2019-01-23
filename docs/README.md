@@ -1,7 +1,7 @@
 ---
 home: true
-heroText: Calendar
-footer: Copyright © 2019 Allen AuYeung
+heroText: iMarker
+footer: MIT Licensed
 ---
 # props
 ### weekText
@@ -14,7 +14,7 @@ footer: Copyright © 2019 Allen AuYeung
 * Usage: 设置返回日期的格式，同时支持 **'YYYY-M-D'**、**'YY/MM/DD'**、**'YY/M/D'** 格式
 
 
-### sundayStart
+### sundayBegin
 * Type: `Boolean`
 * Default: "true"
 * Usage: 设置一周的第一天是否为星期天

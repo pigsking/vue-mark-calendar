@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="calendar-wrap">
-      <Calendar
+      <iMarker
         ref="calendar"
         :weekText="props.weekText.selected"
-        :sundayStart="props.sundayStart"
+        :sundayBegin="props.sundayBegin"
         :format="props.format.selected"
         :markers="props.markers"
         :disabledFutureDay="props.disabledFutureDay"
@@ -12,7 +12,7 @@
         :hideOtherMonthMarker="props.hideOtherMonthMarker"
         @month="handleDateChange($event)"
         @day="handleDateChange($event)"
-      ></Calendar>
+      ></iMarker>
       <div class="calendar-footer">
         <span>You chooesed</span>
         <h2 style="text-align:center;">{{currentDate}}</h2>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import Calendar from "./components/Calendar.vue";
+import iMarker from "./components/iMarker.vue";
 
 const date = new Date();
 const year = date.getFullYear();
@@ -97,7 +97,7 @@ const month = date.getMonth() + 1;
 export default {
   name: "app",
   components: {
-    Calendar
+    iMarker
   },
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
         disabledFutureDay: false,
         hideOtherMonthDay: false,
         hideOtherMonthMarker: false,
-        sundayStart: false,
+        sundayBegin: false,
         format: {
           selected: "YYYY-MM-DD",
           options: ["YYYY-MM-DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]

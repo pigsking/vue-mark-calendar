@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import util from "@/util";
+import util from "./util";
 export default {
   props: {
     markers: Array,
@@ -47,16 +47,16 @@ export default {
       type: String,
       default: "YYYY-MM-DD"
     },
-    sundayStart: {
+    sundayBegin: {
       type: Boolean,
       default: true
     }
   },
   computed: {
-    weekTxt(val) {
+    weekTxt() {
       if (this.weekText) return this.weekText;
       const weekText = ["S", "M", "T", "W", "T", "F", "S"];
-      if (!this.sundayStart) weekText.push(weekText.shift());
+      if (!this.sundayBegin) weekText.push(weekText.shift());
       return weekText;
     }
   },
@@ -114,7 +114,7 @@ export default {
         currentMonthAllDays[currentMonthAllDays.length - 1].date
       ).getDay();
 
-      if (!this.sundayStart) {
+      if (!this.sundayBegin) {
         firstDay -= 1;
       } else {
         lastDay += 1;

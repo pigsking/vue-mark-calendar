@@ -1,7 +1,7 @@
 module.exports = {
-    title: 'Calendar',
-    base: '/calendar',
-    description: 'A calendar component for vuejs',
+    title: 'iMarker',
+    base: '/iMarker',
+    description: 'A calendar marker component for vuejs',
     dest: './dist',
     sidebar: false,
     displayAllHeaders: true,
@@ -17,7 +17,7 @@ module.exports = {
             // { text: 'API', link: '/api/' },
             {
                 text: 'github',
-                link: 'https://github.com/allenou/calendar'
+                link: 'https://github.com/allenou/iMarker'
             }
         ]
     }
