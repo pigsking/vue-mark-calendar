@@ -4,6 +4,7 @@
       <Calendar
         ref="calendar"
         :weekText="props.weekText.selected"
+        :sundayStart="props.sundayStart"
         :format="props.format.selected"
         :markers="props.markers"
         :disabledFutureDay="props.disabledFutureDay"
@@ -103,7 +104,8 @@ export default {
       props: {
         disabledFutureDay: false,
         hideOtherMonthDay: false,
-        hideOtherMonthMarker: true,
+        hideOtherMonthMarker: false,
+        sundayStart: false,
         format: {
           selected: "YYYY-MM-DD",
           options: ["YYYY-MM-DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]
@@ -114,11 +116,11 @@ export default {
           options: [
             {
               lang: "EN",
-              value: ["S", "M", "T", "W", "T", "F", "S"]
+              value: ["M", "T", "W", "T", "F", "S", "S"]
             },
             {
               lang: "ZH",
-              value: ["日", "一", "二", "三", "四", "五", "六"]
+              value: ["一", "二", "三", "四", "五", "六", "日"]
             }
           ]
         },
@@ -244,6 +246,10 @@ h3 {
   background-color: #ff5722;
 }
 
+#calendar-wrap /deep/ .weekend-day span {
+  color: #536dfe;
+}
+
 #calendar-wrap .calendar-footer {
   margin-top: 30px;
   color: #ccc;
@@ -251,6 +257,7 @@ h3 {
 #calendar-wrap .calendar-footer h2 {
   margin-top: 10px;
 }
+
 /* control */
 .control-header span {
   line-height: 40px;
@@ -278,7 +285,11 @@ h3 {
 }
 /* table */
 .table {
+   font-weight: 100;
   border: 1px solid #efefef;
+}
+.table .table-header {
+  /* font-weight: 100; */
 }
 .table ul {
   display: flex;
@@ -293,6 +304,9 @@ h3 {
   height: 60px;
   margin: 0;
   border-top: 1px solid #efefef;
+}
+.table .table-body ul li:first-of-type{
+  /* font-weight: 600; */
 }
 /* copyright */
 .copyright {

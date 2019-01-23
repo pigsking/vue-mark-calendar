@@ -6,6 +6,7 @@
 | ------ | ------ | ------ |------ |
 | markers | Array | - | day markes |
 | format | String | "YYYY-MM-DD" | format date |
+| sundayStart | Boolean | true| if true,the week firtday is sunday|
 | weekText | String | ["S", "M", "T", "W", "T", "F", "S"] | week text
 | disabledFutureDay | Boolean | false | if true, future days status is disabled |
 | hideOtherMonthDay | Boolean | false | if true, other month days status is hide and disabled |

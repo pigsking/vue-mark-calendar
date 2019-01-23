@@ -10,7 +10,7 @@
     </div>
     <div class="calendar-content">
       <ul class="week">
-        <li v-for="(day,index) in weekText" :key="index">{{day}}</li>
+        <li v-for="(day,index) in weekTxt" :key="index">{{day}}</li>
       </ul>
       <ul class="month">
         <li
@@ -30,10 +30,7 @@ import util from "@/util";
 export default {
   props: {
     markers: Array,
-    weekText: {
-      type: Array,
-      default: () => ["S", "M", "T", "W", "T", "F", "S"]
-    },
+    weekText: Array,
     disabledFutureDay: {
       type: Boolean,
       default: false
@@ -49,9 +46,20 @@ export default {
     format: {
       type: String,
       default: "YYYY-MM-DD"
+    },
+    sundayStart: {
+      type: Boolean,
+      default: true
     }
   },
-
+  computed: {
+    weekTxt(val) {
+      if (this.weekText) return this.weekText;
+      const weekText = ["S", "M", "T", "W", "T", "F", "S"];
+      if (!this.sundayStart) weekText.push(weekText.shift());
+      return weekText;
+    }
+  },
   data() {
     return {
       days: [],
@@ -84,7 +92,8 @@ export default {
         "other-month-day": item.isOtherMonthDay,
         "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay,
         "other-month-marker--hide":
-          this.hideOtherMonthMarker && item.isOtherMonthDay
+          this.hideOtherMonthMarker && item.isOtherMonthDay,
+        "weekend-day": item.isWeekendDay
       };
     },
     /**
@@ -100,17 +109,22 @@ export default {
       let nextMonthAllDays = this.handleDays(year, nextMonth, true);
 
       // get the first day and the last day of the month is the day of the week
-      const firstDay = new Date(currentMonthAllDays[0].date).getDay();
-      const lastDay = new Date(
+      let firstDay = new Date(currentMonthAllDays[0].date).getDay();
+      let lastDay = new Date(
         currentMonthAllDays[currentMonthAllDays.length - 1].date
       ).getDay();
 
+      if (!this.sundayStart) {
+        firstDay -= 1;
+      } else {
+        lastDay += 1;
+      }
       // concat prev month and next month
       const prevMonthFewDays = prevMonthAllDays.splice(
         prevMonthAllDays.length - firstDay,
         prevMonthAllDays.length - 1
       );
-      const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - (lastDay + 1));
+      const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
 
       // concat prev last few days and next month first few days
       prevMonthFewDays
@@ -209,7 +223,7 @@ export default {
           day: day,
           date: date,
           isFutureDay: util.getTimestamp() < util.getTimestamp(date),
-          isWeekend: util.isWeekend(date)
+          isWeekendDay: util.isWeekend(date)
         };
 
         // add marker
