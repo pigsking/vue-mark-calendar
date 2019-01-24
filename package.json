@@ -10,6 +10,7 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
+    "imarker": "^1.0.0",
     "vue": "^2.5.17"
   },
   "devDependencies": {
