@@ -20,4 +20,5 @@ yarn-error.log*
 *.sw*
 *.xlsx
 
-src/**/package.json
+# Folder
+dist

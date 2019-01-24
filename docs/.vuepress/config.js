@@ -2,11 +2,11 @@ module.exports = {
     title: 'iMarker',
     base: '/iMarker',
     description: 'A calendar marker component for vuejs',
-    dest: './dist',
+    dest: './dist/iMarker',
     sidebar: false,
     displayAllHeaders: true,
     head: [
-        ['link', { rel: 'icon', href: '/favicon.ico' }]
+        ['link', { rel: 'icon', href: './favicon.ico' }]
     ],
     themeConfig: {
         lastUpdated: 'Last Updated',
@@ -14,7 +14,6 @@ module.exports = {
             updatePopup: true
         },
         nav: [
-            // { text: 'API', link: '/api/' },
             {
                 text: 'github',
                 link: 'https://github.com/allenou/iMarker'

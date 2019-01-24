@@ -1,4 +1,27 @@
-# props
+
+# Installation
+```
+npm install iMarker
+// or
+yarn add iMarker
+```
+# Usage
+```html
+<template>
+    <iMarker></iMarker>
+</template>
+
+<script>
+import iMarker from 'iMarker'
+    export default {
+        components:{
+          iMarker
+        }
+    }
+</script>
+```
+# API
+## props
 ### weekText
 * Type: `Array`
 * Default: EN->["S", "M", "T", "W", "T", "F", "S"]
@@ -59,7 +82,7 @@
 }
 </style>
 ```
-# event
+## event
 ### $ref.switchToPrevMonth
 * Usage: 跳转至上一个月
 
@@ -77,4 +100,5 @@ export default {
     }   
 }
 ```
-
+# License
+MIT
