@@ -341,6 +341,7 @@ li {
 .month li {
   width: 14.28%;
   margin-bottom: 10px;
+  text-align: center;
 }
 .month span {
   display: inline-block;

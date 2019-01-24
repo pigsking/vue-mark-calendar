@@ -2,10 +2,9 @@
 home: true
 footer: MIT Licensed
 ---
-
 <template>
   <div id="calendar-wrap">
-   <iMarker  :markers="props.markers"/>
+   <iMarker :markers="props.markers"/>
   </div>
 </template>
 
@@ -47,20 +46,23 @@ export default {
 <style>
 /* calendar */
 #calendar-wrap {
-  padding-bottom: 30px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /* background-color: #232323; */
-}
-/* marker */
-#calendar-wrap /deep/ #calendar {
   max-width: 414px;
   margin: auto;
+  padding-bottom: 30px;
+  text-align: center;
+  border:1px solid #f3f4f5;
 }
+/* marker */
 /* marker style*/
+#calendar-wrap /deep/ .month-switch{
+  border-bottom:1px solid #f3f4f5;
+  color:#232323;
+  background-color:#fff;
+}
+#calendar-wrap /deep/ .month-switch .prev,
+#calendar-wrap /deep/ .month-switch .next{
+  border-color:#ccc;
+}
 #calendar-wrap/deep/ .love span {
   color: #fff;
   background-color: #7b1fa2;
@@ -83,83 +85,167 @@ export default {
 </style>
 
 
-# props
+# Props
 ### weekText
 * Type: `Array`
 * Default: EN->["S", "M", "T", "W", "T", "F", "S"]
-
+* Example:
+```html
+<imarker :weekText="['日','一', '二', '三', '四', '五', '六']"></imarker>
+```
 ### format
 * Type: `String`
 * Default: "YYYY-MM-DD"
-* Usage: 设置返回日期的格式，同时支持 **'YYYY-M-D'**、**'YY/MM/DD'**、**'YY/M/D'** 格式
-
+* Usage: Set date format
+* Example:
+```html
+<imarker format="YY/MM/DD"></imarker>
+```
 
 ### sundayBegin
 * Type: `Boolean`
-* Default: "true"
-* Usage: 设置一周的第一天是否为星期天
+* Default: `true`
+* Usage: Sunday is the beginning or end of the week
+* Example:
+```html
+<imarker :sundayBegin="false"></imarker>
+```
 
 ### disabledFutureDay
 * Type: `Boolean`
-* Default: "false"，
-* Usage：未来的日期不触发事件
+* Default: `false`，
+* Usage：Events after today do not trigger events
+* Example:
+```html
+<imarker :disabledFutureDay="true"></imarker>
+```
 
 ### hideOtherMonthDay
 * Type: `Boolean`
-* Default: "false"
-* Usage：只显示当前月份的天数
+* Default: `false`
+* Usage：Show only the days of the current month
+* Example:
+```html
+<imarker :hideOtherMonthDay="true"></imarker>
+```
+
 
 ### hideOtherMonthMarker
 * Type: `Boolean`
-* Default: "true"
-* Usage：只显示当前月份的标记
+* Default: `true`
+* Usage：Show only the markers of the current month
+* Example:
+```html
+<imarker :hideOtherMonthMarker="true"></imarker>
+```
 
 ### markers
 * Type: `Array`
-* Default: "[]",
-* Usage：为指定的日子设置标记类
+* Default: `undefined`
 * Example:
 ```html
-<div id="calendar-wrap">
-    <imarker :markers="markers"></imarker>
-</div>
+<template>
+  <iMarker :markers="markers"></iMarker>
+</template>
 <script>
-    export default {
-        data(){
-            return{
-                    markers: [
-                        {
-                            date: '2019-09-14',
-                            className: "dream"
-                        }
-                     ]  
-            }
-        }    
+import iMarker from 'imarker'
+export default {
+  components:{
+    iMarker
+  },
+  data(){
+    return{
+        markers: [
+          {
+            date: '2019-09-14',
+            className: "dream"
+          }
+        ]
     }
+  }
+}
 </script>
 <style>
+// custom marker style
 #calendar-wrap /deep/ .dream span {
   color: #fff;
   background-color: #448aff;
 }
 </style>
 ```
-# event
+# Methods&Events
 ### $ref.switchToPrevMonth
-* Usage: 跳转至上一个月
-
-### $ref.switchToNextMonth
-* Usage: 跳转至下一个月
-
-### $ref.chooseTargetDate
-* Usage: 跳转至指定日期
+* Usage: Switch to the previous month. When the month change that the component will emit an event(month).
 * Example:
-```javascript
-<imarker ref="calendar"></imarker>
+```html
+<template>
+  <iMarker ref="calendar" @month="handleMonthChange($event)"></iMarker>
+</template>
+<script>
+import iMarker from 'imarker'
 export default {
+    components:{
+      iMarker
+    },
     created(){
-        this.$refs.calendar.chooseTargetDate('2019-09-14');
+        this.$refs.calendar.switchToPrevMonth();
+    },
+    methods:{
+      handleMonthChange(date){
+        console.log(date) // 2019-09-14
+      }
     }   
 }
+</script>
+```
+
+### $ref.switchToNextMonth
+* Usage: Switch to the next month. When the month change that the component will emit an event(month).
+* Example:
+```html
+<template>
+  <iMarker ref="calendar" @month="handleMonthChange($event)"></iMarker>
+</template>
+<script>
+import iMarker from 'imarker'
+export default {
+    components:{
+      iMarker
+    },
+    created(){
+        this.$refs.calendar.switchToNextMonth();
+    },
+    methods:{
+      handleMonthChange(date){
+        console.log(date) // 2019-09-14
+      }
+    }     
+}
+</script>
+```
+
+### $ref.chooseTargetDate
+* Usage: Choose the target date. When the day change that the component will emit an event(day)
+* Example:
+```html
+<template>
+  <iMarker ref="calendar" @day="handleDayChange($event)"></iMarker>
+</template>
+<script>
+import iMarker from 'imarker'
+export default {
+    components:{
+      iMarker
+    },
+    created(){
+        this.$refs.calendar.chooseTargetDate('2019-09-14');
+    },
+    methods(){
+      handleDayChange(date){
+        console.log(date) // 2019-09-14
+      }
+    }   
+}
+</script>
 ```
 

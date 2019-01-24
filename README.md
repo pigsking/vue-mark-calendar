@@ -1,9 +1,9 @@
 
 # Install
 ```
-npm install iMarker
+npm install imarker
 // or
-yarn add iMarker
+yarn add imarker
 ```
 # Usage
 ```html
@@ -12,7 +12,7 @@ yarn add iMarker
 </template>
 
 <script>
-import iMarker from 'iMarker'
+import iMarker from 'imarker'
     export default {
         components:{
           iMarker

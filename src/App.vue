@@ -13,75 +13,6 @@
         @month="handleDateChange($event)"
         @day="handleDateChange($event)"
       ></iMarker>
-      <div class="calendar-footer">
-        <span>You chooesed</span>
-        <h2 style="text-align:center;">{{currentDate}}</h2>
-      </div>
-    </div>
-    <div class="control">
-      <section>
-        <h3>Props</h3>
-        <div class="table">
-          <ul class="table-header">
-            <li>name</li>
-            <li>type</li>
-            <li>default</li>
-            <li>description</li>
-            <li>change</li>
-          </ul>
-          <div class="table-body">
-            <ul>
-              <li>disabledFutureDay</li>
-              <li>Boolean</li>
-              <li>false</li>
-              <li>Disabled the future days</li>
-              <li>
-                <input type="checkbox" id="disabledFutureDay" v-model="props.disabledFutureDay">
-              </li>
-            </ul>
-            <ul>
-              <li>hideOtherMonthDay</li>
-              <li>Boolean</li>
-              <li>false</li>
-              <li>Hide the other month days</li>
-              <li>
-                <input type="checkbox" id="hideOtherMonthDay" v-model="props.hideOtherMonthDay">
-              </li>
-            </ul>
-            <ul>
-              <li>hideOtherMonthMarker</li>
-              <li>Boolean</li>
-              <li>true</li>
-              <li>Hide the other months marker</li>
-              <li>
-                <input type="checkbox" id="hideOtherMonthDay" v-model="props.hideOtherMonthMarker">
-              </li>
-            </ul>
-            <ul>
-              <li>format</li>
-              <li>String</li>
-              <li>'YYYY-MM-DD'</li>
-              <li>Format the date</li>
-              <li>
-                <select name id v-model="props.format.selected">
-                  <option v-for="(item,index) in props.format.options" :key="index">{{item}}</option>
-                </select>
-              </li>
-            </ul>
-            <ul>
-              <li>weekText</li>
-              <li>Array</li>
-              <li>["S", "M", "T", "W", "T", "F", "S"]</li>
-              <li>Set the week text</li>
-              <li>
-                <select name id v-model="props.weekText.lang">
-                  <option v-for="(item,index) in props.weekText.options" :key="index">{{item.lang}}</option>
-                </select>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
     </div>
     <div class="copyright">Copyright © 2019 Allen AuYeung</div>
   </div>
@@ -189,35 +120,8 @@ export default {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-ul {
-  padding-left: 0;
-}
-li {
-  list-style: none;
-}
-body,
-select {
-  /* background-color: #efefef; */
-}
-#app {
-  /* max-width: 1080px; */
-  margin: auto;
-}
-h1,
-h2,
-h3 {
-  margin: 0;
-}
-/* calendar */
 #calendar-wrap {
   padding-bottom: 30px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   background-color: #232323;
 }
@@ -250,64 +154,7 @@ h3 {
   color: #536dfe;
 }
 
-#calendar-wrap .calendar-footer {
-  margin-top: 30px;
-  color: #ccc;
-}
-#calendar-wrap .calendar-footer h2 {
-  margin-top: 10px;
-}
 
-/* control */
-.control-header span {
-  line-height: 40px;
-  font-size: 14px;
-}
-.control {
-  padding: 30px 60px;
-  background-color: #fff;
-}
-/* .control-header {
-  text-align: center;
-}*/
-.control h3 {
-  margin: 30px 0;
-}
-.control ul {
-  padding: 10px;
-}
-.control li {
-  margin-bottom: 10px;
-}
-.current-date {
-  text-align: center;
-  color: #232323;
-}
-/* table */
-.table {
-   font-weight: 100;
-  border: 1px solid #efefef;
-}
-.table .table-header {
-  /* font-weight: 100; */
-}
-.table ul {
-  display: flex;
-  padding: 0;
-  align-items: center;
-}
-.table li {
-  width: 24%;
-  text-align: center;
-}
-.table .table-body ul {
-  height: 60px;
-  margin: 0;
-  border-top: 1px solid #efefef;
-}
-.table .table-body ul li:first-of-type{
-  /* font-weight: 600; */
-}
 /* copyright */
 .copyright {
   padding: 30px 0;
