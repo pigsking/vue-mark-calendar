@@ -36,7 +36,7 @@
 * Example:
 ```html
 <div id="calendar-wrap">
-    <Calendar :markers="markers"></Calendar>
+    <iMarker :markers="markers"></iMarker>
 </div>
 <script>
     export default {
@@ -70,7 +70,7 @@
 * Usage: 跳转至指定日期
 * Example:
 ```javascript
-<Calendar ref="calendar"></Calendar>
+<iMarker ref="calendar"></iMarker>
 export default {
     created(){
         this.$refs.calendar.chooseTargetDate('2019-09-14');
