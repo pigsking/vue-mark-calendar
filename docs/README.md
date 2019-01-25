@@ -91,7 +91,7 @@ export default {
 * Default: EN->["S", "M", "T", "W", "T", "F", "S"]
 * Example:
 ```html
-<imarker :weekText="['日','一', '二', '三', '四', '五', '六']"></imarker>
+<iMarker :weekText="['日','一', '二', '三', '四', '五', '六']"></iMarker>
 ```
 ### format
 * Type: `String`
@@ -99,7 +99,7 @@ export default {
 * Usage: Set date format
 * Example:
 ```html
-<imarker format="YY/MM/DD"></imarker>
+<iMarker format="YY/MM/DD"></iMarker>
 ```
 
 ### sundayBegin
@@ -108,7 +108,7 @@ export default {
 * Usage: Sunday is the beginning or end of the week
 * Example:
 ```html
-<imarker :sundayBegin="false"></imarker>
+<iMarker :sundayBegin="false"></iMarker>
 ```
 
 ### disabledFutureDay
@@ -117,7 +117,7 @@ export default {
 * Usage：Events after today do not trigger events
 * Example:
 ```html
-<imarker :disabledFutureDay="true"></imarker>
+<iMarker :disabledFutureDay="true"></iMarker>
 ```
 
 ### hideOtherMonthDay
@@ -126,7 +126,7 @@ export default {
 * Usage：Show only the days of the current month
 * Example:
 ```html
-<imarker :hideOtherMonthDay="true"></imarker>
+<iMarker :hideOtherMonthDay="true"></iMarker>
 ```
 
 
@@ -136,7 +136,7 @@ export default {
 * Usage：Show only the markers of the current month
 * Example:
 ```html
-<imarker :hideOtherMonthMarker="true"></imarker>
+<iMarker :hideOtherMonthMarker="true"></iMarker>
 ```
 
 ### markers
