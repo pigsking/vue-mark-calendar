@@ -1,6 +1,6 @@
 {
   "name": "imarker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A calendar marker component for vuejs",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,8 @@
     "url": "git+https://github.com/allenou/iMarker.git"
   },
   "keywords": [
+    "vue",
+    "vue-component",
     "calendar",
     "marker"
   ],
