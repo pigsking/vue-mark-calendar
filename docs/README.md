@@ -4,18 +4,18 @@ footer: MIT Licensed
 ---
 <template>
   <div id="calendar-wrap">
-   <iMarker :markers="props.markers"/>
+   <Calendar :markers="props.markers"/>
   </div>
 </template>
 
 <script>
-import iMarker from 'imarker'
+import Calendar from 'imarker'
 const date = new Date();
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 export default {
   components:{
-     iMarker
+     Calendar
   },
   data () {
     return {
@@ -91,24 +91,25 @@ export default {
 * Default: EN->["S", "M", "T", "W", "T", "F", "S"]
 * Example:
 ```html
-<iMarker :weekText="['日','一', '二', '三', '四', '五', '六']"></iMarker>
+<Calendar :weekText="['日','一', '二', '三', '四', '五', '六']"></Calendar>
 ```
-### format
-* Type: `String`
-* Default: "YYYY-MM-DD"
-* Usage: Set date format
-* Example:
-```html
-<iMarker format="YY/MM/DD"></iMarker>
-```
-
 ### sundayBegin
 * Type: `Boolean`
 * Default: `true`
 * Usage: Sunday is the beginning or end of the week
 * Example:
 ```html
-<iMarker :sundayBegin="false"></iMarker>
+<Calendar :sundayBegin="false"></Calendar>
+```
+* Note: 当值为 true 时，若 week text 不是默认的应当调整
+
+### format
+* Type: `String`
+* Default: "YYYY-MM-DD"
+* Usage: Set date format. Support 'YYYY-MM-DD' and "YYYY/M/D"
+* Example:
+```html
+<Calendar format="YYYY/M/D"></Calendar>
 ```
 
 ### disabledFutureDay
@@ -117,7 +118,7 @@ export default {
 * Usage：Events after today do not trigger events
 * Example:
 ```html
-<iMarker :disabledFutureDay="true"></iMarker>
+<Calendar :disabledFutureDay="true"></Calendar>
 ```
 
 ### hideOtherMonthDay
@@ -126,7 +127,7 @@ export default {
 * Usage：Show only the days of the current month
 * Example:
 ```html
-<iMarker :hideOtherMonthDay="true"></iMarker>
+<Calendar :hideOtherMonthDay="true"></Calendar>
 ```
 
 
@@ -136,7 +137,7 @@ export default {
 * Usage：Show only the markers of the current month
 * Example:
 ```html
-<iMarker :hideOtherMonthMarker="true"></iMarker>
+<Calendar :hideOtherMonthMarker="true"></Calendar>
 ```
 
 ### markers
@@ -145,13 +146,13 @@ export default {
 * Example:
 ```html
 <template>
-  <iMarker :markers="markers"></iMarker>
+  <Calendar :markers="markers"></Calendar>
 </template>
 <script>
-import iMarker from 'imarker'
+import Calendar from 'imarker'
 export default {
   components:{
-    iMarker
+    Calendar
   },
   data(){
     return{
@@ -172,80 +173,55 @@ export default {
   background-color: #448aff;
 }
 </style>
+* Note: markers 的 日期格式应与 format 保持一致，否则无法达到效果
+
 ```
 # Methods&Events
-### $ref.switchToPrevMonth
-* Usage: Switch to the previous month. When the month change that the component will emit an event(month).
-* Example:
-```html
-<template>
-  <iMarker ref="calendar" @month="handleMonthChange($event)"></iMarker>
-</template>
-<script>
-import iMarker from 'imarker'
-export default {
-    components:{
-      iMarker
-    },
-    created(){
-        this.$refs.calendar.switchToPrevMonth();
-    },
-    methods:{
-      handleMonthChange(date){
-        console.log(date) // 2019-09-14
-      }
-    }   
-}
-</script>
-```
-
-### $ref.switchToNextMonth
-* Usage: Switch to the next month. When the month change that the component will emit an event(month).
-* Example:
-```html
-<template>
-  <iMarker ref="calendar" @month="handleMonthChange($event)"></iMarker>
-</template>
-<script>
-import iMarker from 'imarker'
-export default {
-    components:{
-      iMarker
-    },
-    created(){
-        this.$refs.calendar.switchToNextMonth();
-    },
-    methods:{
-      handleMonthChange(date){
-        console.log(date) // 2019-09-14
-      }
-    }     
-}
-</script>
-```
 
 ### $ref.chooseTargetDate
 * Usage: Choose the target date. When the day change that the component will emit an event(day)
 * Example:
 ```html
 <template>
-  <iMarker ref="calendar" @day="handleDayChange($event)"></iMarker>
+  <Calendar ref="calendar" @day="handleDayChange($event)"></Calendar>
 </template>
 <script>
-import iMarker from 'imarker'
+import Calendar from 'imarker'
 export default {
     components:{
-      iMarker
+      Calendar
     },
     created(){
         this.$refs.calendar.chooseTargetDate('2019-09-14');
     },
     methods(){
-      handleDayChange(date){
-        console.log(date) // 2019-09-14
+      handleDayChange(dateObj){
+        console.log(date) // {"day":14,"date":"2019-09-14","week":6,"isFutureDay":true}
       }
     }   
 }
 </script>
 ```
+* Note: markers 的 日期格式应与 format 保持一致，否则无法达到效果
 
+### $ref.formatDate
+* Usage: Choose the target date. When the day change that the component will emit an event(day)
+* Example:
+```html
+<template>
+  <Calendar ref="calendar"></Calendar>
+</template>
+<script>
+import Calendar from 'imarker'
+export default {
+    components:{
+      Calendar
+    },
+    created(){
+        this.$refs.calendar.formatDate('2019-09-09','YYYY/M/D'); // 2019/9/9
+    }
+}
+</script>
+```
+
+## Slots

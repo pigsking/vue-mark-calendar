@@ -8,14 +8,14 @@ yarn add imarker
 # Usage
 ```html
 <template>
-    <iMarker></iMarker>
+    <Calendar></Calendar>
 </template>
 
 <script>
-import iMarker from 'imarker'
+import Calendar from 'imarker'
     export default {
         components:{
-          iMarker
+          Calendar
         }
     }
 </script>
@@ -26,5 +26,5 @@ import iMarker from 'imarker'
 # License
 MIT
 
-[Documentation]:http://www.toyou.xyz/iMarker/
+[Documentation]:http://www.toyou.xyz/calendar/
 

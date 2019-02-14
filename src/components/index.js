@@ -1,2 +1,2 @@
-import iMarker from './iMarker.vue';
-export default iMarker;
+import Calendar from './Calendar.vue';
+export default Calendar;

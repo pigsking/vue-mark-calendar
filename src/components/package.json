@@ -1,6 +1,6 @@
 {
   "name": "imarker",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A calendar marker component for vuejs",
   "main": "index.js",
   "scripts": {
@@ -8,18 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allenou/iMarker.git"
+    "url": "git+https://github.com/allenou/calendar.git"
   },
   "keywords": [
-    "vue",
-    "vue-component",
+    "vue2",
     "calendar",
     "marker"
   ],
   "author": "AllenAuYeung",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/allenou/iMarker/issues"
+    "url": "https://github.com/allenou/calendar/issues"
   },
-  "homepage": "https://github.com/allenou/iMarker#readme"
+  "homepage": "https://github.com/allenou/calendar#readme"
 }

@@ -1,8 +1,8 @@
 module.exports = {
-    title: 'iMarker',
-    base: '/iMarker',
+    title: 'Calendar',
+    base: '/calendar',
     description: 'A calendar marker component for vuejs',
-    dest: './dist/iMarker',
+    dest: './dist/calendar',
     sidebar: false,
     displayAllHeaders: true,
     head: [
@@ -16,7 +16,7 @@ module.exports = {
         nav: [
             {
                 text: 'github',
-                link: 'https://github.com/allenou/iMarker'
+                link: 'https://github.com/allenou/calendar'
             }
         ]
     }

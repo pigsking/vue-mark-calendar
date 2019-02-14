@@ -1,25 +1,23 @@
 <template>
   <div id="app">
     <div id="calendar-wrap">
-      <iMarker
+      <Calendar
         ref="calendar"
-        :weekText="props.weekText.selected"
         :sundayBegin="props.sundayBegin"
-        :format="props.format.selected"
+        :format="props.format.options[0]"
         :markers="props.markers"
         :disabledFutureDay="props.disabledFutureDay"
         :hideOtherMonthDay="props.hideOtherMonthDay"
         :hideOtherMonthMarker="props.hideOtherMonthMarker"
-        @month="handleDateChange($event)"
-        @day="handleDateChange($event)"
-      ></iMarker>
+        @date="handleDateChange($event)"
+      ></Calendar>
     </div>
     <div class="copyright">Copyright © 2019 Allen AuYeung</div>
   </div>
 </template>
 
 <script>
-import iMarker from "./components/iMarker.vue";
+import Calendar from "./components/Calendar";
 
 const date = new Date();
 const year = date.getFullYear();
@@ -28,18 +26,18 @@ const month = date.getMonth() + 1;
 export default {
   name: "app",
   components: {
-    iMarker
+    Calendar
   },
   data() {
     return {
       props: {
         disabledFutureDay: false,
         hideOtherMonthDay: false,
-        hideOtherMonthMarker: false,
+        hideOtherMonthMarker: true,
         sundayBegin: false,
         format: {
-          selected: "YYYY-MM-DD",
-          options: ["YYYY-MM-DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]
+          selected: "YYYY/MM/DD",
+          options: ["YYYY/MM/DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]
         },
         weekText: {
           lang: "EN",
@@ -73,47 +71,15 @@ export default {
             className: "hope"
           }
         ]
-      },
-      currentDate: "",
-      targetDate: ""
+      }
     };
   },
-  watch: {
-    currentDate(newVal, oldVal) {
-      this.targetDate = oldVal;
-    },
-    "props.format.selected"() {
-      this.$refs.calendar.chooseTargetDate(this.currentDate);
-    },
-    "props.weekText.lang"(val) {
-      this.setWeekText(val);
-    }
-  },
-  created() {
-    this.setWeekText();
+  mounted() {
+    this.$refs.calendar.chooseTargetDate("2019/09/14");
   },
   methods: {
-    handleDateChange(date) {
-      this.currentDate = date;
-    },
-    setWeekText(lang = "EN") {
-      this.props.weekText.options.filter(item => {
-        if (item.lang === lang) {
-          this.props.weekText.selected = item.value;
-        }
-      });
-    },
-    // handleDateChange(date) {
-    //   this.currentDate = date;
-    // },
-    // switchToPrevMonth() {
-    //   this.$refs.calendar.switchToPrevMonth();
-    // },
-    // switchToNextMonth() {
-    //   this.$refs.calendar.switchToNextMonth();
-    // },
-    chooseTargetDate() {
-      this.$refs.calendar.chooseTargetDate(this.targetDate);
+    handleDateChange(obj) {
+      console.log(JSON.stringify(obj));
     }
   }
 };
@@ -153,7 +119,6 @@ export default {
 #calendar-wrap /deep/ .weekend-day span {
   color: #536dfe;
 }
-
 
 /* copyright */
 .copyright {

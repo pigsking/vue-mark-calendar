@@ -1,10 +1,9 @@
 <template>
   <div id="calendar">
     <div class="calendar-header">
-      <slot name="month-switch" v-if="$slots['month-switch']"></slot>
-      <div class="month-switch" v-else>
+      <div class="month-switch">
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span>{{currentDateObj.year}}-{{currentDateObj.month> 9 ? currentDateObj.month : "0" + currentDateObj.month}}</span>
+        <span>{{currentDateObj.yearMonth}}</span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
     </div>
@@ -13,13 +12,11 @@
         <li v-for="(day,index) in weekTxt" :key="index">{{day}}</li>
       </ul>
       <ul class="month">
-        <li
-          v-for="(item,index) in days"
-          :key="index"
-          @click="handleDayChoose(item,index)"
-          :class="[dayClasses(item),item.className]"
-        >
-          <span>{{item.day}}</span>
+        <li v-for="(item,index) in days" :key="index" :class="[dayClasses(item), item.className]">
+          <span
+            @click="handleDayChoose(item,index)"
+            v-if="!(item.isOtherMonthDay&&hideOtherMonthDay)"
+          >{{item.day}}</span>
         </li>
       </ul>
     </div>
@@ -54,53 +51,57 @@ export default {
   },
   computed: {
     weekTxt() {
-      if (this.weekText) return this.weekText;
       const weekText = ["S", "M", "T", "W", "T", "F", "S"];
-      if (!this.sundayBegin) weekText.push(weekText.shift());
-      return weekText;
+      return this.weekText
+        ? this.weekText
+        : this.sundayBegin
+        ? weekText
+        : weekText.push(weekText.shift()) && weekText;
     }
   },
   data() {
     return {
       days: [],
       currentDateObj: {
-        date: null,
+        date: "",
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
-        day: new Date().getDate()
+        day: new Date().getDate(),
+        yearMonth: ""
       }
     };
   },
   watch: {
+    "currentDateObj.year"() {
+      this.initCalendar();
+    },
     "currentDateObj.month"() {
       this.initCalendar();
+    },
+    "currentDateObj.date"(date) {
+      const connector = this.format.match(/[^A-Z]/)[0];
+      const dateArr = date.split(connector);
+      this.currentDateObj.yearMonth = `${dateArr[0]}${connector}${dateArr[1]}`;
+      this.$emit("date", this.matchDayByDate(date));
     }
   },
   created() {
     this.initCalendar();
-    this.currentDateObj.date = util.splicingDate(
-      this.currentDateObj,
-      this.format
-    );
-    this.$emit("day", this.currentDateObj.date);
   },
   methods: {
     dayClasses(item) {
       return {
-        "choose-day": this.currentDateObj.day === item.day,
+        "choose-day": this.currentDateObj.date === item.date,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
-        "other-month-day--hide": this.hideOtherMonthDay && item.isOtherMonthDay,
-        "other-month-marker--hide":
-          this.hideOtherMonthMarker && item.isOtherMonthDay,
-        "weekend-day": item.isWeekendDay
+        "weekend-day": [0, 6, 7].includes(item.week)
       };
     },
     /**
      * @description init month
      */
     initCalendar() {
-      const { year, month } = this.currentDateObj;
+      const { year, month, day } = this.currentDateObj;
       const prevMonth = month === 1 ? 12 : month - 1;
       const nextMonth = month === 12 ? 1 : month + 1;
 
@@ -109,22 +110,19 @@ export default {
       let nextMonthAllDays = this.handleDays(year, nextMonth, true);
 
       // get the first day and the last day of the month is the day of the week
-      let firstDay = new Date(currentMonthAllDays[0].date).getDay();
-      let lastDay = new Date(
-        currentMonthAllDays[currentMonthAllDays.length - 1].date
-      ).getDay();
+      let firstDay = currentMonthAllDays[0].week;
+      let lastDay = currentMonthAllDays[currentMonthAllDays.length - 1].week;
 
-      if (!this.sundayBegin) {
-        firstDay -= 1;
-      } else {
-        lastDay += 1;
-      }
+      // handle sunday begin
+      this.sundayBegin ? (lastDay += 1) : (firstDay -= 1);
+
       // concat prev month and next month
+
+      const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
       const prevMonthFewDays = prevMonthAllDays.splice(
         prevMonthAllDays.length - firstDay,
         prevMonthAllDays.length - 1
       );
-      const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
 
       // concat prev last few days and next month first few days
       prevMonthFewDays
@@ -136,6 +134,7 @@ export default {
         ...currentMonthAllDays,
         ...nextMonthFewDays
       ];
+      this.currentDateObj.date = this.formatDate(`${year}-${month}-${day}`);
     },
     /**
      * @description switch month
@@ -163,43 +162,37 @@ export default {
       }
 
       const switchAfterMonthTotalDays = util.getTotalDays(year, month);
-      // avoid cross-border
-      if (
-        new Date().getDate() > switchAfterMonthTotalDays ||
-        this.currentDateObj.day > switchAfterMonthTotalDays
-      ) {
+      // avoid month cross-border
+      const today = util.getDateObj().day > switchAfterMonthTotalDays;
+      const choosedDday = this.currentDateObj.day > switchAfterMonthTotalDays;
+
+      if (today || choosedDday) {
         this.currentDateObj.day = switchAfterMonthTotalDays;
       }
-
+      const formatDate = this.formatDate(
+        `${year}-${month}-${this.currentDateObj.day}`
+      );
       this.currentDateObj.year = year;
       this.currentDateObj.month = month;
-      this.currentDateObj.date = util.splicingDate(
-        this.currentDateObj,
-        this.format
-      );
-      this.$emit("month", this.currentDateObj.date);
+      this.currentDateObj.date = formatDate;
     },
     /**
      * @description choose one day
      * @param {Object} item
      */
     handleDayChoose(item) {
-      if (
-        (this.disabledFutureDay && item.isFutureDay) ||
-        (this.hideOtherMonthDay && item.isOtherMonthDay)
-      ) {
-        return;
+      if (!(this.disabledFutureDay && item.isFutureDay)) {
+        if (item.isOtherMonthDay) {
+          return item.day > 7
+            ? this.handleMonthSwitch("prev")
+            : this.handleMonthSwitch("next");
+        }
+        const { year, month } = this.currentDateObj;
+        this.currentDateObj.day = item.day;
+        this.currentDateObj.date = this.formatDate(
+          `${year}-${month}-${item.day}`
+        );
       }
-
-      this.currentDateObj.day = item.day;
-      this.currentDateObj.date = item.date;
-
-      this.$emit("day", util.splicingDate(this.currentDateObj, this.format));
-
-      item.isOtherMonthDay &&
-        (item.day > 7
-          ? this.handleMonthSwitch("prev")
-          : this.handleMonthSwitch("next"));
     },
 
     /**
@@ -218,58 +211,60 @@ export default {
 
       for (let i = 0; i < totalDays; i++) {
         const day = i + 1;
-        const date = util.splicingDate({ year, month, day });
+        const date = `${year}-${month}-${day}`;
+
+        let week = util.getDateObj(date).week;
+        if (!this.sundayBegin && week === 0) week = 7;
+
         const dayObj = {
           day: day,
-          date: date,
-          isFutureDay: util.getTimestamp() < util.getTimestamp(date),
-          isWeekendDay: util.isWeekend(date)
+          date: this.formatDate(date),
+          week: week,
+          isFutureDay: util.getTimestamp() < util.getTimestamp(date)
         };
 
         // add marker
         const markers = this.markers;
-
         if (markers && (!isOtherMonths || !this.hideOtherMonthMarker)) {
           markers.map(item => {
-            if (
-              util.getTimestamp(dayObj.date) === util.getTimestamp(item.date)
-            ) {
+            const makerDate = util.getTimestamp(item.date);
+            if (util.getTimestamp(dayObj.date) === makerDate) {
               dayObj["className"] = item.className;
             }
           });
         }
-
         days.push(dayObj);
       }
       return days;
     },
-
+    /**
+     * @description match month's day obj by the date string
+     * @param {String} date
+     */
+    matchDayByDate(date) {
+      return this.days.filter(item => item.date === date)[0];
+    },
+    // External method
+    /**
+     * @description need format date string
+     * @param {String} date
+     * @param {String} format string => default: 'YYYY-MM-DD'
+     */
+    formatDate(date, formatStr = this.format) {
+      if (!date) throw "Missing required parameters";
+      return util.formatDate(date, formatStr.toUpperCase());
+    },
     /**
      * @description choose target date
      * @param {String} date
      */
     chooseTargetDate(date) {
       if (!date) throw "Missing required parameters";
-
-      const [y, m, day] = date.split("-");
-      const { year, month } = this.currentDateObj;
-
-      this.currentDateObj.day = +day;
-      this.currentDateObj.date = date;
-
-      // not init this month
-      if (y != year && m != month) {
-        this.currentDateObj.year = +y;
-        this.currentDateObj.month = +m;
-        this.initCalendar();
-      }
-    },
-    // External method
-    switchToPrevMonth() {
-      this.handleMonthSwitch("prev");
-    },
-    switchToNextMonth() {
-      this.handleMonthSwitch("next");
+      const { year, month, day } = util.getDateObj(date);
+      this.currentDateObj.year = year;
+      this.currentDateObj.month = month;
+      this.currentDateObj.day = day;
+      this.currentDateObj.date = this.formatDate(`${year}-${month}-${day}`);
     }
   }
 };
@@ -361,17 +356,10 @@ li {
 #calendar .other-month-day span {
   color: #ccc;
 }
-#calendar .other-month-day.other-month-day--hide span {
-  color: transparent;
-  background-color: transparent;
-}
+
 #calendar .disabled-day span {
   color: #ccc;
   background-color: transparent;
-}
-
-#calendar .other-month-day.other-month-marker--hide span {
-  background-color: transparent !important;
 }
 </style>
 
