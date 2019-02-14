@@ -48,7 +48,7 @@ export default {
 #calendar-wrap {
   max-width: 414px;
   margin: auto;
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
   text-align: center;
   border:1px solid #f3f4f5;
 }
