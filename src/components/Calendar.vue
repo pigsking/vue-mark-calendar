@@ -131,7 +131,7 @@ export default {
         ...currentMonthAllDays,
         ...nextMonthFewDays
       ];
-      this.currentDateObj.date = this.formatDate(`${year}-${month}-${day}`);
+      this.currentDateObj.date = this.formatDate(`${year}/${month}/${day}`);
     },
     /**
      * @description switch month
@@ -167,7 +167,7 @@ export default {
         this.currentDateObj.day = switchAfterMonthTotalDays;
       }
       const formatDate = this.formatDate(
-        `${year}-${month}-${this.currentDateObj.day}`
+        `${year}/${month}/${this.currentDateObj.day}`
       );
       this.currentDateObj.year = year;
       this.currentDateObj.month = month;
@@ -187,7 +187,7 @@ export default {
         const { year, month } = this.currentDateObj;
         this.currentDateObj.day = item.day;
         this.currentDateObj.date = this.formatDate(
-          `${year}-${month}-${item.day}`
+          `${year}/${month}/${item.day}`
         );
       }
     },
@@ -208,7 +208,7 @@ export default {
 
       for (let i = 0; i < totalDays; i++) {
         const day = i + 1;
-        const date = `${year}-${month}-${day}`;
+        const date = `${year}/${month}/${day}`;
 
         let week = util.getDateObj(date).week;
         if (!this.sundayBegin && week === 0) week = 7;
@@ -219,7 +219,6 @@ export default {
           week: week,
           isFutureDay: util.getTimestamp() < util.getTimestamp(date)
         };
-
         // add marker
         const markers = this.markers;
         if (markers && (!isOtherMonths || !this.hideOtherMonthMarker)) {
@@ -262,7 +261,7 @@ export default {
       this.currentDateObj.year = year;
       this.currentDateObj.month = month;
       this.currentDateObj.day = day;
-      this.currentDateObj.date = this.formatDate(`${year}-${month}-${day}`);
+      this.currentDateObj.date = this.formatDate(`${year}/${month}/${day}`);
     }
   }
 };
