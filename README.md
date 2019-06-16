@@ -13,11 +13,11 @@ yarn add imarker
 
 <script>
 import Calendar from 'imarker'
-    export default {
-        components:{
-          Calendar
-        }
+export default {
+    components:{
+        Calendar
     }
+}
 </script>
 ```
 # API

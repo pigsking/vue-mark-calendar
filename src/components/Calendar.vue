@@ -38,16 +38,13 @@ export default {
     },
     hideOtherMonthMarker: {
       type: Boolean,
-      default: true
+      default: false
     },
     format: {
       type: String,
       default: "YYYY-MM-DD"
     },
-    sundayBegin: {
-      type: Boolean,
-      default: true
-    }
+    sundayBegin: Boolean
   },
   computed: {
     weekTxt() {
@@ -85,7 +82,7 @@ export default {
       this.$emit("date", this.matchDayByDate(date));
     }
   },
-  created() {
+  mounted() {
     this.initCalendar();
   },
   methods: {
@@ -125,9 +122,9 @@ export default {
       );
 
       // concat prev last few days and next month first few days
-      prevMonthFewDays
-        .concat(nextMonthFewDays)
-        .map(item => (item["isOtherMonthDay"] = true));
+      [...prevMonthFewDays, ...nextMonthFewDays].map(
+        item => (item["isOtherMonthDay"] = true)
+      );
 
       this.days = [
         ...prevMonthFewDays,
@@ -183,7 +180,7 @@ export default {
     handleDayChoose(item) {
       if (!(this.disabledFutureDay && item.isFutureDay)) {
         if (item.isOtherMonthDay) {
-          return item.day > 7
+          item.day > 7
             ? this.handleMonthSwitch("prev")
             : this.handleMonthSwitch("next");
         }
@@ -201,7 +198,7 @@ export default {
      * @param {Number} month
      * @return {Array} days
      */
-    handleDays(year, month, isOtherMonths = false) {
+    handleDays(year, month, isOtherMonths) {
       let days = [];
       const totalDays = util.getTotalDays(year, month);
       if (isOtherMonths) {
@@ -242,6 +239,7 @@ export default {
      * @param {String} date
      */
     matchDayByDate(date) {
+      if (!date) throw "Missing required parameters";
       return this.days.filter(item => item.date === date)[0];
     },
     // External method

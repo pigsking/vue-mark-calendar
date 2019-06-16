@@ -3,12 +3,9 @@
     <div id="calendar-wrap">
       <Calendar
         ref="calendar"
-        :sundayBegin="props.sundayBegin"
-        :format="props.format.options[0]"
+        sundayBegin
         :markers="props.markers"
-        :disabledFutureDay="props.disabledFutureDay"
-        :hideOtherMonthDay="props.hideOtherMonthDay"
-        :hideOtherMonthMarker="props.hideOtherMonthMarker"
+        :format="props.format.options[1]"
         @date="handleDateChange($event)"
       ></Calendar>
     </div>
@@ -31,12 +28,8 @@ export default {
   data() {
     return {
       props: {
-        disabledFutureDay: false,
-        hideOtherMonthDay: false,
-        hideOtherMonthMarker: true,
-        sundayBegin: false,
         format: {
-          selected: "YYYY/MM/DD",
+          selected: "YYYY-MM-DD",
           options: ["YYYY/MM/DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]
         },
         weekText: {
@@ -55,7 +48,7 @@ export default {
         },
         markers: [
           {
-            date: `${year}-${month}-09`,
+            date: `${year}-${month}-9`,
             className: "dream"
           },
           {
@@ -67,7 +60,7 @@ export default {
             className: "miss"
           },
           {
-            date: `${year}-${month + 1}-01`,
+            date: `${year}-${month + 1}-1`,
             className: "hope"
           }
         ]
@@ -75,7 +68,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.calendar.chooseTargetDate("2019/09/14");
+    // this.$refs.calendar.chooseTargetDate("2019/09/14");
   },
   methods: {
     handleDateChange(obj) {
@@ -86,18 +79,20 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #efefef;
+}
 #calendar-wrap {
   padding-bottom: 30px;
   color: #2c3e50;
-  background-color: #232323;
 }
 /* marker */
-#calendar-wrap /deep/ #calendar {
+#calendar-wrap {
   max-width: 414px;
   margin: auto;
 }
 /* marker style*/
-#calendar-wrap/deep/ .love span {
+#calendar-wrap /deep/ .love span {
   color: #fff;
   background-color: #7b1fa2;
 }
@@ -106,7 +101,7 @@ export default {
   background-color: #ff4081;
 }
 
-#calendar-wrap /deep/ .dream span {
+#calendar-wrap ::v-deep .dream span {
   color: #fff;
   background-color: #448aff;
 }

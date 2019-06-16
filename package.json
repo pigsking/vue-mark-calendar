@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "imarker": "^1.1.0",
+    "sass-loader": "^7.1.0",
     "vue": "^2.5.17"
   },
   "devDependencies": {
