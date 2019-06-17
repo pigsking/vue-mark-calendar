@@ -3811,10 +3811,10 @@ ignore@^3.3.3, ignore@^3.3.5:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
   integrity sha512-Pgs951kaMm5GXP7MOvxERINe3gsaVjUWFm+UZPSq9xYriQAksyhg0csnS0KXSNRD5NmNdapXEpjxG49+AKh/ug==
 
-imarker@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/imarker/-/imarker-1.1.0.tgz#833142b7a53b6c82914448d180199a9ed3b13d3b"
-  integrity sha512-CF2x2YrWBmEsvS+S34gOMl6PNp2qr8/T/F8P/Nwso4UeJ+60Fm8F9U+yfohxV6Ay33BX9WdBTcz12Vh3djMo3Q==
+imarker@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/imarker/-/imarker-1.2.0.tgz#b66737c084f1eba3d31d99a15ec376a0d98bbd3e"
+  integrity sha512-Jqv+ZiM+Nma0bmZUMOWA70TIyvCiHglKsTELI/Mqp4KkpwUIFFXqy9F/dJwrEOUJq7T3ZHNwrtPivw9tnCPHuA==
 
 import-cwd@^2.0.0:
   version "2.1.0"

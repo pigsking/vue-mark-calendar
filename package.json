@@ -11,7 +11,7 @@
     "docs:deploy": "yarn docs:build && git subtree push --prefix dist/calendar origin gh-pages"
   },
   "dependencies": {
-    "imarker": "^1.1.0",
+    "imarker": "^1.2.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.17"
   },
