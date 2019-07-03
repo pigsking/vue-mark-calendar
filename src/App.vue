@@ -5,11 +5,11 @@
         ref="calendar"
         sundayBegin
         :markers="props.markers"
-        :format="props.format.options[1]"
+        :weekText="props.weekText"
         @date="handleDateChange($event)"
       ></Calendar>
     </div>
-    <div class="copyright">Copyright © 2019 Allen AuYeung</div>
+    <div class="copyright">Copyright © {{new Date().getFullYear()}} Allen AuYeung</div>
   </div>
 </template>
 
@@ -28,24 +28,7 @@ export default {
   data() {
     return {
       props: {
-        format: {
-          selected: "YYYY-MM-DD",
-          options: ["YYYY/MM/DD", "YYYY-M-D", "YY/MM/DD", "YY/M/D"]
-        },
-        weekText: {
-          lang: "EN",
-          selected: "",
-          options: [
-            {
-              lang: "EN",
-              value: ["M", "T", "W", "T", "F", "S", "S"]
-            },
-            {
-              lang: "ZH",
-              value: ["一", "二", "三", "四", "五", "六", "日"]
-            }
-          ]
-        },
+        weekText: ["日", "一", "二", "三", "四", "五", "六"],
         markers: [
           {
             date: `${year}-${month}-9`,
@@ -66,9 +49,6 @@ export default {
         ]
       }
     };
-  },
-  mounted() {
-    // this.$refs.calendar.chooseTargetDate("2019/09/14");
   },
   methods: {
     handleDateChange(obj) {

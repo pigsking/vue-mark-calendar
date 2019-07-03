@@ -8,12 +8,12 @@ export default {
         return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
     },
     getDateObj(date) {
-        const dateObj = date ? new Date(date) : new Date()
+        const dateObj = date ? new Date(date.replace(/\-/g, "/")) : new Date()
         return {
             year: dateObj.getFullYear(),
             month: dateObj.getMonth() + 1,
             day: dateObj.getDate(),
-            week: dateObj.getDay() 
+            week: dateObj.getDay()
         }
     },
     /**
@@ -22,7 +22,7 @@ export default {
     * @return {Number} 
     */
     getTimestamp(date) {
-        return !date ? +new Date() : +new Date(this.formatDate(date, 'YYYY-MM-DD'))
+        return !date ? +new Date() : +new Date(date.replace(/\-/g, "/"))
     },
     /**
     * @description conver date by lang
@@ -49,7 +49,8 @@ export default {
     * @return {Number} totalDays
     */
     getTotalDays(year, month) {
-        return month == 2 ? (this.isLeapYear(year) ? 29 : 28) :
-            String(month).match(/\[.*?\]|4|6|9|11|SSS/g) ? 30 : 31
+        return month == 2 ?
+            (this.isLeapYear(year) ? 29 : 28) :
+            ([4, 6, 9, 11].includes(month) ? 30 : 31)
     }
 }

@@ -3,7 +3,7 @@
     <div class="calendar-header">
       <div class="month-switch">
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span>{{currentDateObj.yearMonth}}</span>
+        <span>{{yearMonth}}</span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
     </div>
@@ -42,19 +42,9 @@ export default {
     },
     format: {
       type: String,
-      default: "YYYY/MM/DD"
+      default: "YYYY-MM-DD"
     },
     sundayBegin: Boolean
-  },
-  computed: {
-    weekTxt() {
-      const weekText = ["S", "M", "T", "W", "T", "F", "S"];
-      return this.weekText
-        ? this.weekText
-        : this.sundayBegin
-        ? weekText
-        : weekText.push(weekText.shift()) && weekText;
-    }
   },
   data() {
     return {
@@ -63,11 +53,27 @@ export default {
         date: "",
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
-        day: new Date().getDate(),
-        yearMonth: ""
+        day: new Date().getDate()
       }
     };
   },
+  computed: {
+    weekTxt() {
+      const weekText = ["S", "M", "T", "W", "T", "F", "S"];
+      return (
+        this.weekText ||
+        (this.sundayBegin
+          ? weekText
+          : weekText.push(weekText.shift()) && weekText)
+      );
+    },
+    yearMonth() {
+      const connector = this.format.match(/[^A-Z]/)[0];
+      const { year, month } = this.currentDateObj;
+      return `${year}${connector}${month}`;
+    }
+  },
+
   watch: {
     "currentDateObj.year"() {
       this.initCalendar();
@@ -76,9 +82,6 @@ export default {
       this.initCalendar();
     },
     "currentDateObj.date"(date) {
-      const connector = this.format.match(/[^A-Z]/)[0];
-      const dateArr = date.split(connector);
-      this.currentDateObj.yearMonth = `${dateArr[0]}${connector}${dateArr[1]}`;
       this.$emit("date", this.matchDayByDate(date));
     }
   },
