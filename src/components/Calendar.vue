@@ -49,12 +49,7 @@ export default {
   data() {
     return {
       days: [],
-      currentDateObj: {
-        date: "",
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        day: new Date().getDate()
-      }
+      currentDate: new Date().toLocaleDateString()
     };
   },
   computed: {
@@ -69,19 +64,13 @@ export default {
     },
     yearMonth() {
       const connector = this.format.match(/[^A-Z]/)[0];
-      const { year, month } = this.currentDateObj;
+      const { year, month } = util.getDateObj(this.currentDate);
       return `${year}${connector}${month}`;
     }
   },
 
   watch: {
-    "currentDateObj.year"() {
-      this.initCalendar();
-    },
-    "currentDateObj.month"() {
-      this.initCalendar();
-    },
-    "currentDateObj.date"(date) {
+    currentDate(date) {
       this.$emit("date", this.matchDayByDate(date));
     }
   },
@@ -91,7 +80,7 @@ export default {
   methods: {
     dayClasses(item) {
       return {
-        "choose-day": this.currentDateObj.date === item.date,
+        "choose-day": this.currentDate === item.date,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
         "weekend-day": [0, 6, 7].includes(item.week)
@@ -101,7 +90,7 @@ export default {
      * @description init month
      */
     initCalendar() {
-      const { year, month, day } = this.currentDateObj;
+      const { year, month, day } = util.getDateObj(this.currentDate);
       const prevMonth = month === 1 ? 12 : month - 1;
       const nextMonth = month === 12 ? 1 : month + 1;
 
@@ -125,7 +114,7 @@ export default {
       );
 
       // concat prev last few days and next month first few days
-      [...prevMonthFewDays, ...nextMonthFewDays].map(
+      [...prevMonthFewDays, ...nextMonthFewDays].forEach(
         item => (item["isOtherMonthDay"] = true)
       );
 
@@ -134,7 +123,6 @@ export default {
         ...currentMonthAllDays,
         ...nextMonthFewDays
       ];
-      this.currentDateObj.date = this.formatDate(`${year}/${month}/${day}`);
     },
     /**
      * @description switch month
@@ -142,7 +130,8 @@ export default {
      */
     handleMonthSwitch(type) {
       // prev month
-      let { year, month } = this.currentDateObj;
+      let { year, month, day } = util.getDateObj(this.currentDate);
+
       if (type === "prev") {
         if (month > 1) {
           month--;
@@ -160,21 +149,16 @@ export default {
           month = 1;
         }
       }
-
+      this.initCalendar();
       const switchAfterMonthTotalDays = util.getTotalDays(year, month);
       // avoid month cross-border
       const today = util.getDateObj().day > switchAfterMonthTotalDays;
-      const choosedDday = this.currentDateObj.day > switchAfterMonthTotalDays;
+      const choosedDday = day > switchAfterMonthTotalDays;
 
       if (today || choosedDday) {
-        this.currentDateObj.day = switchAfterMonthTotalDays;
+        day = switchAfterMonthTotalDays;
       }
-      const formatDate = this.formatDate(
-        `${year}/${month}/${this.currentDateObj.day}`
-      );
-      this.currentDateObj.year = year;
-      this.currentDateObj.month = month;
-      this.currentDateObj.date = formatDate;
+      this.currentDate = this.formatDate(`${year}/${month}/${day}`);
     },
     /**
      * @description choose one day
@@ -187,11 +171,8 @@ export default {
             ? this.handleMonthSwitch("prev")
             : this.handleMonthSwitch("next");
         }
-        const { year, month } = this.currentDateObj;
-        this.currentDateObj.day = item.day;
-        this.currentDateObj.date = this.formatDate(
-          `${year}/${month}/${item.day}`
-        );
+        this.initCalendar();
+        this.currentDate = item.date;
       }
     },
 
@@ -225,7 +206,7 @@ export default {
         // add marker
         const markers = this.markers;
         if (markers && (!isOtherMonths || !this.hideOtherMonthMarker)) {
-          markers.map(item => {
+          markers.forEach(item => {
             const makerDate = util.getTimestamp(item.date);
             if (util.getTimestamp(dayObj.date) === makerDate) {
               dayObj["className"] = item.className;
@@ -242,7 +223,7 @@ export default {
      */
     matchDayByDate(date) {
       if (!date) throw "Missing required parameters";
-      return this.days.filter(item => item.date === date)[0];
+      return this.days.find(item => item.date === date);
     },
     // External method
     /**
@@ -252,7 +233,7 @@ export default {
      */
     formatDate(date, formatStr = this.format) {
       if (!date) throw "Missing required parameters";
-      return util.formatDate(date, formatStr.toUpperCase());
+      return util.formatDate(date, formatStr);
     },
     /**
      * @description choose target date
@@ -260,11 +241,7 @@ export default {
      */
     chooseTargetDate(date) {
       if (!date) throw "Missing required parameters";
-      const { year, month, day } = util.getDateObj(date);
-      this.currentDateObj.year = year;
-      this.currentDateObj.month = month;
-      this.currentDateObj.day = day;
-      this.currentDateObj.date = this.formatDate(`${year}/${month}/${day}`);
+      this.currentDate = date;
     }
   }
 };

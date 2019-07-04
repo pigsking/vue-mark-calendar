@@ -31,7 +31,7 @@ export default {
     */
     formatDate(date, format) {
         const { year, month, day } = this.getDateObj(date)
-        return format.replace(/\[.*?\]|Y{2,4}|M{1,2}|D{1,2}|SSS/g, (match) => {
+        return format.toUpperCase().replace(/\[.*?\]|Y{2,4}|M{1,2}|D{1,2}|SSS/g, (match) => {
             return {
                 YY: String(year).slice(-2),
                 YYYY: year,
