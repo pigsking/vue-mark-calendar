@@ -3,9 +3,9 @@
     <div id="calendar-wrap">
       <Calendar
         ref="calendar"
-        sundayBegin
+        format="YYYY-MM-DD"
         :markers="props.markers"
-        :weekText="props.weekText"
+     
         @date="handleDateChange($event)"
       ></Calendar>
     </div>
@@ -31,7 +31,7 @@ export default {
         weekText: ["日", "一", "二", "三", "四", "五", "六"],
         markers: [
           {
-            date: `${year}-${month}-9`,
+            date: `${year}-${month}-3`,
             className: "dream"
           },
           {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     handleDateChange(obj) {
-      console.log(JSON.stringify(obj));
+      // console.log(JSON.stringify(obj));
     }
   }
 };
@@ -81,7 +81,7 @@ body {
   background-color: #ff4081;
 }
 
-#calendar-wrap ::v-deep .dream span {
+#calendar-wrap /deep/ .dream span {
   color: #fff;
   background-color: #448aff;
 }

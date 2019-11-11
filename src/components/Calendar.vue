@@ -3,7 +3,7 @@
     <div class="calendar-header">
       <div class="month-switch">
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span>{{yearMonth}}</span>
+        <span>{{ym.date}}</span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
     </div>
@@ -24,10 +24,10 @@
 </template>
 <script>
 import util from "./util";
+
 export default {
   props: {
     markers: Array,
-    weekText: Array,
     disabledFutureDay: {
       type: Boolean,
       default: false
@@ -42,30 +42,32 @@ export default {
     },
     format: {
       type: String,
-      default: "YYYY-MM-DD"
+      default: "YYYY/MM/DD"
     },
-    sundayBegin: Boolean
+    sundayBegin: {
+      type: Boolean,
+      default: false
+    },
+    weekText: Array
   },
   data() {
     return {
       days: [],
-      currentDate: new Date().toLocaleDateString()
+      currentDate: ""
     };
   },
   computed: {
     weekTxt() {
-      const weekText = ["S", "M", "T", "W", "T", "F", "S"];
-      return (
-        this.weekText ||
-        (this.sundayBegin
-          ? weekText
-          : weekText.push(weekText.shift()) && weekText)
-      );
+      return this.weekText
+        ? this.weekText
+        : this.sundayBegin
+        ? ["S", "M", "T", "W", "T", "F", "S"]
+        : ["M", "T", "W", "T", "F", "S", "S"];
     },
-    yearMonth() {
-      const connector = this.format.match(/[^A-Z]/)[0];
-      const { year, month } = util.getDateObj(this.currentDate);
-      return `${year}${connector}${month}`;
+    ym() {
+      const formatStr = this.format.split("-" || "/");
+      console.log(formatStr);
+      return this.getDateObj(this.currentDate, "YY/MM");
     }
   },
 
@@ -83,20 +85,21 @@ export default {
         "choose-day": this.currentDate === item.date,
         "disabled-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
-        "weekend-day": [0, 6, 7].includes(item.week)
+        "weekend-day": [6, 7].includes(item.week)
       };
     },
     /**
      * @description init month
      */
-    initCalendar() {
-      const { year, month, day } = util.getDateObj(this.currentDate);
+    initCalendar(dateStr) {
+      const { year, month, date } = this.getDateObj(dateStr);
+
       const prevMonth = month === 1 ? 12 : month - 1;
       const nextMonth = month === 12 ? 1 : month + 1;
 
       const currentMonthAllDays = this.handleDays(year, month);
-      let prevMonthAllDays = this.handleDays(year, prevMonth, true);
-      let nextMonthAllDays = this.handleDays(year, nextMonth, true);
+      let prevMonthAllDays = this.handleDays(year, prevMonth, "prev");
+      let nextMonthAllDays = this.handleDays(year, nextMonth, "next");
 
       // get the first day and the last day of the month is the day of the week
       let firstDay = currentMonthAllDays[0].week;
@@ -106,32 +109,77 @@ export default {
       this.sundayBegin ? (lastDay += 1) : (firstDay -= 1);
 
       // concat prev month and next month
-
       const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
+      // console.log(nextMonthFewDays);
       const prevMonthFewDays = prevMonthAllDays.splice(
         prevMonthAllDays.length - firstDay,
         prevMonthAllDays.length - 1
       );
 
       // concat prev last few days and next month first few days
-      [...prevMonthFewDays, ...nextMonthFewDays].forEach(
-        item => (item["isOtherMonthDay"] = true)
-      );
+      // [...prevMonthFewDays, ...nextMonthFewDays].forEach(
+      //   item => (item["isOtherMonthDay"] = true)
+      // );
 
       this.days = [
         ...prevMonthFewDays,
         ...currentMonthAllDays,
         ...nextMonthFewDays
       ];
+      this.currentDate = date;
+    },
+
+    /**
+     * @description get the total days in the month
+     * @param {Number} year
+     * @param {Number} month
+     * @return {Array} days
+     */
+    handleDays(year, month, type) {
+      let days = [];
+
+      const markers = this.markers;
+      const totalDays = util.getTotalDays(year, month);
+
+      if (type === "prev" && month === 12) year -= 1;
+      if (type === "next" && month === 1) year += 1;
+
+      for (let i = 0; i < totalDays; i++) {
+        const day = i + 1;
+        const dateStr = `${year}/${month}/${day}`;
+        const { date, week } = this.getDateObj(dateStr);
+
+        const dayObj = {
+          day: day,
+          date: date,
+          week: week,
+          isOtherMonthDay: ["prev", "next"].includes(type),
+          isFutureDay: this.getDateObj().date < date
+        };
+
+        // add marker
+        if (
+          !(this.disabledFutureDay && dayObj.isFutureDay) &&
+          !(this.hideOtherMonthMarker && dayObj.isOtherMonth)
+        ) {
+          markers.forEach(item => {
+            if (this.getDateObj(item.date).date === dayObj.date)
+              dayObj["className"] = item.className;
+          });
+        }
+
+        days.push(dayObj);
+      }
+      return days;
     },
     /**
      * @description switch month
      * @param {String} type prev or next
      */
     handleMonthSwitch(type) {
-      // prev month
-      let { year, month, day } = util.getDateObj(this.currentDate);
+      let { year, month, day } = this.getDateObj(this.currentDate);
 
+      // prev month
       if (type === "prev") {
         if (month > 1) {
           month--;
@@ -149,16 +197,16 @@ export default {
           month = 1;
         }
       }
-      this.initCalendar();
+
       const switchAfterMonthTotalDays = util.getTotalDays(year, month);
       // avoid month cross-border
-      const today = util.getDateObj().day > switchAfterMonthTotalDays;
-      const choosedDday = day > switchAfterMonthTotalDays;
+      // const today = this.getDateObj().day > switchAfterMonthTotalDays;
+      // const choosedDday = day > switchAfterMonthTotalDays;
 
-      if (today || choosedDday) {
+      if (day > switchAfterMonthTotalDays) {
         day = switchAfterMonthTotalDays;
       }
-      this.currentDate = this.formatDate(`${year}/${month}/${day}`);
+      this.initCalendar(`${year}/${month}/${day}`);
     },
     /**
      * @description choose one day
@@ -170,53 +218,12 @@ export default {
           item.day > 7
             ? this.handleMonthSwitch("prev")
             : this.handleMonthSwitch("next");
+        } else {
         }
-        this.initCalendar();
         this.currentDate = item.date;
       }
     },
 
-    /**
-     * @description get the total days in the month
-     * @param {Number} year
-     * @param {Number} month
-     * @return {Array} days
-     */
-    handleDays(year, month, isOtherMonths) {
-      let days = [];
-      const totalDays = util.getTotalDays(year, month);
-      if (isOtherMonths) {
-        if (month === 1) year += 1;
-        if (month === 12) year -= 1;
-      }
-
-      for (let i = 0; i < totalDays; i++) {
-        const day = i + 1;
-        const date = `${year}/${month}/${day}`;
-
-        let week = util.getDateObj(date).week;
-        if (!this.sundayBegin && week === 0) week = 7;
-
-        const dayObj = {
-          day: day,
-          date: this.formatDate(date),
-          week: week,
-          isFutureDay: util.getTimestamp() < util.getTimestamp(date)
-        };
-        // add marker
-        const markers = this.markers;
-        if (markers && (!isOtherMonths || !this.hideOtherMonthMarker)) {
-          markers.forEach(item => {
-            const makerDate = util.getTimestamp(item.date);
-            if (util.getTimestamp(dayObj.date) === makerDate) {
-              dayObj["className"] = item.className;
-            }
-          });
-        }
-        days.push(dayObj);
-      }
-      return days;
-    },
     /**
      * @description match month's day obj by the date string
      * @param {String} date
@@ -225,16 +232,8 @@ export default {
       if (!date) throw "Missing required parameters";
       return this.days.find(item => item.date === date);
     },
+
     // External method
-    /**
-     * @description need format date string
-     * @param {String} date
-     * @param {String} format string => default: 'YYYY-MM-DD'
-     */
-    formatDate(date, formatStr = this.format) {
-      if (!date) throw "Missing required parameters";
-      return util.formatDate(date, formatStr);
-    },
     /**
      * @description choose target date
      * @param {String} date
@@ -242,6 +241,10 @@ export default {
     chooseTargetDate(date) {
       if (!date) throw "Missing required parameters";
       this.currentDate = date;
+    },
+
+    getDateObj(date, formatStr = this.format) {
+      return util.getDateObj(date, formatStr);
     }
   }
 };
