@@ -5,7 +5,6 @@
         ref="calendar"
         format="YYYY-MM-DD"
         :markers="props.markers"
-     
         @date="handleDateChange($event)"
       ></Calendar>
     </div>

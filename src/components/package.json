@@ -1,24 +1,25 @@
 {
-  "name": "imarker",
-  "version": "1.2.0",
-  "description": "A simple calendar marker component for vuejs2.x",
+  "name": "vue-mark-calendar",
+  "version": "0.1.0",
+  "description": "A simple calendar mark component for vuejs2.x",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pigsking/vue-marker-calendar.git"
+    "url": "git+https://github.com/pigsking/vue-mark-calendar.git"
   },
   "keywords": [
     "vue2",
+    "component",
     "calendar",
-    "marker"
+    "mark"
   ],
   "author": "AllenAuYeung",
-  "license": "MIT",
+  "license": "GLWTPL",
   "bugs": {
-    "url": "https://github.com/pigsking/vue-marker-calendar/issues"
+    "url": "https://github.com/pigsking/vue-mark-calendar/issues"
   },
-  "homepage": "https://github.com/pigsking/vue-marker-calendar#readme"
+  "homepage": "https://github.com/pigsking/vue-mark-calendar#readme"
 }
