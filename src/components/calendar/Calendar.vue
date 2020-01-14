@@ -24,8 +24,8 @@
 </template>
 <script>
 import util from "./util";
-
 export default {
+  name: "Calendar",
   props: {
     markers: Array,
     disabledFutureDay: {

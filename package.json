@@ -1,24 +1,29 @@
 {
   "name": "vue-mark-calendar",
   "version": "0.1.0",
-  "private": true,
+  "license": "GLWTPL",
+  "author": "Allen AuYeung<allenseac@gmail.com>",
+  "description": "A simple calendar mark component for vuejs2.x",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "yarn docs:build && git subtree push --prefix dist/calendar origin gh-pages"
+    "docs:deploy": "yarn docs:build && git subtree push --prefix dist/calendar origin gh-pages",
+    "lib": "vue-cli-service build --target lib --name vue-mark-calendar --dest lib src/components/index.js"
   },
   "dependencies": {
-    "sass-loader": "^7.1.0",
-    "vue": "^2.5.17"
+    "dayjs": "^1.8.19"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.5.17"
   },
   "eslintConfig": {
     "root": true,
@@ -43,5 +48,19 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pigsking/vue-mark-calendar.git"
+  },
+  "keywords": [
+    "vue",
+    "component",
+    "calendar",
+    "mark"
+  ],
+  "bugs": {
+    "url": "https://github.com/pigsking/vue-mark-calendar/issues"
+  },
+  "homepage": "https://github.com/pigsking/vue-mark-calendar#readme"
 }

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Calendar from "./components/Calendar";
+
 
 const date = new Date();
 const year = date.getFullYear();
@@ -21,9 +21,7 @@ const month = date.getMonth() + 1;
 
 export default {
   name: "app",
-  components: {
-    Calendar
-  },
+ 
   data() {
     return {
       props: {

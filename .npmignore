@@ -1,0 +1,12 @@
+src
+dist
+docs
+public
+yarn.lock
+node_modules
+vue.config.js
+bable.config.js
+package-lock.json
+
+.gitignore
+# https://juejin.im/post/5bbab9de5188255c8c0cb0e3
