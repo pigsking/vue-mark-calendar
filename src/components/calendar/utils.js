@@ -20,7 +20,7 @@ export default {
     },
     getDateObj(date, format = 'YYYY/MM/DD') {
         // console.log(date&&date.replace(/\-/g, "/"))
-        const dateObj = date ? new Date(date.replace(/\-/g, "/")) : new Date()
+        const dateObj = date ? new Date(date.replace(/-/g, "/")) : new Date()
 
         const year = dateObj.getFullYear(), month = dateObj.getMonth() + 1, day = dateObj.getDate();
         return {

@@ -3,7 +3,7 @@
     <div class="calendar-header">
       <div class="month-switch">
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span>{{ym.date}}</span>
+        <span>{{yearMonth}}</span>
         <span class="next" @click="handleMonthSwitch('next')"></span>
       </div>
     </div>
@@ -23,11 +23,16 @@
   </div>
 </template>
 <script>
-import util from "./util";
+import utils from "./utils";
+// import dayjs from "dayjs";
+
 export default {
   name: "Calendar",
   props: {
-    markers: Array,
+    markers: {
+      type: Array,
+      default: () => []
+    },
     disabledFutureDay: {
       type: Boolean,
       default: false
@@ -48,7 +53,10 @@ export default {
       type: Boolean,
       default: false
     },
-    weekText: Array
+    weekText: {
+      type: Array,
+      default: () => ["M", "T", "W", "T", "F", "S", "S"]
+    }
   },
   data() {
     return {
@@ -58,16 +66,17 @@ export default {
   },
   computed: {
     weekTxt() {
-      return this.weekText
-        ? this.weekText
-        : this.sundayBegin
-        ? ["S", "M", "T", "W", "T", "F", "S"]
-        : ["M", "T", "W", "T", "F", "S", "S"];
+      if (this.sundayBegin) {
+        this.weekText.unshift(this.weekText.pop());
+      }
+      return this.weekText;
     },
-    ym() {
-      const formatStr = this.format.split("-" || "/");
-      console.log(formatStr);
-      return this.getDateObj(this.currentDate, "YY/MM");
+
+    yearMonth() {
+      // const formatStr = this.format.split("-" || "/");
+      // console.log(formatStr);
+      console.log(this.format.match(/-\//g));
+      return this.getDateObj(this.currentDate, "YY/MM").date;
     }
   },
 
@@ -77,6 +86,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.sundayBegin);
     this.initCalendar();
   },
   methods: {
@@ -139,7 +149,7 @@ export default {
       let days = [];
 
       const markers = this.markers;
-      const totalDays = util.getTotalDays(year, month);
+      const totalDays = utils.getTotalDays(year, month);
 
       if (type === "prev" && month === 12) year -= 1;
       if (type === "next" && month === 1) year += 1;
@@ -158,10 +168,9 @@ export default {
         };
 
         // add marker
-        if (
-          !(this.disabledFutureDay && dayObj.isFutureDay) &&
-          !(this.hideOtherMonthMarker && dayObj.isOtherMonth)
-        ) {
+        // !(this.disabledFutureDay && dayObj.isFutureDay) &&
+   
+        if (!(this.hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
           markers.forEach(item => {
             if (this.getDateObj(item.date).date === dayObj.date)
               dayObj["className"] = item.className;
@@ -198,7 +207,7 @@ export default {
         }
       }
 
-      const switchAfterMonthTotalDays = util.getTotalDays(year, month);
+      const switchAfterMonthTotalDays = utils.getTotalDays(year, month);
       // avoid month cross-border
       // const today = this.getDateObj().day > switchAfterMonthTotalDays;
       // const choosedDday = day > switchAfterMonthTotalDays;
@@ -244,7 +253,7 @@ export default {
     },
 
     getDateObj(date, formatStr = this.format) {
-      return util.getDateObj(date, formatStr);
+      return utils.getDateObj(date, formatStr);
     }
   }
 };

@@ -3,8 +3,10 @@
     <div id="calendar-wrap">
       <Calendar
         ref="calendar"
-        format="YYYY-MM-DD"
         :markers="props.markers"
+        sundayBegin
+    
+        disabledFutureDay
         @date="handleDateChange($event)"
       ></Calendar>
     </div>
@@ -13,15 +15,13 @@
 </template>
 
 <script>
-
-
 const date = new Date();
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 
 export default {
   name: "app",
- 
+
   data() {
     return {
       props: {
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     handleDateChange(obj) {
-      // console.log(JSON.stringify(obj));
+      console.log(JSON.stringify(obj));
     }
   }
 };
