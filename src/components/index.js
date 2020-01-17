@@ -1,13 +1,9 @@
 import Calendar from './calendar'
 
-const components = [
-    Calendar
-]
-
 const install = function (Vue) {
     if (install.installed) { return }
 
-    components.map(component => Vue.component(component.name, component))
+    Vue.component(Calendar.name, Calendar)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {

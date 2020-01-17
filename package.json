@@ -1,9 +1,11 @@
 {
-  "name": "vue-mark-calendar",
+  "name": "@pigsking/vue-mark-calendar",
   "version": "0.1.0",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
-  "author": "Allen AuYeung<allenseac@gmail.com>",
+  "author": "Allen AuYeung<oyqxiao@sina.com>",
+  "main": "lib/vue-mark-calendar.umd.js",
+  "unpkg": "lib/vue-mark-calendar.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -96,7 +98,7 @@
     "calendar",
     "mark"
   ],
-  "license": "MIT",
+  "license": "GLWTPL",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pigsking/vue-mark-calendar.git"

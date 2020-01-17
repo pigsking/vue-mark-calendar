@@ -83,8 +83,6 @@ export default {
   },
   filters: {
     format(date) {
-      console.log("format:" + date);
-
       if (date) {
         const connector = date.match(/[^0-9]/)[0];
         const formatDate = utils.getDateObj(date, "YYYY/MM").date;
@@ -94,7 +92,6 @@ export default {
   },
   watch: {
     currentDate(date) {
-      console.log("watch:" + date);
       this.$emit("date", this.matchDayByDate(date));
     }
   },
@@ -240,7 +237,6 @@ export default {
           item.day > 7
             ? this.handleMonthSwitch("prev")
             : this.handleMonthSwitch("next");
-        } else {
         }
         this.currentDate = item.date;
       }
