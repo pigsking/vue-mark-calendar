@@ -3,11 +3,13 @@
     <div id="calendar-wrap">
       <Calendar
         ref="calendar"
-        :markers="props.markers"
-        sundayBegin
-    
-        disabledFutureDay
         @date="handleDateChange($event)"
+        :format="props.format"
+        :markers="props.markers"
+        :sundayBegin="props.sundayBegin"
+        :disabledFutureDay="props.disabledFutureDay"
+        :hideOtherMonthDay="props.hideOtherMonthDay"
+        :hideOtherMonthMarker="props.hideOtherMonthMarker"
       ></Calendar>
     </div>
     <div class="copyright">Copyright © {{new Date().getFullYear()}} Allen AuYeung</div>
@@ -25,7 +27,12 @@ export default {
   data() {
     return {
       props: {
+        format: "YYYY-M-D",
         weekText: ["日", "一", "二", "三", "四", "五", "六"],
+        sundayBegin: true,
+        disabledFutureDay: true,
+        hideOtherMonthDay: false,
+        hideOtherMonthMarker: false,
         markers: [
           {
             date: `${year}-${month}-3`,

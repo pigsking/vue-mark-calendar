@@ -3,8 +3,8 @@
     <div class="calendar-header">
       <div class="month-switch">
         <span class="prev" @click="handleMonthSwitch('prev')"></span>
-        <span>{{yearMonth}}</span>
-        <span class="next" @click="handleMonthSwitch('next')"></span>
+        <span class="date">{{currentDate|format}}</span>
+        <span class="next" @click="handleMonthSwitch('next')" v-if="showNextMonthSwitch"></span>
       </div>
     </div>
     <div class="calendar-content">
@@ -24,7 +24,6 @@
 </template>
 <script>
 import utils from "./utils";
-// import dayjs from "dayjs";
 
 export default {
   name: "Calendar",
@@ -55,7 +54,7 @@ export default {
     },
     weekText: {
       type: Array,
-      default: () => ["M", "T", "W", "T", "F", "S", "S"]
+      default: () => ["一", "二", "三", "四", "五", "六", "日"]
     }
   },
   data() {
@@ -71,22 +70,35 @@ export default {
       }
       return this.weekText;
     },
+    showNextMonthSwitch() {
+      let show = true;
+      if (this.disabledFutureDay) {
+        const { year: todayY, month: todayM } = this.getDateObj();
+        const { year, month } = this.getDateObj(this.currentDate);
 
-    yearMonth() {
-      // const formatStr = this.format.split("-" || "/");
-      // console.log(formatStr);
-      console.log(this.format.match(/-\//g));
-      return this.getDateObj(this.currentDate, "YY/MM").date;
+        if (year === todayY && todayM === month) show = false;
+      }
+      return show;
     }
   },
+  filters: {
+    format(date) {
+      console.log("format:" + date);
 
+      if (date) {
+        const connector = date.match(/[^0-9]/)[0];
+        const formatDate = utils.getDateObj(date, "YYYY/MM").date;
+        return formatDate.split("/").join(connector);
+      }
+    }
+  },
   watch: {
     currentDate(date) {
+      console.log("watch:" + date);
       this.$emit("date", this.matchDayByDate(date));
     }
   },
   mounted() {
-    console.log(this.sundayBegin);
     this.initCalendar();
   },
   methods: {
@@ -116,20 +128,20 @@ export default {
       let lastDay = currentMonthAllDays[currentMonthAllDays.length - 1].week;
 
       // handle sunday begin
-      this.sundayBegin ? (lastDay += 1) : (firstDay -= 1);
+
+      if (this.sundayBegin) {
+        lastDay = lastDay === 7 ? (lastDay = 1) : lastDay + 1;
+      } else {
+        firstDay -= 1;
+      }
 
       // concat prev month and next month
       const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
-      // console.log(nextMonthFewDays);
+
       const prevMonthFewDays = prevMonthAllDays.splice(
         prevMonthAllDays.length - firstDay,
         prevMonthAllDays.length - 1
       );
-
-      // concat prev last few days and next month first few days
-      // [...prevMonthFewDays, ...nextMonthFewDays].forEach(
-      //   item => (item["isOtherMonthDay"] = true)
-      // );
 
       this.days = [
         ...prevMonthFewDays,
@@ -149,6 +161,7 @@ export default {
       let days = [];
 
       const markers = this.markers;
+      const hideOtherMonthMarker = this.hideOtherMonthMarker;
       const totalDays = utils.getTotalDays(year, month);
 
       if (type === "prev" && month === 12) year -= 1;
@@ -157,20 +170,20 @@ export default {
       for (let i = 0; i < totalDays; i++) {
         const day = i + 1;
         const dateStr = `${year}/${month}/${day}`;
-        const { date, week } = this.getDateObj(dateStr);
+        const { date, week, timestamp } = this.getDateObj(dateStr);
 
         const dayObj = {
           day: day,
           date: date,
           week: week,
+          timestamp: timestamp,
           isOtherMonthDay: ["prev", "next"].includes(type),
-          isFutureDay: this.getDateObj().date < date
+          isFutureDay: this.getDateObj().timestamp < timestamp
         };
 
         // add marker
         // !(this.disabledFutureDay && dayObj.isFutureDay) &&
-   
-        if (!(this.hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
+        if (!(hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
           markers.forEach(item => {
             if (this.getDateObj(item.date).date === dayObj.date)
               dayObj["className"] = item.className;
@@ -287,6 +300,14 @@ li {
   height: 40px;
   padding: 0 20px;
   background-color: #232323;
+}
+.month-switch .date {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  margin: 0 30%;
+  text-align: center;
 }
 .month-switch .prev,
 .month-switch .next {

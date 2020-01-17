@@ -15,7 +15,7 @@ describe('props', () => {
     const wrapper = shallowMount(Calendar, {
       propsData: { sundayBegin: true }
     })
-    expect(wrapper.vm.weekTxt).toStrictEqual(["S", "M", "T", "W", "T", "F", "S"])
+    expect(wrapper.vm.weekTxt).toStrictEqual(["日", "一", "二", "三", "四", "五", "六"])
   })
 
   it('markers', () => {

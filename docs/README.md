@@ -9,7 +9,7 @@ footer: MIT Licensed
 </template>
 
 <script>
-import Calendar from 'imarker'
+import Calendar from '../src/components/calendar'
 const date = new Date();
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
