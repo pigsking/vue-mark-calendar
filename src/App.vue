@@ -30,7 +30,7 @@ export default {
         format: "YYYY-M-D",
         weekText: ["日", "一", "二", "三", "四", "五", "六"],
         sundayBegin: true,
-        disabledFutureDay: true,
+        disabledFutureDay: false,
         hideOtherMonthDay: false,
         hideOtherMonthMarker: false,
         markers: [

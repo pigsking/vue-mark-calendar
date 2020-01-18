@@ -268,7 +268,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;

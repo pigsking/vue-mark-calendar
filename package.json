@@ -1,6 +1,6 @@
 {
   "name": "@pigsking/vue-mark-calendar",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
   "author": "Allen AuYeung<oyqxiao@sina.com>",
@@ -102,5 +102,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pigsking/vue-mark-calendar.git"
+  },
+  "dependencies": {
+    "@pigsking/vue-mark-calendar": "^0.1.2"
   }
 }
