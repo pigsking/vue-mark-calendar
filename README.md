@@ -21,6 +21,8 @@ Vue.use(Calendar)
 ```
 
 ## :open_book: API
+You might want an [examples].
+
 ```javascirpt
 <Calendar 
     ref="calendar" 
@@ -33,7 +35,7 @@ Vue.use(Calendar)
 ></Calendar>
 ```
 ### Events
-date
+**date**
 ```javascript
 handleDateChange(dayInfo){
     // dayInfo:
@@ -59,22 +61,24 @@ handleDateChange(dayInfo){
 | weekText | Array | ["一", "二", "三", "四", "五", "六", "日"] 
 
 ### methods
-:warning: The argument format must be the same as the `props.format`.
 
-$refs.chooseTargetDate
+**$refs.chooseTargetDate**
 ```javascirpt
 this.$refs.calendar.chooseTargetDate('2020/02/14');
 ```
 
-$refs.getDateObj
+**$refs.getDateObj**
 ```javascirpt
 this.$refs.calendar.getDateObj('2020/02/14');
 ```
+
+## :sos: FAQ
 
 ## :bookmark_tabs: License
 :warning: Under the [GLWTPL] license, use with caution.
 
 
-[GLWTPL]: https://github.com/me-shaon/GLWTPL
+[GLWTPL]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
 [imarker]: https://www.npmjs.com/package/imarker
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
+[examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue

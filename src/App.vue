@@ -23,11 +23,10 @@ const month = date.getMonth() + 1;
 
 export default {
   name: "app",
-
   data() {
     return {
       props: {
-        format: "YYYY-M-D",
+        format: "YYYY-MM-DD",
         weekText: ["日", "一", "二", "三", "四", "五", "六"],
         sundayBegin: true,
         disabledFutureDay: false,
@@ -74,6 +73,9 @@ body {
 #calendar-wrap {
   max-width: 414px;
   margin: auto;
+}
+#calendar{
+  min-width: 100px!important;
 }
 /* marker style*/
 #calendar-wrap /deep/ .love span {
