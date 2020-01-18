@@ -10,7 +10,7 @@
         :disabledFutureDay="props.disabledFutureDay"
         :hideOtherMonthDay="props.hideOtherMonthDay"
         :hideOtherMonthMarker="props.hideOtherMonthMarker"
-      ></Calendar>
+      />
     </div>
     <div class="copyright">Copyright © {{new Date().getFullYear()}} Allen AuYeung</div>
   </div>

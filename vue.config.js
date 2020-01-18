@@ -1,5 +1,6 @@
 module.exports = {
-    // publicPath: 'calendar',
+    publicPath: 'calendar',
+    outputDir:'docs/calendar',
     css: {
         extract: false,
         sourceMap: false,
