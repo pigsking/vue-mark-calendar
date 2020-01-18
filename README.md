@@ -69,10 +69,19 @@ this.$refs.calendar.chooseTargetDate('2020/02/14');
 
 **$refs.getDateObj**
 ```javascirpt
-this.$refs.calendar.getDateObj('2020/02/14');
+const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 ```
+### classes
+You might want to custom theme.
+- choose-day
+- weekend-day
+- future-day
+- other-month-day
 
 ## :sos: FAQ
+**How to change the calendar theme?**
+
+You can use the >>> combinator([Deep Selectors]).
 
 ## :bookmark_tabs: License
 :warning: Under the [GLWTPL] license, use with caution.
@@ -81,4 +90,5 @@ this.$refs.calendar.getDateObj('2020/02/14');
 [GLWTPL]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
 [imarker]: https://www.npmjs.com/package/imarker
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
-[examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
+[examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/Eat.vue
+[Deep Selectors]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements

@@ -2,7 +2,9 @@ src
 dist
 docs
 public
+packages
 tests
+
 
 yarn.lock
 yarn-error.log

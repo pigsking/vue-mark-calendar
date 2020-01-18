@@ -102,9 +102,11 @@ export default {
     dayClasses(item) {
       return {
         "choose-day": this.currentDate === item.date,
-        "disabled-day": this.disabledFutureDay && item.isFutureDay,
+        "future-day": this.disabledFutureDay && item.isFutureDay,
         "other-month-day": item.isOtherMonthDay,
-        "weekend-day": [6, 7].includes(item.week)
+        "weekend-day":
+          !(this.disabledFutureDay && item.isFutureDay) &&
+          [6, 7].includes(item.week)
       };
     },
     /**
@@ -158,6 +160,7 @@ export default {
       let days = [];
 
       const markers = this.markers;
+      const disabledFutureDay = this.disabledFutureDay;
       const hideOtherMonthMarker = this.hideOtherMonthMarker;
       const totalDays = utils.getTotalDays(year, month);
 
@@ -179,8 +182,10 @@ export default {
         };
 
         // add marker
-        // !(this.disabledFutureDay && dayObj.isFutureDay) &&
-        if (!(hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
+        if (
+          !(disabledFutureDay && dayObj.isFutureDay) &&
+          !(hideOtherMonthMarker && dayObj.isOtherMonthDay)
+        ) {
           markers.forEach(item => {
             if (this.getDateObj(item.date).date === dayObj.date)
               dayObj["className"] = item.className;
@@ -268,7 +273,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -322,7 +327,7 @@ li {
   transform: rotate(45deg);
 }
 .calendar-content {
-  color: #232323;
+  /* color: #232323; */
   background-color: #fff;
 }
 .week {
@@ -363,7 +368,7 @@ li {
   color: #ccc;
 }
 
-#calendar .disabled-day span {
+#calendar .future-day span {
   color: #ccc;
   background-color: transparent;
 }
