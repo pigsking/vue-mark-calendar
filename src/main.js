@@ -12,6 +12,8 @@ Vue.config.productionTip = false
 
 
 const router = new VueRouter({
+  mode: 'history',
+  base:'vue-mark-calendar',
   routes: [
     { path: '/', component: Cooking },
     { path: '/eat', component: Eat }
