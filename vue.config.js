@@ -1,5 +1,5 @@
 module.exports = {
-    // publicPath:'vue-mark-calendar',
+    publicPath:'vue-mark-calendar',
     outputDir:'docs',
     css: {
         extract: false,
