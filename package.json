@@ -9,7 +9,6 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:lib": "vue-cli-service build --target lib --name vue-mark-calendar --dest lib packages/index.js",
-    "docs:deploy": "yarn docs:build && git subtree push --prefix dist/calendar origin gh-pages",
     "test:unit": "vue-cli-service test:unit"
   },
   "devDependencies": {
