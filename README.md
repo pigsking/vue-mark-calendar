@@ -98,5 +98,5 @@ You can use the >>> combinator([Deep Selectors]).
 [GLWTPL]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
 [imarker]: https://www.npmjs.com/package/imarker
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
-[examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/Eat.vue
+[examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [Deep Selectors]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
