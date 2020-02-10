@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Calendar from '@/components/calendar/Calendar.vue'
+import Calendar from '../../packages/calendar/Calendar.vue'
 
 
 describe('props', () => {
@@ -56,10 +56,10 @@ describe('props', () => {
   it('disabledFutureDay', () => {
     const wrapper = shallowMount(Calendar, {
       propsData: {
-        disabledFutureDay: true,
+        disabledFutureDay: true
       }
     })
-    expect(wrapper.contains('.disabled-day')).toBe(true)
+    expect(wrapper.contains('.future-day')).toBe(true)
   })
 })
 

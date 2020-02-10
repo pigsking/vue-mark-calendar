@@ -12,7 +12,7 @@ yarn add @pigsking/vue-mark-calendar --save-dev
 ```javscript
 // main.js
 import Vue from 'vue'
-import Calendar from @pigsking/vue-mark-calendar
+import Calendar from '@pigsking/vue-mark-calendar'
 
 Vue.use(Calendar)
 
@@ -57,18 +57,26 @@ handleDateChange(dayInfo){
 | hideOtherMonthDay | Boolean | false |
 | disabledFutureDay | Boolean | false |
 | hideOtherMonthMarker | Boolean | false |
-| format | String | "YYYY/MM/DD" | 
+| format | "YYYY/MM/DD"、"YYYY/M/D"、"YYYY-MM-DD"、"YYYY-M-D" | "YYYY/MM/DD" | 
 | weekText | Array | ["一", "二", "三", "四", "五", "六", "日"] 
 
 ### methods
 
-**$refs.chooseTargetDate**
+**$refs.chooseDate**
 ```javascirpt
-this.$refs.calendar.chooseTargetDate('2020/02/14');
+// back to today
+this.$refs.calendar.chooseDate();
+
+// choose a specific day
+this.$refs.calendar.chooseDate('2020/02/14');
 ```
 
 **$refs.getDateObj**
 ```javascirpt
+// get today's Date Object
+const dayInfo = this.$refs.calendar.getDateObj();
+
+// get a specific day's Date Object
 const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 ```
 ### classes
@@ -79,7 +87,7 @@ You might want to custom theme.
 - other-month-day
 
 ## :sos: FAQ
-**How to change the calendar theme?**
+**How to custom theme?**
 
 You can use the >>> combinator([Deep Selectors]).
 

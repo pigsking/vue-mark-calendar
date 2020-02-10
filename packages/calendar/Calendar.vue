@@ -92,6 +92,7 @@ export default {
   },
   watch: {
     currentDate(date) {
+      this.initCalendar(date);
       this.$emit("date", this.matchDayByDate(date));
     }
   },
@@ -230,7 +231,9 @@ export default {
       if (day > switchAfterMonthTotalDays) {
         day = switchAfterMonthTotalDays;
       }
-      this.initCalendar(`${year}/${month}/${day}`);
+
+      // this.initCalendar(`${year}/${month}/${day}`);
+      this.currentDate = this.getDateObj(`${year}/${month}/${day}`).date;
     },
     /**
      * @description choose one day
@@ -252,7 +255,6 @@ export default {
      * @param {String} date
      */
     matchDayByDate(date) {
-      if (!date) throw "Missing required parameters";
       return this.days.find(item => item.date === date);
     },
 
@@ -261,9 +263,8 @@ export default {
      * @description choose target date
      * @param {String} date
      */
-    chooseTargetDate(date) {
-      if (!date) throw "Missing required parameters";
-      this.currentDate = date;
+    chooseDate(date) {
+      this.currentDate = this.getDateObj(date).date;
     },
 
     getDateObj(date, formatStr = this.format) {
@@ -288,10 +289,10 @@ li {
 
 #calendar {
   min-width: 320px;
-  color: #fff;
 }
 .calendar-header {
   position: relative;
+  color: #fff;
 }
 
 .month-switch {
