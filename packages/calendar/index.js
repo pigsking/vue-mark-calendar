@@ -19,6 +19,10 @@ export default {
             type: Boolean,
             default: false
         },
+        hideMarker: {
+            type: Boolean,
+            default: false
+        },
         format: {
             type: String,
             default: "YYYY/MM/DD"
@@ -128,6 +132,7 @@ export default {
             const markers = this.markers;
             const disabledFutureDay = this.disabledFutureDay;
             const hideOtherMonthMarker = this.hideOtherMonthMarker;
+            const hideMarker = this.hideMarker
             const totalDays = this.getTotalDays(year, month);
 
             if (type === "prev" && month === 12) year -= 1;
@@ -149,6 +154,7 @@ export default {
 
                 // add marker
                 if (
+                    !hideMarker&&
                     !(disabledFutureDay && dayObj.isFutureDay) &&
                     !(hideOtherMonthMarker && dayObj.isOtherMonthDay)
                 ) {
