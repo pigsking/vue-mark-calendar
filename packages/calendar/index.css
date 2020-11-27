@@ -1,0 +1,108 @@
+* {
+    box-sizing                 : border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+ul {
+    margin      : 0;
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+}
+
+#calendar {
+    min-width: 320px;
+}
+
+.calendar-header {
+    position        : relative;
+    color           : #fff;
+    background-color: #232323;
+}
+
+.month-switch {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    height         : 40px;
+    padding        : 0 20px;
+}
+
+.month-switch .date {
+    position  : absolute;
+    left      : 0;
+    right     : 0;
+    z-index   : 0;
+    margin    : 0 30%;
+    text-align: center;
+}
+
+.month-switch .prev,
+.month-switch .next {
+    width       : 12px;
+    height      : 12px;
+    border-top  : 1px solid #fff;
+    border-right: 1px solid #fff;
+    cursor      : pointer;
+}
+
+.month-switch .prev {
+    transform: rotate(-135deg);
+}
+
+.month-switch .next {
+    transform: rotate(45deg);
+}
+
+.calendar-content {
+    background-color: #fff;
+}
+
+.week {
+    display: flex;
+    padding: 10px 0;
+}
+
+.week li {
+    flex      : 1;
+    text-align: center;
+    cursor    : pointer;
+}
+
+.month {
+    display      : flex;
+    flex-wrap    : wrap;
+    margin-bottom: 0;
+}
+
+.month li {
+    width        : 14.28%;
+    margin-bottom: 10px;
+    text-align   : center;
+}
+
+.month span {
+    display      : inline-block;
+    width        : 40px;
+    height       : 40px;
+    line-height  : 40px;
+    border-radius: 50%;
+    text-align   : center;
+    cursor       : pointer;
+}
+
+#calendar .choose-day span {
+    color           : #fff;
+    background-color: #232323;
+}
+
+#calendar .other-month-day span {
+    color: #ccc;
+}
+
+#calendar .future-day span {
+    color           : #ccc;
+    background-color: transparent;
+}

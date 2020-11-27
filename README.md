@@ -41,7 +41,7 @@ handleDateChange(dayInfo){
     // dayInfo:
     // {
     //     "day":18,
-    //     "date":"2020-1-18",
+    //     "date":"2020-01-18",
     //     "week":6,
     //     "timestamp":1579276800000,
     //     "isOtherMonthDay":false,

@@ -8,7 +8,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:lib": "vue-cli-service build --target lib --name vue-mark-calendar --dest lib packages/index.js",
+    "build:lib": "vue-cli-service build --target lib --dest lib packages/index.js",
+    "prepublishOnly":"npm run build:lib",
     "test:unit": "vue-cli-service test:unit"
   },
   "devDependencies": {
