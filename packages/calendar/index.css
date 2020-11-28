@@ -95,14 +95,11 @@ li {
 
 #calendar .choose-day span {
     color           : #fff;
-    background-color: #232323;
+    background-color: #232323!important;
 }
 
+
+#calendar .future-day span,
 #calendar .other-month-day span {
-    color: #ccc;
-}
-
-#calendar .future-day span {
-    color           : #ccc;
-    background-color: transparent;
+    opacity: .3;
 }

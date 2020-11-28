@@ -108,7 +108,6 @@ export default {
             let lastDay = currentMonthAllDays[currentMonthAllDays.length - 1].week;
 
             // handle sunday begin
-
             if (this.sundayBegin) {
                 lastDay = lastDay === 7 ? (lastDay = 1) : lastDay + 1;
             } else {
@@ -206,8 +205,6 @@ export default {
 
             const switchAfterMonthTotalDays = this.getTotalDays(year, month);
             // avoid month cross-border
-            // const today = this.getDateObj().day > switchAfterMonthTotalDays;
-            // const choosedDday = day > switchAfterMonthTotalDays;
             if (this.disabledFutureDay) {
                 const { day: nowDay } = this.getDateObj()
                 if (day > nowDay) {

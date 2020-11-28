@@ -1,5 +1,8 @@
 <template>
-  <Calendar ref="calendar" @date="handleDateChange($event)" />
+  <section>
+    <h2>DEFAULT</h2>
+    <Calendar ref="calendar" @date="handleDateChange($event)" />
+  </section>
 </template>
 
 <script>
@@ -8,7 +11,7 @@ export default {
   methods: {
     handleDateChange(obj) {
       console.log(JSON.stringify(obj));
-    }
+    },
   },
 };
 </script>
