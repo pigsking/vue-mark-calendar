@@ -49,33 +49,4 @@ export default {
 };
 </script>
 
-<style scoped>
-#custom-calendar >>> .calendar-header {
-  background-color: #5300e8;
-}
-
-/* marker style*/
-#custom-calendar >>> .love span {
-  color: #fff;
-  background-color: #7b1fa2;
-}
-
-#custom-calendar >>> .miss span {
-  color: #fff;
-  background-color: #ff4081;
-}
-
-#custom-calendar >>> .dream span {
-  color: #fff;
-  background-color: #448aff;
-}
-
-#custom-calendar >>> .hope span {
-  color: #fff;
-  background-color: #ff5722;
-}
-
-#custom-calendar >>> .weekend-day span {
-  color: #536dfe;
-}
-</style>
+<style scoped src="./index.css"></style>

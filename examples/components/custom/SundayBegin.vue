@@ -13,7 +13,6 @@
 <script>
 export default {
   name: "SundayBegin",
-
   methods: {
     handleDateChange(obj) {
       console.log(JSON.stringify(obj));

@@ -7,6 +7,10 @@
     <div class="item">
       <h2>CUSTOM</h2>
       <section>
+        <h3>Weekend Day</h3>
+        <WeekendDay />
+      </section>
+      <section>
         <h3>Format</h3>
         <Format />
       </section>
@@ -47,6 +51,7 @@
 import Default from "./components/Default";
 import {
   Format,
+  WeekendDay,
   WeekText,
   SundayBegin,
   DisabledFutureDay,
@@ -64,6 +69,7 @@ export default {
   components: {
     Default,
     Format,
+    WeekendDay,
     WeekText,
     SundayBegin,
     DisabledFutureDay,
@@ -109,6 +115,37 @@ export default {
 #calendar-wrap {
   max-width: 414px;
   margin: auto;
+}
+#custom-calendar >>> .choose-day span {
+  color: #fff !important;
+}
+#custom-calendar >>> .weekend-day span {
+  color: #536dfe;
+}
+
+#custom-calendar >>> .calendar-header {
+  background-color: #5300e8;
+}
+
+/* marker style*/
+#custom-calendar >>> .love span {
+  color: #fff !important;
+  background-color: #7b1fa2;
+}
+
+#custom-calendar >>> .miss span {
+  color: #fff !important;
+  background-color: #ff4081;
+}
+
+#custom-calendar >>> .dream span {
+  color: #fff !important;
+  background-color: #448aff;
+}
+
+#custom-calendar >>> .hope span {
+  color: #fff !important;
+  background-color: #ff5722;
 }
 
 /* copyright */
