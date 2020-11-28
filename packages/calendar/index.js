@@ -72,6 +72,18 @@ export default {
         currentDate(date) {
             this.initCalendar(date);
             this.$emit("date", this.getDayObj());
+        },
+        markers() {
+            this.initCalendar(this.currentDate)
+        },
+        sundayBegin() {
+            this.initCalendar(this.currentDate)
+        },
+        hideMarker() {
+            this.initCalendar(this.currentDate)
+        },
+        hideOtherMonthMarker() {
+            this.initCalendar(this.currentDate)
         }
     },
     mounted() {
@@ -147,6 +159,7 @@ export default {
                     date: date,
                     week: week,
                     timestamp: timestamp,
+                    className: '',
                     isOtherMonthDay: ["prev", "next"].includes(type),
                     isFutureDay: this.getDateObj().timestamp < timestamp
                 };
@@ -295,26 +308,26 @@ export default {
                 <li>{item}</li>
             )
         })
-        this.days.forEach((item, index) => {
+        this.days.forEach((dayObj, index) => {
             let day = ''
             const classes = {
-                "future-day": this.disabledFutureDay && item.isFutureDay,
+                "future-day": this.disabledFutureDay && dayObj.isFutureDay,
                 "weekend-day":
-                    !(this.disabledFutureDay && item.isFutureDay) &&
-                    [6, 7].includes(item.week),
-                "choose-day": this.currentDate === item.date,
-                "other-month-day": item.isOtherMonthDay
+                    !(this.disabledFutureDay && dayObj.isFutureDay) &&
+                    [6, 7].includes(dayObj.week),
+                "choose-day": this.currentDate === dayObj.date,
+                "other-month-day": dayObj.isOtherMonthDay
             };
 
-            if (!(item.isOtherMonthDay && this.hideOtherMonthDay)) {
+            if (!(dayObj.isOtherMonthDay && this.hideOtherMonthDay)) {
                 day = (
-                    <span onClick={() => this.handleDayChoose(item, index)}>
-                        {item.day}
+                    <span onClick={() => this.handleDayChoose(dayObj, index)}>
+                        {dayObj.day}
                     </span>
                 )
             }
             monthContent.push(
-                <li class={[classes, item.className]}>
+                <li class={[classes, dayObj.className]}>
                     {day}
                 </li>
             )
