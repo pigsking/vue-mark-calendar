@@ -130,7 +130,6 @@ export default {
             let days = [];
 
             const markers = this.markers;
-            const disabledFutureDay = this.disabledFutureDay;
             const hideOtherMonthMarker = this.hideOtherMonthMarker;
             const hideMarker = this.hideMarker
             const totalDays = this.getTotalDays(year, month);
@@ -152,16 +151,14 @@ export default {
                     isFutureDay: this.getDateObj().timestamp < timestamp
                 };
 
-                // add marker
-                if (
-                    !hideMarker&&
-                    !(disabledFutureDay && dayObj.isFutureDay) &&
-                    !(hideOtherMonthMarker && dayObj.isOtherMonthDay)
-                ) {
-                    markers.forEach(item => {
-                        if (this.getDateObj(item.date).date === dayObj.date)
-                            dayObj["className"] = item.className;
-                    });
+                // // add marker
+                if (!hideMarker) {
+                    if (!(hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
+                        markers.forEach(item => {
+                            if (this.getDateObj(item.date).date === dayObj.date)
+                                dayObj["className"] = item.className;
+                        });
+                    }
                 }
 
                 days.push(dayObj);
@@ -198,12 +195,17 @@ export default {
             // avoid month cross-border
             // const today = this.getDateObj().day > switchAfterMonthTotalDays;
             // const choosedDday = day > switchAfterMonthTotalDays;
-
-            if (day > switchAfterMonthTotalDays) {
-                day = switchAfterMonthTotalDays;
+            if (this.disabledFutureDay) {
+                const { day: nowDay } = this.getDateObj()
+                if (day > nowDay) {
+                    day = nowDay
+                }
+            } else {
+                if (day > switchAfterMonthTotalDays) {
+                    day = switchAfterMonthTotalDays;
+                }
             }
 
-            // this.initCalendar(`${year}/${month}/${day}`);
             this.currentDate = this.getDateObj(`${year}/${month}/${day}`).date;
         },
         /**
@@ -312,10 +314,7 @@ export default {
                 )
             }
             monthContent.push(
-                <li
-                    class={[classes, item.className]}
-                    onClick={() => this.handleDayChoose(item, index)}
-                >
+                <li class={[classes, item.className]}>
                     {day}
                 </li>
             )
