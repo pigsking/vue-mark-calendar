@@ -1,20 +1,60 @@
 <template>
   <div id="calendar-wrap">
     <div class="item">
-      <h3>DEFAULT</h3>
-      <DefaultCalendar />
+      <h2>DEFAULT</h2>
+      <Default />
     </div>
     <div class="item">
-      <h3>CUSTOM</h3>
-      <CustomCalendar />
+      <h2>CUSTOM</h2>
+      <section>
+        <h3>Format</h3>
+        <Format />
+      </section>
+      <section>
+        <h3>WeekText</h3>
+        <WeekText />
+      </section>
+      <section>
+        <h3>Sunday Begin</h3>
+        <SundayBegin />
+      </section>
+      <section>
+        <h3>Disabled Future Day</h3>
+        <DisabledFutureDay />
+      </section>
+      <section>
+        <h3>Markers</h3>
+        <Markers />
+      </section>
+      <section>
+        <h3>Hide Other Month Marker</h3>
+        <HideOtherMonthMarker />
+      </section>
+      <section>
+        <h3>Hide Other Month Day</h3>
+        <HideOtherMonthDay />
+      </section>
+      <section>
+        <h3>Hide Marker</h3>
+        <HideMarker />
+      </section>
     </div>
     <div class="copyright">© {{ new Date().getFullYear() }} Allen AuYeung</div>
   </div>
 </template>
 
 <script>
-import DefaultCalendar from "./components/DefaultCalendar";
-import CustomCalendar from "./components/CustomCalendar";
+import Default from "./components/Default";
+import {
+  Format,
+  WeekText,
+  SundayBegin,
+  DisabledFutureDay,
+  Markers,
+  HideOtherMonthMarker,
+  HideOtherMonthDay,
+  HideMarker,
+} from "./components/custom";
 
 const date = new Date();
 const year = date.getFullYear();
@@ -22,8 +62,15 @@ const month = date.getMonth() + 1;
 
 export default {
   components: {
-    DefaultCalendar,
-    CustomCalendar,
+    Default,
+    Format,
+    WeekText,
+    SundayBegin,
+    DisabledFutureDay,
+    Markers,
+    HideOtherMonthMarker,
+    HideOtherMonthDay,
+    HideMarker,
   },
   data() {
     return {
@@ -59,7 +106,6 @@ export default {
 </script>
 
 <style scoped>
-
 #calendar-wrap {
   max-width: 414px;
   margin: auto;

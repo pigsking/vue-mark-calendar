@@ -3,13 +3,11 @@
     <Calendar
       ref="calendar"
       @date="handleDateChange($event)"
-      :format="'YYYY-M-D'"
-      :markers="props.markers"
+      :format="'YYYY-MM-DD'"
+      :weekText="['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']"
       sundayBegin
       disabledFutureDay
-      hideOtherMonthDay
-      hideOtherMonthMarker
-      :weekText="['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']"
+      :markers="markers"
     />
   </div>
 </template>
@@ -20,29 +18,27 @@ const year = date.getFullYear();
 const month = date.getMonth() + 1;
 
 export default {
-  name: "CustomCalendar",
+  name: "Markers",
   data() {
     return {
-      props: {
-        markers: [
-          {
-            date: `${year}-${month}-1`,
-            className: "dream",
-          },
-          {
-            date: `${year}-${month}-20`,
-            className: "love",
-          },
-          {
-            date: `${year}-${month}-30`,
-            className: "miss",
-          },
-          {
-            date: `${year}-${month + 1}-1`,
-            className: "hope",
-          },
-        ],
-      },
+      markers: [
+        {
+          date: `${year}-${month}-1`,
+          className: "dream",
+        },
+        {
+          date: `${year}-${month}-20`,
+          className: "love",
+        },
+        {
+          date: `${year}-${month}-30`,
+          className: "miss",
+        },
+        {
+          date: `${year}-${month + 1}-1`,
+          className: "hope",
+        },
+      ],
     };
   },
   methods: {
@@ -54,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-#custom-calendar >>> .calendar-header{
+#custom-calendar >>> .calendar-header {
   background-color: #5300e8;
 }
 
