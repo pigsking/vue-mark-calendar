@@ -16,9 +16,9 @@
 
     <HideOtherMonthMarker />
 
-    <HideOtherMonthDay />
-
     <HideMarker />
+    
+    <HideOtherMonthDay />
   </section>
 </template>
 <script>
@@ -32,7 +32,7 @@ import {
   HideOtherMonthMarker,
   HideOtherMonthDay,
   HideMarker,
-} from "./components";
+} from "./customs";
 export default {
   name: "Custom",
   components: {
@@ -49,10 +49,12 @@ export default {
 };
 </script>
 <style scoped>
+.custom-calendar-header{
+ display: flex;
+}
 #custom-calendar >>> .choose-day span {
   color: #fff !important;
 }
-
 
 /* 
 #custom-calendar >>> .calendar-header {
