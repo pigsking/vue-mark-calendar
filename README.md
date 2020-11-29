@@ -92,8 +92,9 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 
 - [x] 属性更改后重新初始化日历
 - [x] 隐藏全部标记]
-- [ ] 多个日期可使用一个标记
 - [ ] 隐藏月份切换按钮
+- [ ] 校验属性合法性
+- [ ] 多个日期可使用一个标记
 
 ## :bookmark_tabs: 协议
 

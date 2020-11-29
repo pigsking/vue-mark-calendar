@@ -3,7 +3,14 @@
   "version": "0.3.0",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
+  "keywords": [
+    "vue",
+    "component",
+    "calendar",
+    "mark"
+  ],
   "author": "Allen AuYeung<oyqxiao@sina.com>",
+  "license": "GLWTPL",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -12,8 +19,6 @@
     "build:lib": "vue-cli-service build --target lib --dest lib packages/index.js",
     "prepublishOnly": "npm run build:lib"
   },
-  "main": "lib/vue-mark-calendar.umd.js",
-  "unpkg": "lib/vue-mark-calendar.umd.min.js",
   "dependencies": {
     "vue": "^2.6.12"
   },
@@ -32,19 +37,14 @@
     "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.12"
   },
-  "bugs": {
-    "url": "https://github.com/pigsking/vue-mark-calendar/issues"
-  },
-  "homepage": "https://github.com/pigsking/vue-mark-calendar#readme",
-  "keywords": [
-    "vue",
-    "component",
-    "calendar",
-    "mark"
-  ],
-  "license": "GLWTPL",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pigsking/vue-mark-calendar.git"
-  }
+  },
+  "homepage": "https://github.com/pigsking/vue-mark-calendar#readme",
+  "bugs": {
+    "url": "https://github.com/pigsking/vue-mark-calendar/issues"
+  },
+  "main": "lib/vue-mark-calendar.umd.js",
+  "unpkg": "lib/vue-mark-calendar.umd.min.js"
 }
