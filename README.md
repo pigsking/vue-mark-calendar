@@ -25,7 +25,7 @@ Vue.use(Calendar)
 ### 属性
 
 | 属性 | 说明 | 类型 | 默认值 | 版本
-| ----  | ---- | ---- | ---- |
+| ----  | ---- | ---- | ---- | ---- |
 | markers | 需要标记的天数 | Array | [ ] | 0.1.0 |
 | sundayBegin | 设置一周的开始为星期天 | Boolean | false | 0.1.0 |
 | hideOtherMonthDay | 隐藏其它月份的天数 | Boolean | false | 0.1.0 |
@@ -56,12 +56,12 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 
 // dayInfo
 // {
-//     "day":18, // 一个月中的第几天
-//     "date":"2020/02/14", // 日期
+//     "day":14, // 一个月中的第几天
+//     "date":"2020/02/14", // 该天日期
 //     "week":6, // 星期几
-//     "timestamp":1579276800000, // 事件戳
-//     "isOtherMonthDay":false, // 是否为非本月
-//     "isFutureDay":false // 是否为未来的天数
+//     "timestamp":1581609600000, // 该天时间戳
+//     "isOtherMonthDay":false, // 该天是否为非本月
+//     "isFutureDay":false // 该天是否为未来的天数
 // }
 ```
 
@@ -90,10 +90,10 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 
 未来不一定会来，若来了可在[更新日志]中查看.
 
-- [x] [属性更改后重新初始化日历]
-- [x] [隐藏全部标记]
-- [ ] [多个日期可使用一个标记]
-- [ ] [隐藏月份切换按钮]
+- [x] 属性更改后重新初始化日历
+- [x] 隐藏全部标记]
+- [ ] 多个日期可使用一个标记
+- [ ] 隐藏月份切换按钮
 
 ## :bookmark_tabs: 协议
 
