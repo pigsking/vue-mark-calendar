@@ -59,15 +59,6 @@ export default {
             return true;
         }
     },
-    filters: {
-        format(date) {
-            if (date) {
-                const connector = date.match(/[^0-9]/)[0];
-                const formatDate = utils.getDateObj(date, "YYYY/MM").date;
-                return formatDate.split("/").join(connector);
-            }
-        }
-    },
     watch: {
         currentDate(date) {
             this.initCalendar(date);
@@ -291,10 +282,16 @@ export default {
     render() {
         let weekContent = []
         let monthContent = []
+
+        const dateFormatFilter = (date) => {
+            const connector = date.match(/[^0-9]/)[0];
+            const formatDate = this.getDateObj(date, "YYYY/MM").date;
+            return formatDate.split("/").join(connector);
+        }
         const headerContent = (
             <div class="month-switch">
                 <span class="prev" onClick={() => this.handleMonthSwitch('prev')}></span>
-                <span class="date">{this.currentDate}</span>
+                <span class="date">{dateFormatFilter(this.currentDate)}</span>
                 {this.showNextMonthSwitch &&
                     <span class="next" onClick={() => this.handleMonthSwitch('next')}></span>}
             </div>

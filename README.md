@@ -2,7 +2,8 @@
 一个基于 Vue 2.x 开发的日历标记组件
 
 ## :interrobang: 重要提示
-[imarker] 已不再维护, 请使用 [vue-mark-calendar].
+- [imarker] 已不再维护, 请使用 [vue-mark-calendar]
+- 在未更新到 1.0.0 版本前请慎用
 
 ## :package: 安装
 ```
@@ -17,9 +18,6 @@ import Vue from 'vue'
 import Calendar from '@pigsking/vue-mark-calendar'
 
 Vue.use(Calendar)
-
-//App.vue 
-<Calendar></Calendar>
 ```
 
 ## :open_book: API
@@ -27,7 +25,7 @@ Vue.use(Calendar)
 ### 属性
 
 | 属性 | 说明 | 类型 | 默认值 | 版本
-| ----  | ---- | ---- |
+| ----  | ---- | ---- | ---- |
 | markers | 需要标记的天数 | Array | [ ] | 0.1.0 |
 | sundayBegin | 设置一周的开始为星期天 | Boolean | false | 0.1.0 |
 | hideOtherMonthDay | 隐藏其它月份的天数 | Boolean | false | 0.1.0 |
@@ -70,11 +68,12 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 ### 事件
 
 | 名称 | 说明 | 回调参数 | 版本
-| ----  | ---- | ---- |
+| ----  | ---- | ---- | ---- |
 | date | 点击某天时的回调 | (dayInfo) => void | 0.1.0 |
 
 
 ### 类名
+
 某天满足某些条件时的类名：
 - choose-day：某天被选中
 - weekend-day：某天为周末
@@ -82,12 +81,23 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 - other-month-day：其它月份的天数
 
 ## :sos: 常见问题
+
 **怎么自定义主题?**
 
 你可以使用[深度作用选择器]
 
+## 未来
+
+未来不一定会来，若来了可在[更新日志]中查看.
+
+- [x] [属性更改后重新初始化日历]
+- [x] [隐藏全部标记]
+- [ ] [多个日期可使用一个标记]
+- [ ] [隐藏月份切换按钮]
+
 ## :bookmark_tabs: 协议
-:warning: 本项目采用 [GLWTPL] 协议, 祝你好运
+
+:warning: 本项目采用 [GLWTPL] 协议, 祝你好运！
 
 
 [GLWTPL]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
@@ -95,3 +105,4 @@ const dayInfo = this.$refs.calendar.getDateObj('2020/02/14');
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
 [examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [深度作用选择器]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
+[更新日志]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md

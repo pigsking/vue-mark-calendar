@@ -1,10 +1,9 @@
 module.exports = {
-    publicPath: 'vue-mark-calendar',
+    publicPath: process.env.NODE_ENV === 'production' ? 'vue-mark-calendar' : '/',
     outputDir: 'docs',
     css: {
         extract: false,
         sourceMap: false,
-        modules: false
     },
     pages: {
         index: {
