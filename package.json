@@ -1,6 +1,6 @@
 {
   "name": "@pigsking/vue-mark-calendar",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
   "keywords": [
@@ -16,7 +16,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:lib": "vue-cli-service build --target lib --dest lib packages/index.js",
+    "builib": "vue-cli-service build --target lib --dest lib packages/index.js",
     "prepublishOnly": "npm run build:lib"
   },
   "dependencies": {

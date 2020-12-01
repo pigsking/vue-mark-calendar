@@ -11,24 +11,24 @@ jobs:
    - name: Checkout code
      uses: actions/checkout@v2
    - name: Build
-      run: npm install && npm run build:lib 
+      run: npm install && npm run builib
     
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release  ${{ github.ref }}
-          body: |
-              Please refer to [CHANGELOG.md](https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md) for details.
+  # release:
+  #   name: Release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Release  ${{ github.ref }}
+  #         body: |
+  #             Please refer to [CHANGELOG.md](https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md) for details.
 
   publish:
     name: Publish
