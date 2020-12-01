@@ -3,16 +3,24 @@ on:
     tags:
       - 'v*'
       
-name: Release
+name: Release and Publish
 jobs:
+  build:
+  runs-on: ubuntu-latest
+  steps: 
+   - name: Checkout code
+     uses: actions/checkout@v2
+   - name: Build
+      run: npm install && npm run build:lib 
+    
   release:
-    name: Create Release
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@2
-      - name: Create Release for Tag
-        id: release_tag
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -21,3 +29,27 @@ jobs:
           release_name: Release  ${{ github.ref }}
           body: |
               Please refer to [CHANGELOG.md](https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md) for details.
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Publish
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+      - run: npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - uses: actions/setup-node@v1
+      with:
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@octocat'
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
