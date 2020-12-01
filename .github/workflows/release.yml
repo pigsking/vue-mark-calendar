@@ -1,8 +1,7 @@
 on:
   push:
-    branches:
-      # - 'v*'
-      - master
+    tags:
+      - 'v*'
       
 name: Release and Publish
 jobs:

@@ -1,21 +1,20 @@
+# folder
 .github
 examples
 docs
 packages
 tests
-node_modules
+public
 
+# file
 yarn.lock
 yarn-error.log
 vue.config.js
 babel.config.js
-
 jest.config.js
 # package-lock.json
-
 .gitignore
 .browserslistrc
-.eslintrc
+.eslintrc.js
 .postcssrc.json
 CHANGELOG.md
-# https://juejin.im/post/5bbab9de5188255c8c0cb0e3
