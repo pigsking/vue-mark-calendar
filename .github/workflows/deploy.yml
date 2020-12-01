@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      - deploy
+      - master
+      
 name: Deploy
 jobs:
   build-and-deploy:
@@ -9,8 +10,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        persist-credentials: false
 
     - name: Build
       run: npm install && npm run build  
