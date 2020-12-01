@@ -284,9 +284,11 @@ export default {
         let monthContent = []
 
         const dateFormatFilter = (date) => {
-            const connector = date.match(/[^0-9]/)[0];
-            const formatDate = this.getDateObj(date, "YYYY/MM").date;
-            return formatDate.split("/").join(connector);
+            if(date){
+                const connector = date.match(/[^0-9]/)[0];
+                const formatDate = this.getDateObj(date, "YYYY/MM").date;
+                return formatDate.split("/").join(connector);
+            }
         }
         const headerContent = (
             <div class="month-switch">

@@ -1,14 +1,12 @@
-src
-dist
+.github
+examples
 docs
-public
 packages
 tests
-
+node_modules
 
 yarn.lock
 yarn-error.log
-node_modules
 vue.config.js
 babel.config.js
 
@@ -16,4 +14,8 @@ jest.config.js
 # package-lock.json
 
 .gitignore
+.browserslistrc
+.eslintrc
+.postcssrc.json
+CHANGELOG.md
 # https://juejin.im/post/5bbab9de5188255c8c0cb0e3
