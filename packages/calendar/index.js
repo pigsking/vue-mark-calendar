@@ -280,7 +280,7 @@ export default {
                 month: month,
                 day: day,
                 week: dateObj.getDay() || 7,
-                timestamp: dateObj.getTime(),
+                timestamp: dateObj.getTime() / 1000,
                 date: format.toUpperCase().replace(/\[.*?\]|Y{2,4}|M{1,2}|D{1,2}|SSS/g, (match) => {
                     return {
                         // YY: String(year).slice(-2),
