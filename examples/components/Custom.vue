@@ -21,6 +21,8 @@
     <HideOtherMonthDay />
     
     <TodayText/>
+    
+    <DisabledSwitchMonth/>
   </section>
 </template>
 <script>
@@ -34,7 +36,8 @@ import {
   HideOtherMonthMarker,
   HideOtherMonthDay,
   HideMarker,
-  TodayText
+  TodayText,
+  DisabledSwitchMonth
 } from "./customs";
 export default {
   name: "Custom",
@@ -48,7 +51,8 @@ export default {
     HideOtherMonthMarker,
     HideOtherMonthDay,
     HideMarker,
-    TodayText
+    TodayText,
+    DisabledSwitchMonth
   },
 };
 </script>
@@ -66,7 +70,7 @@ export default {
 } */
 
 /* marker style*/
-#custom-calendar >>> .love span {
+/* #custom-calendar >>> .love span {
   color: #fff !important;
   background-color: #7b1fa2;
 }
@@ -84,5 +88,5 @@ export default {
 #custom-calendar >>> .hope span {
   color: #fff !important;
   background-color: #ff5722;
-}
+} */
 </style>

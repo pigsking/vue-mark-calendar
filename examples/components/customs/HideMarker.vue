@@ -1,7 +1,7 @@
 <template>
-  <section id="custom-calendar">
+  <section>
     <div class="custom-calendar-header">
-      <h3>props.hideMarker</h3>
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/HideMarker.vue" >props.hideMarker</a></h3>
       <input type="checkbox" v-model="hideMarker" />
     </div>
     <Calendar :markers="markers" :hideMarker="hideMarker" />
@@ -32,7 +32,7 @@ export default {
           className: "miss",
         },
         {
-          date: `${year}-${month + 1}/1`,
+          date: `${month===12?year+1:year}/${month===12?1:month+ 1}/1`,
           className: "hope",
         },
       ],
@@ -40,3 +40,24 @@ export default {
   },
 };
 </script>
+<style scoped>
+section >>> .love span {
+  color: #fff !important;
+  background-color: #7b1fa2;
+}
+
+section >>> .miss span {
+  color: #fff !important;
+  background-color: #ff4081;
+}
+
+section >>> .dream span {
+  color: #fff !important;
+  background-color: #448aff;
+}
+
+section >>> .hope span {
+  color: #fff !important;
+  background-color: #ff5722;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <section id="custom-calendar">
+  <section>
     <div class="custom-calendar-header">
-      <h3>props.markers</h3>
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/Markers.vue" >props.markers</a></h3>
       <button @click="randomMarker">Random</button>
     </div>
     <Calendar :markers="markers" />
@@ -44,3 +44,24 @@ export default {
   },
 };
 </script>
+<style scoped>
+section >>> .love span {
+  color: #fff !important;
+  background-color: #7b1fa2;
+}
+
+section >>> .miss span {
+  color: #fff !important;
+  background-color: #ff4081;
+}
+
+section >>> .dream span {
+  color: #fff !important;
+  background-color: #448aff;
+}
+
+section >>> .hope span {
+  color: #fff !important;
+  background-color: #ff5722;
+}
+</style>

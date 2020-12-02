@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3>class="weekend-day"</h3>
+     <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/WeekendDay.vue" >class="weekend-day"</a></h3>
     <Calendar />
   </section>
 </template>
