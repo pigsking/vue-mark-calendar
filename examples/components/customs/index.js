@@ -7,6 +7,8 @@ import WeekText from './WeekText'
 import Markers from './Markers'
 import HideOtherMonthMarker from './HideOtherMonthMarker'
 import HideMarker from './HideMarker'
+import TodayText from './TodayText'
+
 
 export {
     Format,
@@ -17,5 +19,6 @@ export {
     Markers,
     HideOtherMonthMarker,
     HideOtherMonthDay,
-    HideMarker
+    HideMarker,
+    TodayText
 }

@@ -31,7 +31,9 @@ export default {
         },
         sundayBegin: {
             type: Boolean,
-            default: false
+            default: (value) => {
+                console.log(value)
+            }
         },
         weekText: {
             type: Array,
@@ -39,7 +41,8 @@ export default {
             validator: (value) => {
                 return value.length === 7
             }
-        }
+        },
+        todayText: String
     },
     data() {
         return {
@@ -140,6 +143,7 @@ export default {
             const hideOtherMonthMarker = this.hideOtherMonthMarker;
             const hideMarker = this.hideMarker
             const totalDays = this.getTotalDays(year, month);
+            const { timestamp: todayTimestamp } = this.getDateObj()
 
             if (type === "prev" && month === 12) year -= 1;
             if (type === "next" && month === 1) year += 1;
@@ -156,7 +160,8 @@ export default {
                     timestamp: timestamp,
                     className: '',
                     isOtherMonthDay: ["prev", "next"].includes(type),
-                    isFutureDay: this.getDateObj().timestamp < timestamp
+                    isFutureDay: timestamp > todayTimestamp,
+                    isToday: todayTimestamp === timestamp
                 };
 
                 // // add marker
@@ -263,7 +268,7 @@ export default {
           * @return {Object}
           */
         getDateObj(date, format = this.format) {
-            const dateObj = date ? new Date(date.replace(/-/g, "/")) : new Date()
+            const dateObj = date ? new Date(date.replace(/-/g, "/")) : new Date(new Date().setHours(0, 0, 0, 0))
             const year = dateObj.getFullYear(), month = dateObj.getMonth() + 1, day = dateObj.getDate();
             return {
                 year: year,
@@ -317,13 +322,14 @@ export default {
                     !(this.disabledFutureDay && dayObj.isFutureDay) &&
                     [6, 7].includes(dayObj.week),
                 "choose-day": this.currentDate === dayObj.date,
-                "other-month-day": dayObj.isOtherMonthDay
+                "other-month-day": dayObj.isOtherMonthDay,
+                "today": dayObj.isToday
             };
 
             if (!(dayObj.isOtherMonthDay && this.hideOtherMonthDay)) {
                 day = (
                     <span onClick={() => this.handleDayChoose(dayObj, index)}>
-                        {dayObj.day}
+                        {this.todayText && dayObj.isToday ? this.todayText : dayObj.day}
                     </span>
                 )
             }

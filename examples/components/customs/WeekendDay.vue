@@ -6,7 +6,7 @@
 </template>
 
 <style scoped>
-#custom-calendar >>> .weekend-day span {
+section >>> .weekend-day span {
   color: #536dfe;
 }
 </style>

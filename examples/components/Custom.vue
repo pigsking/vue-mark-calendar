@@ -19,6 +19,8 @@
     <HideMarker />
     
     <HideOtherMonthDay />
+    
+    <TodayText/>
   </section>
 </template>
 <script>
@@ -32,6 +34,7 @@ import {
   HideOtherMonthMarker,
   HideOtherMonthDay,
   HideMarker,
+  TodayText
 } from "./customs";
 export default {
   name: "Custom",
@@ -45,6 +48,7 @@ export default {
     HideOtherMonthMarker,
     HideOtherMonthDay,
     HideMarker,
+    TodayText
   },
 };
 </script>

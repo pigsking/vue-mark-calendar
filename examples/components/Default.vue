@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2>DEFAULT</h2>
-    <Calendar ref="calendar" @date="handleDateChange($event)" />
+    <Calendar ref="calendar" @date="handleDateChange($event)" todayText/>
   </section>
 </template>
 
