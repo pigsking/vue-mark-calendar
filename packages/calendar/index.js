@@ -24,8 +24,10 @@ export default {
             default: false
         },
         format: {
-            type: String,
-            default: "YYYY/MM/DD"
+            default: "YYYY/MM/DD",
+            validator: (value) => {
+                return ["YYYY/MM/DD", "YYYY/M/D", "YYYY-MM-DD", "YYYY-M-D"].includes(value)
+            }
         },
         sundayBegin: {
             type: Boolean,
@@ -33,7 +35,10 @@ export default {
         },
         weekText: {
             type: Array,
-            default: () => ["一", "二", "三", "四", "五", "六", "日"]
+            default: () => ["一", "二", "三", "四", "五", "六", "日"],
+            validator: (value) => {
+                return value.length === 7
+            }
         }
     },
     data() {
@@ -284,7 +289,7 @@ export default {
         let monthContent = []
 
         const dateFormatFilter = (date) => {
-            if(date){
+            if (date) {
                 const connector = date.match(/[^0-9]/)[0];
                 const formatDate = this.getDateObj(date, "YYYY/MM").date;
                 return formatDate.split("/").join(connector);
