@@ -95,11 +95,21 @@ li {
 
 #calendar .choose-day span {
     color           : #fff;
-    background-color: #232323!important;
+    background-color: #232323 !important;
 }
 
 
-#calendar .future-day span,
-#calendar .other-month-day span {
+#calendar .future-day,
+#calendar .other-month-day {
     opacity: .3;
+}
+
+.start-marker {
+    border-top-left-radius   : 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.end-marker {
+    border-top-right-radius   : 20px;
+    border-bottom-right-radius: 20px;
 }

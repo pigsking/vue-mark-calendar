@@ -31,9 +31,7 @@ export default {
         },
         sundayBegin: {
             type: Boolean,
-            default: (value) => {
-                console.log(value)
-            }
+            default: false
         },
         weekText: {
             type: Array,
@@ -46,6 +44,10 @@ export default {
         disabledSwitchMonth: {
             type: Boolean,
             default: false
+        },
+        multiDayMarkers: {
+            type: Array,
+            default: () => []
         }
     },
     data() {
@@ -144,6 +146,7 @@ export default {
             let days = [];
 
             const markers = this.markers;
+            const multiDayMarkers = this.multiDayMarkers
             const hideOtherMonthMarker = this.hideOtherMonthMarker;
             const hideMarker = this.hideMarker
             const totalDays = this.getTotalDays(year, month);
@@ -173,8 +176,24 @@ export default {
                     if (!(hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
                         markers.forEach(item => {
                             if (this.getDateObj(item.date).date === dayObj.date)
-                                dayObj["className"] = item.className;
+                                dayObj.className = item.className;
                         });
+                        multiDayMarkers.forEach(item => {
+                            const { timestamp: startTimestamp } = this.getDateObj(item.startDate)
+                            const { timestamp: endTimestamp } = this.getDateObj(item.endDate)
+                            if (startTimestamp === dayObj.timestamp) {
+                                dayObj.className = `${item.className} start-marker`;
+                            }
+
+                            if (startTimestamp < dayObj.timestamp && dayObj.timestamp < endTimestamp) {
+                                dayObj.className = item.className
+                            }
+
+                            if (endTimestamp === dayObj.timestamp) {
+                                dayObj.className =  `${item.className} end-marker`;
+                            }
+                        })
+
                     }
                 }
 

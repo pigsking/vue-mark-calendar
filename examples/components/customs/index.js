@@ -9,6 +9,10 @@ import HideOtherMonthMarker from './HideOtherMonthMarker'
 import HideMarker from './HideMarker'
 import TodayText from './TodayText'
 import DisabledSwitchMonth from './DisabledSwitchMonth'
+import MultiDayMarkers from './MultiDayMarkers'
+
+
+
 
 export {
     Format,
@@ -21,5 +25,6 @@ export {
     HideOtherMonthDay,
     HideMarker,
     TodayText,
-    DisabledSwitchMonth
+    DisabledSwitchMonth,
+    MultiDayMarkers
 }
