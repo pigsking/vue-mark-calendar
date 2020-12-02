@@ -5,15 +5,17 @@ on:
       
 name: Deploy
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - run: npm install
-      - run: npm run build  
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build
+      run: npm install && npm run build  
     
-      - uses: JamesIves/github-pages-deploy-action@releases/v3
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
