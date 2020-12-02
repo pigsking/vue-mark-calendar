@@ -20,7 +20,7 @@ import Calendar from '@pigsking/vue-mark-calendar'
 Vue.use(Calendar)
 ```
 ## :open_book: API
-具体使用方法请查看具体[相关示例]。
+具体使用方法请查看具体[相关示例]
 ### props
 
 **markers**
@@ -117,7 +117,7 @@ Vue.use(Calendar)
 点击某天时的回调
 
 ### date object
-`getDateObj` 方法返回和 `date` 接收到的时间对象
+`getDateObj` 方法返回和 `date` 事件接收到的时间对象
 ```javascirpt
 // {
 //     "day":14, // 一个月中的第几天
@@ -155,4 +155,4 @@ Vue.use(Calendar)
 [examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [深度作用选择器]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
 [更新日志]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
-[相关示例]：https://github.com/pigsking/vue-mark-calendar/tree/master/examples/components/customs
+[相关示例]: https://github.com/pigsking/vue-mark-calendar/tree/master/examples/components/customs
