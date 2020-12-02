@@ -42,7 +42,11 @@ export default {
                 return value.length === 7
             }
         },
-        todayText: String
+        todayText: String,
+        disabledSwitchMonth: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -224,14 +228,15 @@ export default {
          * @param {Object} item
          */
         handleDayChoose(item) {
-            if (!(this.disabledFutureDay && item.isFutureDay)) {
-                if (item.isOtherMonthDay) {
-                    item.day > 7
-                        ? this.handleMonthSwitch("prev")
-                        : this.handleMonthSwitch("next");
-                }
-                this.currentDate = item.date;
+            if ((this.disabledFutureDay && item.isFutureDay)) return
+            if (this.disabledSwitchMonth && item.isOtherMonthDay) return
+
+            if (item.isOtherMonthDay) {
+                item.day > 7
+                    ? this.handleMonthSwitch("prev")
+                    : this.handleMonthSwitch("next");
             }
+            this.currentDate = item.date;
         },
         /**
          * @description match month's day obj by the date string
@@ -302,10 +307,10 @@ export default {
         }
         const headerContent = (
             <div class="month-switch">
-                <span class="prev" onClick={() => this.handleMonthSwitch('prev')}></span>
+                <span class={{ 'prev': !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
                 <span class="date">{dateFormatFilter(this.currentDate)}</span>
                 {this.showNextMonthSwitch &&
-                    <span class="next" onClick={() => this.handleMonthSwitch('next')}></span>}
+                    <span class={{ 'next': !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
             </div>
         );
 
