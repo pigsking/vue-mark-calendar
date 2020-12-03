@@ -3,7 +3,6 @@
 
 ## :interrobang: Important
 - [imarker] 已不再维护, 请使用 [vue-mark-calendar]
-- 在未更新到 1.0.0 版本前请慎用
 
 ## :package: Install
 ```
@@ -21,115 +20,195 @@ Vue.use(Calendar)
 ```
 ## :open_book: API
 具体使用方法请查看具体[相关示例]
-### props
+### Props
 
 **markers**
-- type: `Array`
-- required: `false`
-
+- Type: `Array`
+- Usage: 
+```javascript
+<Calendar :markers="markers" />
+export default{
+    data(){
+        return{
+             markers: [
+                {
+                    date: "2020/12/20",
+                    className: "dream",
+                },
+            ],
+        }
+    }
+}
+```
 需要标记的天数
 
-**sundayBegin**
-- type: `Boolean`
-- default: `false`
-- required: `false`
+**multiDayMarkers**
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar :multiDayMarkers="multiDayMarkers" />
+export default{
+    data(){
+        return{
+             multiDayMarkers: [
+                {
+                    startDate: "2020/11/10",
+                    endDate: "2020/11/20",
+                    className: "dream",
+                },
+             ]
+        }
+    }
+}
+```
+ 一次标记多天
 
+**sundayBegin**
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar sundayBegin />
+```
  设置一周的开始为星期天
 
 **hideOtherMonthDay**
-- type: `Boolean`
-- default: `false`
-- required: `false`
-
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar hideOtherMonthDay />
+```
  隐藏其它月份的天数
  
 **hideOtherMonthMarker**
-- type: `Boolean`
-- default: `false`
-- required: `false`
-
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar hideOtherMonthMarker />
+```
  隐藏其它月份的标记
 
  
 **disabledFutureDay**
-- type: `Boolean`
-- default: `false`
-- required: `false`
-
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar disabledFutureDay />
+```
  设置未来的天数不可点击
 
  
 **format**
-- type: `String`
-- default: "YYYY/MM/DD"
-- required: `false`
-
+- Type: `String`
+- Default: "YYYY/MM/DD"
+- Usage: 
+```javascript
+<Calendar format="YYYY-MM-DD" />
+```
  日期格式化形式,目前只支持 "YYYY/MM/DD"、"YYYY/M/D"、"YYYY-MM-DD"、"YYYY-M-D"
  
 **weekText**
-- type: `Array`
-- default: `["一", "二", "三", "四", "五", "六", "日"]`
-- required: `false`
-
+- Type: `Array`
+- Default: `["一", "二", "三", "四", "五", "六", "日"]`
+- Usage: 
+```javascript
+<Calendar :weekText="['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']" />
+```
  周几的文字描述
  
 **hideMarker**
-- type: `Boolean`
-- required: `false`
-
+- Type: `Boolean`
+- Usage: 
+```javascript
+<Calendar hideMarker />
+```
  隐藏所有的标记
  
 **todayText**
-- type: `String`
-- required: `false`
-
+- Type: `String`
+- Usage: 
+```javascript
+<Calendar todayText="今" />
+```
  周几的文字描述
 
 **disabledSwitchMonth**
-- type: `Boolean`
-- default: `false`
-- required: `false`
-
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar disabledSwitchMonth />
+```
  禁用月份切换
 
-### methods
+### Methods
 
 **chooseDate()**
 
-- type: `String`
-- required：`false`
+- Arguments: `{String} date string`
+- Usage:
+```javascript
+<Calendar ref="calendar" />
+export default{
+   mounted(){
+       // 回到今天
+       this.$refs.calendar.chooseDate()
 
+       // 选中指定日期
+       this.$refs.calendar.chooseDate('2020/12/20')
+   }
+}
+```
 选中某天，传参数时选中所传日期，不传参数时选中当天
 
 **getDateObj()**
 
-- parameter type: `String`
-- parameter required：`false`
-- return: `current date object`
+- Arguments: `{String} date string`
+- Usage:
+```javascript
+<Calendar ref="calendar" />
+export default{
+   mounted(){
+       // 获取今天对象
+      const todayInfo = this.$refs.calendar.getDateObj()
 
+       // 选中指定日期对象
+      const dayInfo = this.$refs.calendar.getDateObj('2020/12/20')
+   }
+}
+```
 获取日期对象，传参数时选中所传日期的对象，不传参数时获取当天日期对象
 
-### events
+### Events
 
 **date**
-- return:`current date object`
-
+- Usage:
+```javascript
+<Calendar @date="handleChooseDay($event)" />
+export default{
+   methods(){
+       handleChooseDay(dayInfo){
+        // dayInfo   
+        // {
+        //     "day":14, // 一个月中的第几天
+        //     "date":"2020/02/14", // 该天日期
+        //     "week":6, // 星期几
+        //     "timestamp":1581609600, // 该天时间戳
+        //     "isOtherMonthDay":false, // 该天是否为非本月
+        //     "isFutureDay":false, // 该天是否为未来的天数
+        //     "isToday":false // 某月中的某天是否为当天     
+        // }
+       }
+   }
+}
+```
 点击某天时的回调
 
-### date object
-`getDateObj` 方法返回和 `date` 事件接收到的时间对象
-```javascirpt
-// {
-//     "day":14, // 一个月中的第几天
-//     "date":"2020/02/14", // 该天日期
-//     "week":6, // 星期几
-//     "timestamp":1581609600, // 该天时间戳
-//     "isOtherMonthDay":false, // 该天是否为非本月
-//     "isFutureDay":false, // 该天是否为未来的天数
-//     "isToday":false // 某月中的某天是否为当天     
-// }
-```
-### classes
+### Classes
 
 组件默认类名：
 - choose-day：某天被选中

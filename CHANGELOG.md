@@ -1,10 +1,20 @@
 # 更新日志
 
+## 0.5.0
+
+### Bug Fixes
+- 移除生产环境存在的 console
+- 修复组件样式影响全局问题(css modules)
+
+### Features
+- 支持一次标记多天
+- 取消浏览器双击文字显示蓝色背景的默认行为
+
 ## 0.4.0
 
 ### Features
 - prop 简单验证
-- 支持禁止手动月份切换
+- 支持禁止手动切换月份
 - 支持自定义今天文字和样式
 
 ### BREAKING CHANGES
@@ -14,6 +24,7 @@
 
 ### Bug Fixes
 - 修复设置 disabledFutureDay 后，从上一月份切回本月时可选择未来的天数
+
 ### Code Refactoring
 - 重构原单文件形式组件为 jsx 形式组件
 

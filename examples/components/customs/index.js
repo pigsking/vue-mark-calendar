@@ -12,8 +12,6 @@ import DisabledSwitchMonth from './DisabledSwitchMonth'
 import MultiDayMarkers from './MultiDayMarkers'
 
 
-
-
 export {
     Format,
     WeekendDay,
