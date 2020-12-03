@@ -4,6 +4,7 @@ module.exports = {
     css: {
         extract: false,
         sourceMap: false,
+        modules: true
     },
     pages: {
         index: {

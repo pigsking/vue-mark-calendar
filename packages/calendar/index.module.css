@@ -1,14 +1,19 @@
-* {
+#calendar * {
     box-sizing                 : border-box;
     -webkit-tap-highlight-color: transparent;
+    -moz-user-select           : none;
+    -webkit-user-select        : none;
+    -ms-user-select            : none;
+    -khtml-user-select         : none;
+    user-select                : none;
 }
 
-ul {
+#calendar ul {
     margin      : 0;
     padding-left: 0;
 }
 
-li {
+#calendar li {
     list-style: none;
 }
 
@@ -68,7 +73,6 @@ li {
 .week li {
     flex      : 1;
     text-align: center;
-    cursor    : pointer;
 }
 
 .month {
