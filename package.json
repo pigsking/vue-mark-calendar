@@ -1,6 +1,6 @@
 {
   "name": "@pigsking/vue-mark-calendar",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
   "keywords": [
@@ -34,6 +34,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^26.6.3",
+    "terser-webpack-plugin": "4.2.3",
     "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.12"
   },
@@ -45,6 +46,6 @@
   "bugs": {
     "url": "https://github.com/pigsking/vue-mark-calendar/issues"
   },
-  "main": "lib/vue-mark-calendar.umd.js",
+  "main": "lib/vue-mark-calendar.umd.min.js",
   "unpkg": "lib/vue-mark-calendar.umd.min.js"
 }

@@ -350,7 +350,7 @@ export default {
                     [6, 7].includes(dayObj.week),
                 [styles['choose-day']]: this.currentDate === dayObj.date,
                 [styles['other-month-day']]: dayObj.isOtherMonthDay,
-                [styles.today]: dayObj.isToday
+                today: dayObj.isToday
             };
 
             if (!(dayObj.isOtherMonthDay && this.hideOtherMonthDay)) {
