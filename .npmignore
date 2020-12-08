@@ -12,9 +12,10 @@ yarn-error.log
 vue.config.js
 babel.config.js
 jest.config.js
-# package-lock.json
+package-lock.json
 .gitignore
 .browserslistrc
 .eslintrc.js
 .postcssrc.json
 CHANGELOG.md
+rollup.config.js
