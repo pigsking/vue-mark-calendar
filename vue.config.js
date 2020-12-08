@@ -6,8 +6,7 @@ module.exports = {
     productionSourceMap: false,
     css: {
         extract: false,
-        sourceMap: false,
-        modules: true
+        requireModuleExtension: true
     },
     pages: {
         index: {

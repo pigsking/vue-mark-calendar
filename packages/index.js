@@ -1,7 +1,13 @@
-import Calendar from './calendar';
+import Calendar from './calendar/index.js';
 
-Calendar.install = (Vue) => {
-    Vue.component(Calendar.name, Calendar)
+const install = (Vue) => {
+    Vue.component(Calendar.name, Calendar);
 }
 
-export default Calendar;
+if (typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+}
+
+export default {
+    install
+}

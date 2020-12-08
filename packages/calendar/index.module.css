@@ -35,7 +35,7 @@
     padding        : 0 20px;
 }
 
-.month-switch .date {
+.date {
     position  : absolute;
     left      : 0;
     right     : 0;
@@ -44,8 +44,8 @@
     text-align: center;
 }
 
-.month-switch .prev,
-.month-switch .next {
+.prev,
+.next {
     width       : 12px;
     height      : 12px;
     border-top  : 1px solid #fff;
@@ -53,11 +53,11 @@
     cursor      : pointer;
 }
 
-.month-switch .prev {
+.prev {
     transform: rotate(-135deg);
 }
 
-.month-switch .next {
+.next {
     transform: rotate(45deg);
 }
 
@@ -97,14 +97,14 @@
     cursor       : pointer;
 }
 
-#calendar .choose-day span {
+.choose-day span {
     color           : #fff;
     background-color: #232323 !important;
 }
 
 
-#calendar .future-day,
-#calendar .other-month-day {
+.future-day,
+.other-month-day {
     opacity: .3;
 }
 
