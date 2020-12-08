@@ -1,5 +1,10 @@
 # 更新日志
 
+## 0.6.0-beta
+
+### Code Refactoring
+- 更换打包方式（rollup）以减少包体积
+
 ## 0.5.0
 
 ### Bug Fixes

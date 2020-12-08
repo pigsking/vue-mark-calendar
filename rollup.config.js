@@ -14,11 +14,8 @@ export default {
         format: "umd",
         name: 'Calendar'
     },
-    // external: ['vue','core-js'],
-    // ...
     plugins: [
         vue({ css: false }),
-    
         postcss({
             extract: false,
             modules: true,
