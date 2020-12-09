@@ -4,6 +4,8 @@
 
     <Custom />
 
+    <GitHubBadge slug="pigsking/vue-mark-calendar"/>
+    
     <div class="copyright">© {{ new Date().getFullYear() }} Allen AuYeung</div>
   </div>
 </template>
@@ -11,11 +13,12 @@
 <script>
 import Default from "./components/Default";
 import Custom from "./components/Custom";
-
+import GitHubBadge from 'vue-github-badge'
 export default {
   components: {
     Default,
     Custom,
+    GitHubBadge
   },
 };
 </script>

@@ -11368,6 +11368,11 @@ vue-eslint-parser@^7.0.0:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
+vue-github-badge@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-github-badge/-/vue-github-badge-1.0.1.tgz#dff7ce07320e64a218edf106b15a43176ec06106"
+  integrity sha1-3/fOBzIOZKIY7fEGsVpDF27AYQY=
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"

@@ -1,16 +1,16 @@
 # vue-mark-calendar
 一个基于 Vue 2.x 开发的日历标记组件，版本记录请在[更新日志]中查看。
 
-## :interrobang: Important
-- [imarker] 已不再维护, 请使用 [vue-mark-calendar]
+## BREAKING CHANGES
+- [imarker] 已不再维护, 请使用 [vue-mark-calendar]。
 
-## :package: Install
+## Install
 ```
 npm install @pigsking/vue-mark-calendar
 //or
 yarn add @pigsking/vue-mark-calendar
 ```
-## :grey_question: Usage
+## Usage
 ```javscript
 // main.js
 import Vue from 'vue'
@@ -18,8 +18,8 @@ import Calendar from '@pigsking/vue-mark-calendar'
 
 Vue.use(Calendar)
 ```
-## :open_book: API
-具体使用方法请查看具体[相关示例]
+## API
+下面是 API 说明，你也可以直接查看具体的[示例组件]。
 ### Props
 
 **markers**
@@ -217,7 +217,7 @@ export default{
 - other-month-day：其它月份的天数
 - today: 今天
 
-## :sos: FQA
+## FQA
 
 **怎么自定义主题?**
 
@@ -225,17 +225,21 @@ export default{
 
 **能在移动端网页中使用吗?**
 
-组件本身未限制最大宽度，故可根据不同屏幕尺寸自适应
+组件本身未限制最大宽度，故可根据不同屏幕尺寸自适应。
 
-## :bookmark_tabs: License
+**为什么英文命名不规范？**
 
-:warning: 本项目采用 [GLWTPL] 协议, 祝你好运！
+本人英文水平有限，不然就该写英文文档了，欢迎英文好的帮忙斧正。
+
+## License
+
+[MIT]
 
 
-[GLWTPL]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
+[MIT]: https://github.com/pigsking/vue-mark-calendar/blob/master/LICENSE
 [imarker]: https://www.npmjs.com/package/imarker
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
 [examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [深度作用选择器]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
 [更新日志]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
-[相关示例]: https://github.com/pigsking/vue-mark-calendar/tree/master/examples/components/customs
+[示例组件]: https://github.com/pigsking/vue-mark-calendar/tree/master/examples/components/customs

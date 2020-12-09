@@ -19,3 +19,4 @@ package-lock.json
 .postcssrc.json
 CHANGELOG.md
 rollup.config.js
+*.yml
