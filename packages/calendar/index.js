@@ -90,7 +90,7 @@ export default {
         hideOtherMonthMarker() {
             this.initCalendar(this.currentDate)
         },
-        multiDayMarkers(){
+        multiDayMarkers() {
             this.initCalendar(this.currentDate)
         }
     },
@@ -174,7 +174,7 @@ export default {
                     isToday: todayTimestamp === timestamp
                 };
 
-                // // add marker
+                // add marker
                 if (!hideMarker) {
                     if (!(hideOtherMonthMarker && dayObj.isOtherMonthDay)) {
                         markers.forEach(item => {
@@ -182,8 +182,12 @@ export default {
                                 dayObj.className = item.className;
                         });
                         multiDayMarkers.forEach(item => {
-                            const { timestamp: startTimestamp } = this.getDateObj(item.startDate)
-                            const { timestamp: endTimestamp } = this.getDateObj(item.endDate)
+                            const { timestamp: startTimestamp, date: startDate } = this.getDateObj(item.startDate)
+                            const { timestamp: endTimestamp, date: endDate } = this.getDateObj(item.endDate)
+
+                            dayObj['startDate'] = startDate
+                            dayObj['endDate'] = endDate
+
                             if (startTimestamp === dayObj.timestamp) {
                                 dayObj.className = `${item.className} ${styles['start-marker']}`;
                             }
@@ -193,7 +197,7 @@ export default {
                             }
 
                             if (endTimestamp === dayObj.timestamp) {
-                                dayObj.className =  `${item.className} ${styles['end-marker']}`;
+                                dayObj.className = `${item.className} ${styles['end-marker']}`;
                             }
                         })
 
