@@ -10,6 +10,7 @@ import HideMarker from './HideMarker'
 import TodayText from './TodayText'
 import DisabledSwitchMonth from './DisabledSwitchMonth'
 import MultiDayMarkers from './MultiDayMarkers'
+import HideArrows from './HideArrows'
 
 
 export {
@@ -24,5 +25,6 @@ export {
     HideMarker,
     TodayText,
     DisabledSwitchMonth,
-    MultiDayMarkers
+    MultiDayMarkers,
+    HideArrows
 }

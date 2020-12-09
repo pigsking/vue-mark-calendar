@@ -48,6 +48,10 @@ export default {
         multiDayMarkers: {
             type: Array,
             default: () => []
+        },
+        hideArrows: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -333,10 +337,10 @@ export default {
         }
         const headerContent = (
             <div class={styles['month-switch']}>
-                <span class={{ [styles.prev]: !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
+                <span class={{ [styles.prev]: !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
                 <span class={styles.date}>{dateFormatFilter(this.currentDate)}</span>
                 {this.showNextMonthSwitch &&
-                    <span class={{ [styles.next]: !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
+                    <span class={{ [styles.next]: !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
             </div>
         );
 
