@@ -9,11 +9,13 @@ import resolve from 'rollup-plugin-node-resolve';
 
 export default {
     input: "./packages/index.js",
-    output: {
-        file: "./lib/vue-mark-calendar.umd.js",
-        format: "umd",
-        name: 'Calendar'
-    },
+    output: [
+        {
+            file: "./dist/vue-mark-calendar.umd.js",
+            format: "umd",
+            name: 'Calendar'
+        }
+    ],
     plugins: [
         vue({ css: false }),
         postcss({
@@ -24,7 +26,7 @@ export default {
         commonjs({
             include: 'node_modules/**'
         }),
-        babel({ exclude: 'node_modules/**',babelHelpers:'runtime'}),
+        babel({ exclude: 'node_modules/**', babelHelpers: 'runtime' }),
         terser()
     ],
 }

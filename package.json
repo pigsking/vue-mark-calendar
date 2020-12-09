@@ -1,6 +1,6 @@
 {
   "name": "@pigsking/vue-mark-calendar",
-  "version": "0.6.0-beta",
+  "version": "0.6.0",
   "private": false,
   "description": "A simple calendar mark component for vuejs2.x",
   "keywords": [
@@ -10,17 +10,14 @@
     "mark"
   ],
   "author": "Allen AuYeung<oyqxiao@sina.com>",
-  "license": "GLWTPL",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "build:component": "npm run build:library && npm run build:plugin",
-    "build:library": "vue-cli-service build --target lib --dest library packages/calendar/index.js --mode production",
-    "build:plugin": "vue-cli-service build --target lib --dest plugin packages/index.js",
-    "prepublishOnly": "npm run build:p",
-    "build:p": "rollup -c"
+    "prepublishOnly": "npm run build:c",
+    "build:c": "rollup -c"
   },
   "dependencies": {
     "vue": "^2.6.12"
@@ -28,6 +25,7 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/runtime": "^7.12.5",
+    "@pigsking/vue-mark-calendar": "0.6.0-beta",
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@testing-library/jest-dom": "^5.11.6",
@@ -51,7 +49,7 @@
     "terser-webpack-plugin": "4.2.3",
     "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.12",
-    "@pigsking/vue-mark-calendar": "0.6.0-beta"
+    "vue-github-badge": "^1.0.1"
   },
   "repository": {
     "type": "git",
@@ -61,5 +59,6 @@
   "bugs": {
     "url": "https://github.com/pigsking/vue-mark-calendar/issues"
   },
-  "main": "lib/vue-mark-calendar.umd.js"
+  "main": "dist/vue-mark-calendar.umd.js",
+  "unpkg": "dist/vue-mark-calendar.umd.js"
 }

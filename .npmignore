@@ -5,6 +5,7 @@ docs
 packages
 tests
 public
+dist
 
 # file
 yarn.lock
