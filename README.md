@@ -1,8 +1,12 @@
 # vue-mark-calendar
-一个基于 Vue 2.x 开发的日历标记组件，版本记录请在[更新日志]中查看。
+一个基于 Vue 2.x 开发的日历标记组件
 
 ## BREAKING CHANGES
 - [imarker] 已不再维护, 请使用 [vue-mark-calendar]。
+
+## Change Log
+
+更新记录请移步[CHANGELOG]
 
 ## Install
 ```
@@ -145,6 +149,16 @@ export default{
 ```
  禁用月份切换
 
+ 
+**hideArrows**
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar hideArrows />
+```
+ 隐藏月份切换箭头
+
 ### Methods
 
 **chooseDate()**
@@ -241,5 +255,5 @@ export default{
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
 [examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [深度作用选择器]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
-[更新日志]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
+[CHANGELOG]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
 [示例组件]: https://github.com/pigsking/vue-mark-calendar/tree/master/examples/components/customs
