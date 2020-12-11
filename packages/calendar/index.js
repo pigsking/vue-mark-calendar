@@ -353,7 +353,7 @@ export default {
             let day = ''
             const classes = {
                 [styles['future-day']]: this.disabledFutureDay && dayObj.isFutureDay,
-                [styles['weekend-day']]:
+                ['weekend-day']:
                     !(this.disabledFutureDay && dayObj.isFutureDay) &&
                     [6, 7].includes(dayObj.week),
                 [styles['choose-day']]: this.currentDate === dayObj.date,
