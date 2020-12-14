@@ -231,7 +231,7 @@ export default{
 - other-month-day：其它月份的天数
 - today: 今天
 
-## FQA
+## FAQ
 
 **怎么自定义主题?**
 
