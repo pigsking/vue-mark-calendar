@@ -1,4 +1,4 @@
-import styles from "./index.module.css"
+import "./index.css"
 
 export default {
     name: "Calendar",
@@ -50,6 +50,10 @@ export default {
             default: () => []
         },
         hideArrows: {
+            type: Boolean,
+            default: false
+        },
+        darkMode: {
             type: Boolean,
             default: false
         }
@@ -282,7 +286,7 @@ export default {
          */
         chooseDate(date) {
             this.currentDate = this.getDateObj(date).date;
-            if(!date) this.chosenDate = this.currentDate;
+            if (!date) this.chosenDate = this.currentDate;
         },
         /**
          * @description get total days
@@ -362,7 +366,7 @@ export default {
                 ['weekend-day']:
                     !(this.disabledFutureDay && dayObj.isFutureDay) &&
                     [6, 7].includes(dayObj.week),
-                [styles['choose-day']]: this.chosenDate === dayObj.date,
+                [styles['chosen-day']]: this.chosenDate === dayObj.date,
                 [styles['other-month-day']]: dayObj.isOtherMonthDay,
                 today: dayObj.isToday
             };
@@ -381,11 +385,11 @@ export default {
             )
         })
         return (
-            <div id={styles.calendar}>
-                <div class={styles['calendar-header']}>
+            <div id={styles.calendar} class={this.darkMode ? styles['dark-mode'] : styles['light-mode']}>
+                <div class={styles.header}>
                     {headerContent}
                 </div >
-                <div class={styles['calendar-content']}>
+                <div class={styles.content}>
                     <ul class={styles.week}>
                         {weekContent}
                     </ul>
