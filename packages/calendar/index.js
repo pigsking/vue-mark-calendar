@@ -322,6 +322,12 @@ export default {
                     }[match]
                 })
             }
+        },
+        prevMonth() {
+            this.handleMonthSwitch('prev')
+        },
+        nextMonth() {
+            this.handleMonthSwitch('next')
         }
     },
     render() {
