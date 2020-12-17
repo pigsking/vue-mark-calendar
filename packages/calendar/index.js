@@ -85,9 +85,6 @@ export default {
         markers() {
             this.initCalendar(this.currentDate)
         },
-        sundayBegin() {
-            this.initCalendar(this.currentDate)
-        },
         hideMarker() {
             this.initCalendar(this.currentDate)
         },
