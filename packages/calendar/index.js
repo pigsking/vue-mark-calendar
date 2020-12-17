@@ -57,7 +57,8 @@ export default {
     data() {
         return {
             days: [],
-            currentDate: ""
+            currentDate: "",
+            chosenDate: ''
         };
     },
     computed: {
@@ -136,7 +137,8 @@ export default {
                 ...currentMonthAllDays,
                 ...nextMonthFewDays
             ];
-            this.currentDate = date;
+            this.currentDate = date
+            if (!this.chosenDate) this.chosenDate = date
         },
 
         /**
@@ -263,7 +265,7 @@ export default {
                     ? this.handleMonthSwitch("prev")
                     : this.handleMonthSwitch("next");
             }
-            this.currentDate = item.date;
+            this.chosenDate = this.currentDate = item.date;
         },
         /**
          * @description match month's day obj by the date string
@@ -280,6 +282,7 @@ export default {
          */
         chooseDate(date) {
             this.currentDate = this.getDateObj(date).date;
+            if(!date) this.chosenDate = this.currentDate;
         },
         /**
          * @description get total days
@@ -359,7 +362,7 @@ export default {
                 ['weekend-day']:
                     !(this.disabledFutureDay && dayObj.isFutureDay) &&
                     [6, 7].includes(dayObj.week),
-                [styles['choose-day']]: this.currentDate === dayObj.date,
+                [styles['choose-day']]: this.chosenDate === dayObj.date,
                 [styles['other-month-day']]: dayObj.isOtherMonthDay,
                 today: dayObj.isToday
             };
