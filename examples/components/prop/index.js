@@ -13,7 +13,7 @@ import MultiDayMarkers from './MultiDayMarkers'
 import HideArrows from './HideArrows'
 
 
-export {
+export default {
     Format,
     WeekendDay,
     WeekText,

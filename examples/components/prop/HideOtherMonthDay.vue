@@ -1,7 +1,7 @@
 <template>
   <section id="custom-calendar">
     <div class="custom-calendar-header">
-      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/HideOtherMonthDay.vue" >props.hideOtherMonthDay</a></h3>
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/HideOtherMonthDay.vue" >hideOtherMonthDay</a></h3>
       <input type="checkbox" v-model="hideOtherMonthDay" />
     </div>
     <Calendar :hideOtherMonthDay="hideOtherMonthDay" />

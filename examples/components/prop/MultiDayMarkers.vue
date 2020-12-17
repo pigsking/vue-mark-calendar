@@ -1,9 +1,9 @@
 <template>
   <section>
     <div class="custom-calendar-header">
-      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/HideOtherMonthMarker.vue" >props.multiDayMarkers</a></h3>
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/HideOtherMonthMarker.vue" >multiDayMarkers</a></h3>
     </div>
-    <Calendar :multiDayMarkers="markers" @date="handleChooseDay"/>
+    <Calendar :multiDayMarkers="markers"/>
   </section>
 </template>
 
@@ -24,11 +24,6 @@ export default {
         },
       ],
     };
-  },
-  methods:{
-    handleChooseDay(dayInfo){
-      console.log(JSON.stringify(dayInfo))
-    }
   }
 };
 </script>

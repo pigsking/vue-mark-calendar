@@ -1,9 +1,8 @@
 <template>
   <section>
-    <h2>CUSTOM</h2>
-
+    <h2>Props</h2>
     <WeekendDay />
-
+    
     <Format />
 
     <WeekText />
@@ -17,56 +16,27 @@
     <HideOtherMonthMarker />
 
     <HideMarker />
-    
-    <HideOtherMonthDay />
-    
-    <TodayText/>
-    
-    <DisabledSwitchMonth/>
 
-    <MultiDayMarkers/>
-    
-    <HideArrows/>
+    <HideOtherMonthDay />
+
+    <TodayText />
+
+    <DisabledSwitchMonth />
+
+    <MultiDayMarkers />
+
+    <HideArrows />
   </section>
 </template>
 <script>
-import {
-  Format,
-  WeekendDay,
-  WeekText,
-  SundayBegin,
-  DisabledFutureDay,
-  Markers,
-  HideOtherMonthMarker,
-  HideOtherMonthDay,
-  HideMarker,
-  TodayText,
-  DisabledSwitchMonth,
-  MultiDayMarkers,
-  HideArrows
-} from "./customs";
+import components from "./prop";
 export default {
-  name: "Custom",
-  components: {
-    Format,
-    WeekendDay,
-    WeekText,
-    SundayBegin,
-    DisabledFutureDay,
-    Markers,
-    HideOtherMonthMarker,
-    HideOtherMonthDay,
-    HideMarker,
-    TodayText,
-    DisabledSwitchMonth,
-    MultiDayMarkers,
-    HideArrows
-  },
+  components: components,
 };
 </script>
 <style scoped>
-.custom-calendar-header{
- display: flex;
+.custom-calendar-header {
+  display: flex;
 }
 #custom-calendar >>> .choose-day span {
   color: #fff !important;

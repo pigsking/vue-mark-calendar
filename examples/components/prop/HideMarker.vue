@@ -1,10 +1,10 @@
 <template>
   <section>
     <div class="custom-calendar-header">
-      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/HideOtherMonthMarker.vue" >props.hideOtherMonthMarker</a></h3>
-      <input type="checkbox" v-model="hideOtherMonthMarker" />
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/HideMarker.vue" >hideMarker</a></h3>
+      <input type="checkbox" v-model="hideMarker" />
     </div>
-    <Calendar :markers="markers" :hideOtherMonthMarker="hideOtherMonthMarker" />
+    <Calendar :markers="markers" :hideMarker="hideMarker" />
   </section>
 </template>
 
@@ -14,10 +14,10 @@ const year = date.getFullYear();
 const month = date.getMonth() + 1;
 
 export default {
-  name: "HideOtherMonthMarker",
+  name: "HideMarker",
   data() {
     return {
-      hideOtherMonthMarker: false,
+      hideMarker: false,
       markers: [
         {
           date: `${year}/${month}/1`,
