@@ -19,8 +19,7 @@ export default {
     plugins: [
         vue({ css: false }),
         postcss({
-            extract: false,
-            modules: true,
+            extract: false
         }),
         resolve(),
         commonjs({
