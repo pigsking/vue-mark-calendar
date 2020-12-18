@@ -196,7 +196,7 @@ export default {
                             dayObj['endDate'] = endDate
 
                             if (startTimestamp === dayObj.timestamp) {
-                                dayObj.className = `${item.className} ${styles['start-marker']}`;
+                                dayObj.className = `${item.className} start-marker`;
                             }
 
                             if (startTimestamp < dayObj.timestamp && dayObj.timestamp < endTimestamp) {
@@ -204,7 +204,7 @@ export default {
                             }
 
                             if (endTimestamp === dayObj.timestamp) {
-                                dayObj.className = `${item.className} ${styles['end-marker']}`;
+                                dayObj.className = `${item.className} end-marker`;
                             }
                         })
 
@@ -285,7 +285,7 @@ export default {
          * @param {String} date
          */
         chooseDate(date) {
-            this.currentDate = this.getDateObj(date).date;
+            this.chosenDate = this.currentDate = this.getDateObj(date).date;
             if (!date) this.chosenDate = this.currentDate;
         },
         /**
@@ -346,11 +346,11 @@ export default {
             }
         }
         const headerContent = (
-            <div class={styles['month-switch']}>
-                <span class={{ [styles.prev]: !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
-                <span class={styles.date}>{dateFormatFilter(this.currentDate)}</span>
+            <div class='month-switch'>
+                <span class={{ 'prev': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
+                <span class='date'>{dateFormatFilter(this.currentDate)}</span>
                 {this.showNextMonthSwitch &&
-                    <span class={{ [styles.next]: !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
+                    <span class={{ 'next': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
             </div>
         );
 
@@ -362,12 +362,12 @@ export default {
         this.days.forEach((dayObj, index) => {
             let day = ''
             const classes = {
-                [styles['future-day']]: this.disabledFutureDay && dayObj.isFutureDay,
+                ['future-day']: this.disabledFutureDay && dayObj.isFutureDay,
                 ['weekend-day']:
                     !(this.disabledFutureDay && dayObj.isFutureDay) &&
                     [6, 7].includes(dayObj.week),
-                [styles['chosen-day']]: this.chosenDate === dayObj.date,
-                [styles['other-month-day']]: dayObj.isOtherMonthDay,
+                ['chosen-day']: this.chosenDate === dayObj.date,
+                ['other-month-day']: dayObj.isOtherMonthDay,
                 today: dayObj.isToday
             };
 
@@ -385,15 +385,15 @@ export default {
             )
         })
         return (
-            <div id={styles.calendar} class={this.darkMode ? styles['dark-mode'] : styles['light-mode']}>
-                <div class={styles.header}>
+            <div id="v-calendar" class={this.darkMode ? 'dark-mode' : 'light-mode'}>
+                <div class='header'>
                     {headerContent}
                 </div >
-                <div class={styles.content}>
-                    <ul class={styles.week}>
+                <div class='content'>
+                    <ul class='week'>
                         {weekContent}
                     </ul>
-                    <ul class={styles.month}>
+                    <ul class='month'>
                         {monthContent}
                     </ul>
                 </div>
