@@ -1,5 +1,20 @@
 # 更新日志
 
+## v0.7.0
+
+### Bug Fixes
+- 修复因采用 css modules 导致无法通过指定类名覆盖组件默认样式的问题（取消使用 css modules）
+
+### Features
+- 支持 dark 模式
+- 支持通过调用指定方法切换月份
+
+### BREAKING CHANGES
+- 取消切换月份时自动选中今天
+- 默认样式改为 light 模式
+- 取消 sundayBegin 属性的动态设置
+- 已选中日子的类名由 `choose-day` 改为 `chosen-day`
+- 组件 id 名由 `calendar` 改为 `v-calendar`
 
 ## v0.6.1
 
