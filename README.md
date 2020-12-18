@@ -288,5 +288,5 @@ export default{
 [vue-mark-calendar]: https://www.npmjs.com/package/@pigsking/vue-mark-calendar
 [examples]: https://github.com/pigsking/vue-mark-calendar/blob/master/src/App.vue
 [深度作用选择器]: https://vue-loader.vuejs.org/guide/scoped-css.html#child-component-root-elements
-[更新日志]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
+[CHANGELOG]: https://github.com/pigsking/vue-mark-calendar/blob/master/CHANGELOG.md
 [示例组件]: https://github.com/pigsking/vue-mark-calendar/tree/master/examples
