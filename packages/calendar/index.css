@@ -1,0 +1,174 @@
+html {
+  --header-background-dark : #2f2f2f;
+  --header-text-dark       : #b9b9b9;
+  --week-text-dark         : #909090;
+  --content-background-dark: #252525;
+  --content-text-dark      : #E3E3E3;
+
+  --header-background-light : #fafafa;
+  --week-text-light         : #6e6e6e;
+  --header-text-light       : #4b4b4b;
+  --content-background-light: #fff;
+  --content-text-light      : #2c2c2c;
+}
+
+/* light mode */
+#v-calendar.light-mode .header {
+  color           : var(--header-text-light);
+  background-color: var(--header-background-light);
+}
+
+#v-calendar.light-mode .header span {
+  border-color: var(--header-text-light);
+}
+
+#v-calendar.light-mode .week {
+  color: var(--week-text-light);
+}
+
+#v-calendar.light-mode .content {
+  color           : var(--content-text-light);
+  background-color: var(--content-background-light);
+}
+
+#v-calendar.light-mode .chosen-day span {
+  color           : var(--content-text-dark);
+  background-color: var(--content-background-dark);
+}
+
+/* dark mode */
+#v-calendar.dark-mode .header {
+  color           : var(--header-text-dark);
+  background-color: var(--header-background-dark);
+}
+
+#v-calendar .dark-mode .header span {
+  border-color: var(--header-text-dark);
+}
+
+#v-calendar.dark-mode .week {
+  color: var(--week-text-dark);
+}
+
+#v-calendar.dark-mode .content {
+  color           : var(--content-text-dark);
+  background-color: var(--content-background-dark);
+}
+
+#v-calendar.dark-mode .chosen-day span {
+  color           : var(--content-text-light);
+  background-color: var(--content-background-light);
+}
+
+/* reset */
+#v-calendar * {
+  box-sizing                 : border-box;
+  -webkit-tap-highlight-color: transparent;
+  -moz-user-select           : none;
+  -webkit-user-select        : none;
+  -ms-user-select            : none;
+  -khtml-user-select         : none;
+  user-select                : none;
+}
+
+#v-calendar ul {
+  margin      : 0;
+  padding-left: 0;
+}
+
+#v-calendar li {
+  list-style: none;
+}
+
+/* component styles */
+
+#v-calendar {
+  min-width: 320px;
+}
+
+#v-calendar .header {
+  position: relative;
+}
+
+#v-calendar .month-switch {
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+  height         : 44px;
+  padding        : 0 20px;
+}
+
+#v-calendar .date {
+  position  : absolute;
+  left      : 0;
+  right     : 0;
+  z-index   : 0;
+  margin    : 0 30%;
+  text-align: center;
+}
+
+#v-calendar .prev,
+#v-calendar .next {
+  width             : 12px;
+  height            : 12px;
+  border-top-width  : 1px;
+  border-right-width: 1px;
+  border-top-style  : solid;
+  border-right-style: solid;
+  cursor            : pointer;
+}
+
+#v-calendar .prev {
+  transform: rotate(-135deg);
+}
+
+#v-calendar .next {
+  transform: rotate(45deg);
+}
+
+#v-calendar .week {
+  display: flex;
+  padding: 10px 0;
+}
+
+#v-calendar .week li {
+  flex      : 1;
+  text-align: center;
+}
+
+#v-calendar .month {
+  display      : flex;
+  flex-wrap    : wrap;
+  margin-bottom: 0;
+}
+
+#v-calendar .month li {
+  width        : 14.28%;
+  margin-bottom: 10px;
+  text-align   : center;
+}
+
+#v-calendar .month span {
+  display      : inline-block;
+  width        : 40px;
+  height       : 40px;
+  line-height  : 40px;
+  border-radius: 50%;
+  text-align   : center;
+  cursor       : pointer;
+}
+
+#v-calendar .future-day,
+#v-calendar .other-month-day {
+  opacity: 0.38;
+}
+
+#v-calendar .start-marker {
+  border-top-left-radius   : 20px;
+  border-bottom-left-radius: 20px;
+}
+
+#v-calendar .end-marker {
+  border-top-right-radius   : 20px;
+  border-bottom-right-radius: 20px;
+}

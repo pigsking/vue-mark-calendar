@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="custom-calendar-header">
-      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/Markers.vue" >props.markers</a></h3>
+      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/Markers.vue" >markers</a></h3>
       <button @click="randomMarker">Random</button>
     </div>
     <Calendar :markers="markers" />

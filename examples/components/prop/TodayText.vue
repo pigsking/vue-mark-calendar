@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/customs/TodayText.vue" >props.todayText</a></h3>
+    <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/TodayText.vue" >todayText</a></h3>
     <Calendar todayText="今" />
   </section>
 </template>

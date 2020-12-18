@@ -11,9 +11,10 @@ import TodayText from './TodayText'
 import DisabledSwitchMonth from './DisabledSwitchMonth'
 import MultiDayMarkers from './MultiDayMarkers'
 import HideArrows from './HideArrows'
+import DarkMode from './DarkMode'
 
 
-export {
+export default {
     Format,
     WeekendDay,
     WeekText,
@@ -26,5 +27,6 @@ export {
     TodayText,
     DisabledSwitchMonth,
     MultiDayMarkers,
-    HideArrows
+    HideArrows,
+    DarkMode
 }
