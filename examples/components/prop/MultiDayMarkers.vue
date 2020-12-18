@@ -1,9 +1,15 @@
 <template>
   <section>
     <div class="custom-calendar-header">
-      <h3><a target="blank" href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/HideOtherMonthMarker.vue" >multiDayMarkers</a></h3>
+      <h3>
+        <a
+          target="blank"
+          href="https://github.com/pigsking/vue-mark-calendar/blob/master/examples/components/prop/HideOtherMonthMarker.vue"
+          >multiDayMarkers</a
+        >
+      </h3>
     </div>
-    <Calendar :multiDayMarkers="markers"/>
+    <Calendar :multiDayMarkers="markers" />
   </section>
 </template>
 
@@ -19,17 +25,21 @@ export default {
       markers: [
         {
           startDate: `${year}/${month}/1`,
-          endDate:`${year}/${month}/15`,
+          endDate: `${year}/${month}/15`,
           className: "dream",
         },
       ],
     };
-  }
+  },
 };
 </script>
 <style scoped>
 section >>> .dream {
   color: #fff !important;
-  background-color: #448aff;
+  background-color: #2680eb;
+}
+
+section >>> .index-module_header_2gnmJ {
+  background-color: lightblue !important;
 }
 </style>

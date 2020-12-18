@@ -145,6 +145,15 @@ export default{
 ```
  禁用月份切换
 
+**darkMode**
+- Type: `Boolean`
+- Default: `false`
+- Usage: 
+```javascript
+<Calendar darkMode />
+```
+是否开启 dark 模式
+
 ### Methods
 
 **chooseDate()**
@@ -183,6 +192,31 @@ export default{
 ```
 获取日期对象，传参数时选中所传日期的对象，不传参数时获取当天日期对象
 
+**prevMonth()**
+
+- Usage:
+```javascript
+<Calendar ref="calendar" />
+export default{
+  mounted(){
+      this.$refs.calendar.prevMonth();
+  }
+}
+```
+切换到上一月份
+
+**nextMonth()**
+
+- Usage:
+```javascript
+<Calendar ref="calendar" />
+export default{
+  mounted(){
+      this.$refs.calendar.nextMonth();
+  }
+}
+```
+切换到下一月份
 ### Events
 
 **date**
@@ -191,8 +225,8 @@ export default{
 <Calendar @date="handleChooseDay($event)" />
 export default{
    methods(){
-       handleChooseDay(dayInfo){
-        // dayInfo   
+       handleChooseDay(dateObj){
+        // dateObj   
         // {
         //     "day":14, // 一个月中的第几天
         //     "date":"2020/02/14", // 该天日期
@@ -211,7 +245,7 @@ export default{
 ### Classes
 
 组件默认类名：
-- choose-day：某天被选中
+- chosen-day：某天被选中
 - weekend-day：某天为周末
 - future-day：未来的天数
 - other-month-day：其它月份的天数

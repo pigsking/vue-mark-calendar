@@ -7,7 +7,7 @@
         >chooseDate</a
       >
       <button @click="chooseDate('2020/12/25')">2020/12/25</button>
-      <button @click="chooseDate">回到今天</button>
+      <button @click="backToToday">回到今天</button>
     </h3>
     <Calendar ref="calendar" />
   </section>
@@ -19,6 +19,9 @@ export default {
     chooseDate(date) {
       this.$refs.calendar.chooseDate(date);
     },
+    backToToday(){
+      this.$refs.calendar.chooseDate();
+    }
   },
 };
 </script>
