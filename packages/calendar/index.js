@@ -113,35 +113,26 @@ export default {
             const prevMonth = month === 1 ? 12 : month - 1;
             const nextMonth = month === 12 ? 1 : month + 1;
 
-            const currentMonthAllDays = this.handleDays(year, month);
-            let prevMonthAllDays = this.handleDays(year, prevMonth, "prev");
-            let nextMonthAllDays = this.handleDays(year, nextMonth, "next");
+            const currentMonthDays = this.handleDays(year, month);
+            const prevMonthDays = this.handleDays(year, prevMonth, "prev");
+            const nextMonthDays = this.handleDays(year, nextMonth, "next");
 
-            // get the first day and the last day of the month is the day of the week
-            let firstDay = currentMonthAllDays[0].week;
-            let lastDay = currentMonthAllDays[currentMonthAllDays.length - 1].week;
+            let firstDay = currentMonthDays[0].week;
 
-            // handle sunday begin
-            if (this.sundayBegin) {
-                lastDay = lastDay === 7 ? (lastDay = 1) : lastDay + 1;
-            } else {
-                firstDay -= 1;
-            }
+            if (this.sundayBegin) firstDay += 1;
 
-            // concat prev month and next month
-            const nextMonthFewDays = nextMonthAllDays.splice(0, 7 - lastDay);
-
-            const prevMonthFewDays = prevMonthAllDays.splice(
-                prevMonthAllDays.length - firstDay,
-                prevMonthAllDays.length - 1
+            const prevMonthFewDays = prevMonthDays.slice(
+                prevMonthDays.length - firstDay,
+                prevMonthDays.length - 1
             );
-
-            this.days = [
+            const days = [
                 ...prevMonthFewDays,
-                ...currentMonthAllDays,
-                ...nextMonthFewDays
+                ...currentMonthDays,
+                ...nextMonthDays
             ];
+            this.days = days.slice(0, 42)
             this.currentDate = date
+
             if (!this.chosenDate) this.chosenDate = date
         },
 
