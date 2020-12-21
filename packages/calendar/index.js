@@ -55,7 +55,7 @@ export default {
         },
         darkMode: {
             type: Boolean,
-            default: true
+            default: false
         },
         lang: {
             type: String,

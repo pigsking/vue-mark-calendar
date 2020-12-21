@@ -13,7 +13,7 @@ export default {
   name: "HideOtherMonthDay",
   data() {
     return {
-      hideOtherMonthDay: false,
+      hideOtherMonthDay: true,
     };
   },
 };
