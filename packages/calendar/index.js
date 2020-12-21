@@ -55,14 +55,24 @@ export default {
         },
         darkMode: {
             type: Boolean,
-            default: false
+            default: true
+        },
+        lang: {
+            type: String,
+            default: 'zh-CN',
+            validator: (value) => {
+                return ["zh-CN", "en-US"].includes(value)
+            }
         }
     },
     data() {
         return {
             days: [],
             currentDate: "",
-            chosenDate: ''
+            chosenDate: '',
+            isSwitchYear: false,
+            isSwitchMonth: false,
+            minPickerYear: 0,
         };
     },
     computed: {
@@ -80,6 +90,12 @@ export default {
                 if (year === currentYear && currentMonth === month) return false;
             }
             return true;
+        },
+        monthText() {
+            return {
+                'zh-CN': ['1 月', '2 月', '3 月', '4 月', '5 月', '6 月', '7 月', '8 月', '9 月', '10 月', '11 月', '12 月'],
+                'en-US': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Now', 'Dec']
+            }[this.lang]
         }
     },
     watch: {
@@ -113,9 +129,9 @@ export default {
             const prevMonth = month === 1 ? 12 : month - 1;
             const nextMonth = month === 12 ? 1 : month + 1;
 
-            const currentMonthDays = this.handleDays(year, month);
-            const prevMonthDays = this.handleDays(year, prevMonth, "prev");
-            const nextMonthDays = this.handleDays(year, nextMonth, "next");
+            const currentMonthDays = this.getDays(year, month);
+            const prevMonthDays = this.getDays(year, prevMonth, "prev");
+            const nextMonthDays = this.getDays(year, nextMonth, "next");
 
             let firstDay = currentMonthDays[0].week;
 
@@ -130,12 +146,13 @@ export default {
                 ...currentMonthDays,
                 ...nextMonthDays
             ];
+
             this.days = days.slice(0, 42)
             this.currentDate = date
+            this.minPickerYear = year
 
             if (!this.chosenDate) this.chosenDate = date
         },
-
         /**
          * @description get the total days in the month
          * @param {Number} year
@@ -143,7 +160,7 @@ export default {
          * @param {String} type
          * @return {Array} days
          */
-        handleDays(year, month, type) {
+        getDays(year, month, type) {
             let days = [];
 
             const markers = this.markers;
@@ -206,11 +223,29 @@ export default {
             }
             return days;
         },
+        setIsSwitchYearState() {
+            this.isSwitchYear = !this.isSwitchYear
+            if (this.isSwitchYear) this.isSwitchMonth = false
+        },
+        setIsSwitchMonthState() {
+            this.isSwitchMonth = !this.isSwitchMonth
+            if (this.isSwitchMonth) this.isSwitchYear = false
+        },
         /**
          * @description switch month
          * @param {String} type prev or next
          */
-        handleMonthSwitch(type) {
+        handleSwitch(type) {
+            this.isSwitchYear ? this.switchYear(type) : this.switchMonth(type)
+        },
+        switchYear(type) {
+            if (type === 'prev') {
+                this.minPickerYear -= 12
+            } else {
+                this.minPickerYear += 12
+            }
+        },
+        switchMonth(type) {
             let { year, month, day } = this.getDateObj(this.currentDate);
 
             // prev month
@@ -251,16 +286,26 @@ export default {
          * @description choose one day
          * @param {Object} item
          */
-        handleDayChoose(item) {
+        handleChooseDay(item) {
             if ((this.disabledFutureDay && item.isFutureDay)) return
             if (this.disabledSwitchMonth && item.isOtherMonthDay) return
 
             if (item.isOtherMonthDay) {
                 item.day > 7
-                    ? this.handleMonthSwitch("prev")
-                    : this.handleMonthSwitch("next");
+                    ? this.switchMonth("prev")
+                    : this.switchMonth("next");
             }
             this.chosenDate = this.currentDate = item.date;
+        },
+        handleChooseYear(year) {
+            const { month, day } = this.getDateObj(this.currentDate)
+            this.currentDate = this.getDateObj(`${year}/${month}/${day}`).date;
+            this.isSwitchYear = false
+        },
+        handleChooseMonth(month) {
+            const { year, day } = this.getDateObj(this.currentDate)
+            this.currentDate = this.getDateObj(`${year}/${month}/${day}`).date;
+            this.isSwitchMonth = false
         },
         /**
          * @description match month's day obj by the date string
@@ -319,29 +364,39 @@ export default {
             }
         },
         prevMonth() {
-            this.handleMonthSwitch('prev')
+            this.switchMonth('prev')
         },
         nextMonth() {
-            this.handleMonthSwitch('next')
-        }
+            this.switchMonth('next')
+        },
+
     },
     render() {
+        let dateContent = ''
         let weekContent = []
         let monthContent = []
+        let yearPickerContent = []
+        let monthPickerContent = []
 
-        const dateFormatFilter = (date) => {
-            if (date) {
-                const connector = date.match(/[^0-9]/)[0];
-                const formatDate = this.getDateObj(date, "YYYY/MM").date;
-                return formatDate.split("/").join(connector);
-            }
+        const { year, month } = this.getDateObj(this.currentDate)
+
+        if (this.lang === 'zh-CN') {
+            dateContent = <span class="date">
+                <i class={{ 'active': this.isSwitchYear }} onClick={() => this.setIsSwitchYearState()}>{year}年</i> <i class={{ 'active': this.isSwitchMonth }} onClick={() => this.setIsSwitchMonthState()}>{month}月</i>
+            </span>
+        } else {
+            dateContent = <span class="date">
+                <i class={{ 'active': this.isSwitchMonth }} onClick={() => this.setIsSwitchMonthState()}>{this.monthText[month - 1]}</i> <i class={{ 'active': this.isSwitchYear }} onClick={() => this.setIsSwitchYearState()}>{year}</i>
+            </span>
         }
+
         const headerContent = (
             <div class='month-switch'>
-                <span class={{ 'prev': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('prev')}></span>
-                <span class='date'>{dateFormatFilter(this.currentDate)}</span>
-                {this.showNextMonthSwitch &&
-                    <span class={{ 'next': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleMonthSwitch('next')}></span>}
+                {!this.isSwitchMonth && <span class={{ 'prev': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleSwitch('prev')}></span>
+                }
+                {dateContent}
+                {!this.isSwitchMonth && this.showNextMonthSwitch &&
+                    <span class={{ 'next': !this.hideArrows && !this.disabledSwitchMonth }} onClick={() => this.handleSwitch('next')}></span>}
             </div>
         );
 
@@ -364,7 +419,7 @@ export default {
 
             if (!(dayObj.isOtherMonthDay && this.hideOtherMonthDay)) {
                 day = (
-                    <span onClick={() => this.handleDayChoose(dayObj, index)}>
+                    <span onClick={() => this.handleChooseDay(dayObj, index)}>
                         {this.todayText && dayObj.isToday ? this.todayText : dayObj.day}
                     </span>
                 )
@@ -375,6 +430,14 @@ export default {
                 </li>
             )
         })
+
+        this.monthText.forEach((mth, index) => {
+            monthPickerContent.push(<li onClick={() => this.handleChooseMonth(index + 1)}><span>{mth}</span></li>)
+        })
+        for (let i = 0; i < 12; i++) {
+            yearPickerContent.push(<li onClick={() => { this.handleChooseYear(this.minPickerYear + i) }}><span>{this.minPickerYear + i}</span></li>)
+        }
+
         return (
             <div id="v-calendar" class={this.darkMode ? 'dark-mode' : 'light-mode'}>
                 <div class='header'>
@@ -387,6 +450,12 @@ export default {
                     <ul class='month'>
                         {monthContent}
                     </ul>
+                    {
+                        (this.isSwitchYear || this.isSwitchMonth) && <ul class="picker">
+                            {this.isSwitchYear && yearPickerContent}
+                            {this.isSwitchMonth && monthPickerContent}
+                        </ul>
+                    }
                 </div>
             </div >
         )

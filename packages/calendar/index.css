@@ -60,6 +60,38 @@ html {
   background-color: var(--content-background-light);
 }
 
+#v-calendar.light-mode .date i:hover,
+#v-calendar.light-mode .date .active {
+  color: var(--content-text-light);
+}
+
+#v-calendar.dark-mode .date i:hover,
+#v-calendar.dark-mode .date .active {
+  color: var(--content-text-dark);
+}
+
+#v-calendar.light-mode .picker {
+  background-color: var(--content-background-light);
+}
+
+#v-calendar.dark-mode .picker {
+  background-color: var(--content-background-dark);
+}
+
+
+#v-calendar.light-mode .picker span:hover,
+#v-calendar.light-mode .month span:hover {
+  color           : var(--content-text-dark);
+  background-color: var(--content-background-dark);
+}
+
+#v-calendar.dark-mode .picker span:hover,
+#v-calendar.dark-mode .month span:hover {
+  color           : var(--content-text-light);
+  background-color: var(--content-background-light);
+}
+
+
 /* reset */
 #v-calendar * {
   box-sizing                 : border-box;
@@ -80,13 +112,18 @@ html {
   list-style: none;
 }
 
+#v-calendar i {
+  font-style: normal;
+}
+
 /* component styles */
 
 #v-calendar {
   min-width: 320px;
 }
 
-#v-calendar .header {
+#v-calendar .header,
+#v-calendar .content {
   position: relative;
 }
 
@@ -105,6 +142,11 @@ html {
   z-index   : 0;
   margin    : 0 30%;
   text-align: center;
+
+}
+
+#v-calendar .date i {
+  cursor: pointer;
 }
 
 #v-calendar .prev,
@@ -171,4 +213,26 @@ html {
 #v-calendar .end-marker {
   border-top-right-radius   : 20px;
   border-bottom-right-radius: 20px;
+}
+
+#v-calendar .picker {
+  position: absolute;
+  top     : 0;
+  bottom  : 0;
+  width   : 100%;
+  display  : flex;
+  flex-wrap: wrap;
+}
+
+#v-calendar .picker li {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  width          : 33.333%;
+  cursor         : pointer;
+}
+
+#v-calendar .picker span {
+  padding      : 10px 16px;
+  border-radius: 2px;
 }
