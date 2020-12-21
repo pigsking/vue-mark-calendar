@@ -1,6 +1,6 @@
-import ChooseDate from './ChooseDate'
-import PrevMonth from './PrevMonth'
-import NextMonth from './NextMonth'
+import ChooseDate from './ChooseDate.vue'
+import PrevMonth from './PrevMonth.vue'
+import NextMonth from './NextMonth.vue'
 
 
 

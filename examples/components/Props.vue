@@ -40,7 +40,7 @@ export default {
 .custom-calendar-header {
   display: flex;
 }
-#custom-calendar >>> .choose-day span {
+#custom-calendar :deep() .choose-day span {
   color: #fff !important;
 }
 </style>

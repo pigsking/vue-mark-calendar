@@ -34,12 +34,12 @@ export default {
 };
 </script>
 <style scoped>
-section >>> .dream {
+section :deep() .dream {
   color: #fff !important;
   background-color: #2680eb;
 }
 
-section >>> .index-module_header_2gnmJ {
+section :deep() .index-module_header_2gnmJ {
   background-color: lightblue !important;
 }
 </style>

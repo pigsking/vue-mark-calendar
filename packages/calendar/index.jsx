@@ -1,6 +1,7 @@
+import { defineComponent } from 'vue'
 import "./index.css"
 
-export default {
+export default defineComponent({
     name: "Calendar",
     props: {
         markers: {
@@ -460,7 +461,6 @@ export default {
             </div >
         )
     }
-};
-
+})
 
 

@@ -1,4 +1,4 @@
-import Calendar from './calendar/index.js';
+import Calendar from './calendar/index';
 
 const install = (Vue) => {
     Vue.component(Calendar.name, Calendar);

@@ -45,22 +45,22 @@ export default {
 };
 </script>
 <style scoped>
-section >>> .love span {
+section :deep() .love span {
   color: #fff !important;
   background-color: #7b1fa2;
 }
 
-section >>> .miss span {
+section :deep() .miss span {
   color: #fff !important;
   background-color: #ff4081;
 }
 
-section >>> .dream span {
+section :deep() .dream span {
   color: #fff !important;
   background-color: #448aff;
 }
 
-section >>> .hope span {
+section :deep() .hope span {
   color: #fff !important;
   background-color: #ff5722;
 }

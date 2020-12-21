@@ -2,12 +2,12 @@
   <div id="calendar-wrap">
     <Default />
 
-    <Events/>
+    <Events />
 
     <Props />
 
     <Methods />
-    
+
     <GitHubBadge slug="pigsking/vue-mark-calendar" />
 
     <div class="copyright">© {{ new Date().getFullYear() }} Allen AuYeung</div>
@@ -15,21 +15,23 @@
 </template>
 
 <script>
-import Default from "./components/Default";
-import Events from "./components/Events";
-import Props from "./components/Props";
-import Methods from "./components/Methods";
+import { defineComponent } from "vue";
+// import GitHubBadge from "vue-github-badge";
 
-import GitHubBadge from "vue-github-badge";
-export default {
+import Default from "./components/Default.vue";
+import Events from "./components/Events.vue";
+import Props from "./components/Props.vue";
+import Methods from "./components/Methods.vue";
+
+export default defineComponent({
   components: {
     Default,
     Events,
     Props,
     Methods,
-    GitHubBadge,
+    // GitHubBadge,
   },
-};
+});
 </script>
 
 <style scoped>
@@ -37,7 +39,7 @@ export default {
   max-width: 414px;
   margin: auto;
 }
-#custom-calendar >>> .choose-day span {
+#custom-calendar :deep() .choose-day span {
   color: #fff !important;
 }
 

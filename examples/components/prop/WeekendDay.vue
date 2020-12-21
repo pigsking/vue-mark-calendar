@@ -6,7 +6,7 @@
 </template>
 
 <style scoped>
-section >>> .weekend-day span {
+section :deep() .weekend-day span {
   color: #536dfe;
 }
 </style>
