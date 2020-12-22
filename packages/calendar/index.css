@@ -127,6 +127,10 @@ html {
   position: relative;
 }
 
+#v-calendar .content {
+  touch-action: none;
+}
+
 #v-calendar .month-switch {
   display        : flex;
   justify-content: space-between;

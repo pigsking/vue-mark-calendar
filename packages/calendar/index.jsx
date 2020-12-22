@@ -74,6 +74,7 @@ export default defineComponent({
             isSwitchYear: false,
             isSwitchMonth: false,
             minPickerYear: 0,
+            startXY: [0, 0]
         };
     },
     computed: {
@@ -240,11 +241,23 @@ export default defineComponent({
             this.isSwitchYear ? this.switchYear(type) : this.switchMonth(type)
         },
         switchYear(type) {
-            if (type === 'prev') {
-                this.minPickerYear -= 12
+            if (this.isSwitchYear) {
+                if (type === 'prev') {
+                    this.minPickerYear -= 12
+                } else {
+                    this.minPickerYear += 12
+                }
             } else {
-                this.minPickerYear += 12
+
+                let { year, month, day } = this.getDateObj(this.currentDate)
+                if (type === 'prev') {
+                    year--
+                } else {
+                    year++
+                }
+                this.currentDate = this.getDateObj(`${year}/${month}/${day}`).date;
             }
+
         },
         switchMonth(type) {
             let { year, month, day } = this.getDateObj(this.currentDate);
@@ -370,7 +383,62 @@ export default defineComponent({
         nextMonth() {
             this.switchMonth('next')
         },
+        handleTouchStart(e) {
+            const { pageX, pageY } = e.touches[0]
+            this.startXY = [pageX, pageY]
+        },
+        handleTouchEnd(e) {
+            // 月份选择时不处理滑动操作
+            if (this.isSwitchMonth) return
 
+            const [startX, startY] = this.startXY
+            const { pageX: endX, pageY: endY } = e.changedTouches[0]
+            const diffX = endX - startX
+            const diffY = startY - endY
+
+
+            if (Math.abs(diffX) < 2 && Math.abs(diffY) < 2) return
+
+            const angle = Math.atan2(diffY, diffX) * 180 / Math.PI
+            const direction = this.getTouchDirection(angle)
+
+            switch (direction) {
+                case 1:
+                    this.switchYear('prev')
+                    break;
+                case 2:
+                    this.switchYear('next')
+                    break;
+                case 3:
+                    // 年选择时不处理左右滑动操作
+                    if (this.isSwitchYear) {
+                        this.switchYear('next')
+                    } else {
+                        this.switchMonth('next')
+                    }
+                    break;
+                case 4:
+                    // 年选择时不处理左右滑动操作
+                    if (this.isSwitchYear) {
+                        this.switchYear('prev')
+                    } else {
+                        this.switchMonth('prev')
+                    }
+                    break;
+            }
+        },
+        // 根据角度获取滑动方向
+        getTouchDirection(angle) {
+            if (angle >= -135 && angle <= -45) {
+                return 1;
+            } else if (angle > 45 && angle < 135) {
+                return 2;
+            } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+                return 3;
+            } else if (angle >= -45 && angle <= 45) {
+                return 4;
+            }
+        }
     },
     render() {
         let dateContent = ''
@@ -444,7 +512,7 @@ export default defineComponent({
                 <div class='header'>
                     {headerContent}
                 </div >
-                <div class='content'>
+                <div class='content' onTouchStart={(e) => this.handleTouchStart(e)} onTouchEnd={(e) => this.handleTouchEnd(e)}>
                     <ul class='week'>
                         {weekContent}
                     </ul>
