@@ -8,16 +8,12 @@
 
     <Methods />
 
-    <GitHubBadge slug="pigsking/vue-mark-calendar" />
-
     <div class="copyright">© {{ new Date().getFullYear() }} Allen AuYeung</div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-// import GitHubBadge from "vue-github-badge";
-
 import Default from "./components/Default.vue";
 import Events from "./components/Events.vue";
 import Props from "./components/Props.vue";
@@ -28,8 +24,7 @@ export default defineComponent({
     Default,
     Events,
     Props,
-    Methods,
-    // GitHubBadge,
+    Methods
   },
 });
 </script>
