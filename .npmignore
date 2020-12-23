@@ -5,11 +5,13 @@ docs
 packages
 tests
 public
+backup
 
 # file
 yarn.lock
 yarn-error.log
 vue.config.js
+vite.config.js
 babel.config.js
 jest.config.js
 package-lock.json
@@ -18,5 +20,7 @@ package-lock.json
 .eslintrc.js
 .postcssrc.json
 CHANGELOG.md
+plan.md
 rollup.config.js
 *.yml
+*.html

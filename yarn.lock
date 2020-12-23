@@ -244,12 +244,12 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@pigsking/vue-mark-calendar@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@pigsking/vue-mark-calendar/-/vue-mark-calendar-0.7.0.tgz#17d6dcfc0b405aca58ddf0c90b9e5514d8076cfa"
-  integrity sha512-5V8L2/7t75Ou9M2CPrzyb7hWtKt9aUm7RRxzYCaMOFl+1YcQrA+ajIUAbeDOsAooUeO3J/YrkvtFdZZUV8Hl5Q==
+"@pigsking/vue-mark-calendar@1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@pigsking/vue-mark-calendar/-/vue-mark-calendar-1.0.0-alpha.0.tgz#109ba0a31d52ae9274a4e323c4313a7fc2939981"
+  integrity sha512-9CLFCOr5bPYDq0Zcy8UsVISh+lCNZ+eg1Rq+VEqDPdJ8dbd08wBPhESlppQhQg2Yws1J3qEITx02Xvdv154CeQ==
   dependencies:
-    vue "^2.6.12"
+    vue "^3.0.4"
 
 "@rollup/plugin-babel@^5.2.2":
   version "5.2.2"
@@ -598,7 +598,7 @@ accepts@^1.3.5:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-acorn-jsx@^5.2.0, acorn-jsx@^5.3.1:
+acorn-jsx@^5.2.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
   integrity sha512-K0Ptm/47OKfQRpNQ2J/oIN/3QYiK6FwW+eJbILhsdxh2WTLdl+30o8aGdTbm5JbffpFFAg/g+zi1E+jvJha5ng==
@@ -3908,16 +3908,6 @@ vue-eslint-parser@^7.0.0:
     espree "^6.2.1"
     esquery "^1.0.1"
     lodash "^4.17.15"
-
-vue-github-badge@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/vue-github-badge/-/vue-github-badge-1.0.1.tgz#dff7ce07320e64a218edf106b15a43176ec06106"
-  integrity sha1-3/fOBzIOZKIY7fEGsVpDF27AYQY=
-
-vue@^2.6.12:
-  version "2.6.12"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
-  integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
 vue@^3.0.3, vue@^3.0.4:
   version "3.0.4"

@@ -1,5 +1,18 @@
 # 更新日志
 
+## 1.0.0-alpha.0
+
+### Features
+- 移动端支持滑动切换年月
+- 一次固定显示 42 天
+- 支持年月选择
+
+### Code Refactoring
+- 使用 Vite 替换 Vue CLI
+
+### BREAKING CHANGES
+- 将 Vue2.x 更新至 Vux3.x
+
 ## v0.7.0
 
 ### Bug Fixes
