@@ -1,5 +1,5 @@
 # vue-mark-calendar
-一个基于 Vue 2.x 开发的日历标记组件
+一个基于 Vue 开发的日历标记组件
 
 ## BREAKING CHANGES
 - [imarker] 已不再维护, 请使用 [vue-mark-calendar]

@@ -15,7 +15,9 @@ jobs:
       run: npm install && npm run build  
 
     - name: Make
-      run: touch .nojekyll
+      run: |
+        cd docs/
+        touch .nojekyll
     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
